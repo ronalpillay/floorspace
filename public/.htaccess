@@ -1,0 +1,63 @@
+# ─── Routing ───────────────────────────────────────────────
+DirectoryIndex index.html
+
+Options -MultiViews
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^.]+[^/])$ /$1/ [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /$1index.html [L]
+
+# ─── Gzip Compression ──────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE font/woff2
+  AddOutputFilterByType DEFLATE font/woff
+</IfModule>
+
+# ─── Browser Caching ───────────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # HTML — short cache (1 hour) so updates show quickly
+  ExpiresByType text/html                  "access plus 1 hour"
+
+  # Next.js static assets have content hash in filename — cache forever
+  <FilesMatch "\.(js|css|woff2|woff|ttf|otf)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Images — cache for 30 days
+  ExpiresByType image/jpeg                 "access plus 30 days"
+  ExpiresByType image/png                  "access plus 30 days"
+  ExpiresByType image/webp                 "access plus 30 days"
+  ExpiresByType image/avif                 "access plus 30 days"
+  ExpiresByType image/svg+xml             "access plus 30 days"
+  ExpiresByType image/x-icon              "access plus 1 year"
+</IfModule>
+
+# ─── Keep-Alive ────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header set Connection keep-alive
+</IfModule>
+
+# ─── Security headers ──────────────────────────────────────
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
