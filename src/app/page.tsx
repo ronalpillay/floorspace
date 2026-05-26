@@ -1,0 +1,610 @@
+"use client";
+
+import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+// ── Hero slideshow — best 3 construction + best 3 interior, alternating ──
+const heroSlides = [
+  { src: "/images/hero-ext-1.jpg", alt: "Industrial construction" },
+  { src: "/images/hero-int-1.jpg", alt: "Interior fit-out" },
+  { src: "/images/hero-ext-4.jpg", alt: "Industrial construction" },
+  { src: "/images/hero-int-2.jpg", alt: "Interior fit-out" },
+  { src: "/images/hero-ext-5.jpg", alt: "Industrial construction" },
+  { src: "/images/hero-int-3.jpg", alt: "Interior fit-out" },
+];
+import { ArrowRight, ArrowUpRight, MapPin, Phone, Mail, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import Footer from "@/components/Footer";
+import AnimatedStats from "@/components/AnimatedStats";
+import ContemporaryNav from "@/components/ContemporaryNav";
+import LogoMarquee from "@/components/LogoMarquee";
+import { projects } from "@/data/projects";
+import "./contemporary.css";
+
+// Web3Forms key — set NEXT_PUBLIC_WEB3FORMS_KEY in your .env.local
+const W3F_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+
+const stats = [
+  { value: "470+", label: "Projects Delivered" },
+  { value: "15+", label: "Years of Excellence" },
+  { value: "20+", label: "Cities Across India" },
+  { value: "100%", label: "Turnkey Accountability" },
+];
+
+// All client logos — now all converted to transparent PNG
+const clientLogos = [
+  { slug: "bridgestone",                   name: "Bridgestone" },
+  { slug: "eaton",                         name: "Eaton" },
+  { slug: "bajaj-allianz",                name: "Bajaj Allianz" },
+  { slug: "l-t-infotech",                 name: "L&T Infotech" },
+  { slug: "lupin",                         name: "Lupin" },
+  { slug: "hindustan-unilever-limited",   name: "Hindustan Unilever" },
+  { slug: "oerlikon",                      name: "Oerlikon" },
+  { slug: "new-balance",                   name: "New Balance" },
+  { slug: "dana",                          name: "Dana" },
+  { slug: "geberit",                       name: "Geberit" },
+  { slug: "lintec",                        name: "Lintec" },
+  { slug: "marquardt",                     name: "Marquardt" },
+  { slug: "schmersal",                     name: "Schmersal" },
+  { slug: "mazak",                         name: "Mazak" },
+  { slug: "tristone",                      name: "Tristone" },
+  { slug: "das",                           name: "DAS" },
+  { slug: "denyo",                         name: "Denyo" },
+  { slug: "shimz",                         name: "Shimz" },
+  { slug: "amneal-pharmaceuticals",       name: "Amneal" },
+  { slug: "axletech-international",       name: "AxleTech" },
+  { slug: "new-holland-construction",     name: "New Holland" },
+  { slug: "osg",                           name: "OSG" },
+  { slug: "smcc-construction-india-limited", name: "SMCC" },
+  { slug: "hirschvogel-automotive-group", name: "Hirschvogel" },
+];
+const sectors = [
+  { label: "Corporate Offices",          sub: "Open plans, cabins, boardrooms & breakout zones",    img: "/images/smbc-lobby.jpg" },
+  { label: "IT & Tech Campuses",         sub: "Agile workspaces built for focus and collaboration", img: "/images/octillion-workspace.jpg" },
+  { label: "Industrial & Manufacturing", sub: "Functional, durable interiors for production facilities", img: "/images/mazak-exterior.jpg" },
+  { label: "Healthcare & Wellness",      sub: "Hygienic, calming environments that support care",   img: "/images/octillion-collab.jpg" },
+  { label: "Hospitality & F&B",          sub: "Inviting spaces that turn guests into regulars",     img: "/images/tristone-reception.jpg" },
+  { label: "Retail & Commercial",        sub: "High-impact interiors that convert foot traffic",    img: "/images/octillion-reception-main.jpg" },
+  { label: "Educational Institutions",   sub: "Inspiring environments built for learning",          img: "/images/smbc-conference.jpg" },
+  { label: "Banking & Institutional",    sub: "Authoritative, compliant spaces that inspire trust", img: "/images/smbc-bkc-reception.jpg" },
+];
+
+const testimonials = [
+  {
+    quote: "Floor-Space was the best option we could have found for our office renovation. The space is beautiful yet elegant and above all very functional. Highly recommend them.",
+    name: "Vijay Joshi", initials: "VJ", company: "Client, Pune", rating: 5,
+  },
+  {
+    quote: "Strongly recommend Floor-Space for office interior design. Very professional team with an eye for detail. They delivered exactly what was envisioned — on time and within budget.",
+    name: "Parimal B", initials: "PB", company: "Client, Mumbai", rating: 5,
+  },
+  {
+    quote: "Very conceptual and creative approach. The team understood our requirements perfectly and transformed our vision into a stunning workspace our employees love.",
+    name: "Swapnil Jadhav", initials: "SJ", company: "Client, Pune", rating: 5,
+  },
+];
+
+type FormStatus = "idle" | "submitting" | "success" | "error";
+
+// ── Hero Slideshow Component ──
+function HeroSlideshow() {
+  const [current, setCurrent] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setPrev(current);
+      setAnimating(true);
+      setCurrent((c) => (c + 1) % heroSlides.length);
+      setTimeout(() => { setPrev(null); setAnimating(false); }, 1000);
+    }, 4500);
+    return () => clearInterval(t);
+  }, [current]);
+
+  return (
+    <section className="c-hero" aria-labelledby="hero-h">
+      {/* Slides */}
+      {heroSlides.map((slide, i) => (
+        <div
+          key={slide.src}
+          className={`c-hero-slide ${i === current ? "is-active" : ""} ${i === prev && animating ? "is-leaving" : ""}`}
+          aria-hidden={i !== current}
+        >
+          <Image
+            src={slide.src}
+            alt={slide.alt}
+            fill
+            priority={i === 0}
+            sizes="100vw"
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+      ))}
+      <div className="c-hero-overlay" aria-hidden />
+      <div className="c-hero-body">
+        <p className="c-hero-eyebrow">Pune · Mumbai · Bangalore · Hyderabad · Goa</p>
+        <h1 className="c-hero-title" id="hero-h">
+          General Contracting<br />Company
+        </h1>
+        <p className="c-hero-sub">15+ years. 470+ projects. One complete partner for industrial construction and interior fit-outs.</p>
+        <div className="c-hero-actions">
+          <Link href="/projects" className="c-btn-hero-primary">
+            View Our Work <ArrowRight size={16} aria-hidden />
+          </Link>
+          <Link href="/contact" className="c-btn-hero-ghost">Get a Quote</Link>
+        </div>
+      </div>
+      {/* Slide indicators */}
+      <div className="c-hero-dots" aria-hidden>
+        {heroSlides.map((_, i) => (
+          <span key={i} className={`c-hero-dot ${i === current ? "is-active" : ""}`} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Client Names Marquee — two rows, opposite directions ──
+function ClientNamesMarquee({ clients }: { clients: { name: string }[] }) {
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
+  const raf1Ref = useRef<number>(0);
+  const raf2Ref = useRef<number>(0);
+  const pos1 = useRef(0);
+  const pos2 = useRef(0);
+  const paused = useRef(false);
+
+  // Split clients into two halves for the two rows
+  const half = Math.ceil(clients.length / 2);
+  const row1 = clients.slice(0, half);
+  const row2 = clients.slice(half);
+
+  useEffect(() => {
+    const t1 = row1Ref.current;
+    const t2 = row2Ref.current;
+    if (!t1 || !t2) return;
+
+    // Row 2 starts offset for staggered appearance
+    pos2.current = (t2.scrollWidth / 2) * 0.4;
+
+    // Single rAF loop drives both rows — halves the per-frame callback count
+    function animate() {
+      if (!paused.current) {
+        pos1.current += 0.5;
+        if (pos1.current >= t1!.scrollWidth / 2) pos1.current -= t1!.scrollWidth / 2;
+        t1!.style.transform = `translateX(-${pos1.current}px)`;
+
+        pos2.current += 0.5;
+        if (pos2.current >= t2!.scrollWidth / 2) pos2.current -= t2!.scrollWidth / 2;
+        t2!.style.transform = `translateX(-${pos2.current}px)`;
+      }
+      raf1Ref.current = requestAnimationFrame(animate);
+    }
+
+    raf1Ref.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf1Ref.current);
+  }, []);
+
+  const loop1 = [...row1, ...row1];
+  const loop2 = [...row2, ...row2];
+
+  return (
+    <div
+      className="c-clients-marquee-outer"
+      onMouseEnter={() => { paused.current = true; }}
+      onMouseLeave={() => { paused.current = false; }}
+    >
+      {/* Row 1 — scrolls left */}
+      <div className="c-clients-marquee-row">
+        <div className="c-clients-marquee-track" ref={row1Ref} style={{ transform: "translateX(0)" }}>
+          {loop1.map((c, i) => (
+            <span key={i} className="c-clients-name">
+              <span className="c-clients-sep" aria-hidden>/</span>
+              {c.name}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Row 2 — scrolls slightly offset (looks like opposite direction) */}
+      <div className="c-clients-marquee-row">
+        <div className="c-clients-marquee-track" ref={row2Ref} style={{ transform: "translateX(0)" }}>
+          {loop2.map((c, i) => (
+            <span key={i} className="c-clients-name">
+              <span className="c-clients-sep" aria-hidden>/</span>
+              {c.name}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function HomePage() {
+  const [activeSector, setActiveSector] = useState(0);
+  const [formStatus, setFormStatus] = useState<FormStatus>("idle");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Slider
+  const sliderProjects = projects.filter((p) => p.images.length >= 5);
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const [sliderPaused, setSliderPaused] = useState(false);
+  const sliderPrev = useCallback(() => setSliderIndex((i) => (i - 1 + sliderProjects.length) % sliderProjects.length), [sliderProjects.length]);
+  const sliderNext = useCallback(() => setSliderIndex((i) => (i + 1) % sliderProjects.length), [sliderProjects.length]);
+
+  // Slider auto-advance
+  useEffect(() => {
+    if (sliderPaused) return;
+    const t = setInterval(sliderNext, 5000);
+    return () => clearInterval(t);
+  }, [sliderPaused, sliderNext]);
+
+  // Slider keyboard nav
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") sliderPrev();
+      if (e.key === "ArrowRight") sliderNext();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [sliderPrev, sliderNext]);
+
+  async function handleContactSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setFormStatus("submitting");
+    const data = new FormData(e.currentTarget);
+    data.append("access_key", W3F_KEY);
+    data.append("subject", "New enquiry from Floor-Space India website");
+    data.append("from_name", "Floor-Space India Website");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data,
+      });
+      const json = await res.json();
+      if (json.success) {
+        setFormStatus("success");
+        formRef.current?.reset();
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  }
+
+  return (
+    <div className="c-page">
+
+      {/* ── Nav ── */}
+      <ContemporaryNav />
+
+      {/* 1. HERO — image slideshow */}
+      <HeroSlideshow />
+
+
+
+      {/* 2. STATS STRIP — animated counters */}
+      <AnimatedStats stats={stats} />
+
+      {/* 3. CLIENT NAMES MARQUEE */}
+      <section className="c-clients-section" aria-label="Clients we have worked with">
+        <div className="c-clients-header">
+          <p className="c-clients-count">100<span>+</span></p>
+          <p className="c-clients-headline">Brands that trust us to deliver</p>
+        </div>
+        <ClientNamesMarquee clients={clientLogos} />
+      </section>
+
+      {/* 4. TWO SERVICE CARDS */}
+      <section className="c-cats-section" aria-label="Core services" data-stagger>
+        <article className="c-cat-card">
+          <Image alt="Industrial Construction" className="c-cat-image" fill loading="lazy" sizes="50vw" src="/images/hero-ext-3.jpg" />
+          <div className="c-cat-overlay" aria-hidden />
+          <div className="c-cat-body">
+            <span className="c-cat-badge">Service 01</span>
+            <span className="c-cat-title">Industrial Construction</span>
+            <Link href="/industrial-construction" className="c-cat-link">
+              Explore <ArrowUpRight size={14} aria-hidden />
+            </Link>
+          </div>
+        </article>
+        <article className="c-cat-card">
+          <Image alt="Interior Fit Outs" className="c-cat-image" fill loading="lazy" sizes="50vw" src="/images/hero-int-2.jpg" />
+          <div className="c-cat-overlay" aria-hidden />
+          <div className="c-cat-body">
+            <span className="c-cat-badge">Service 02</span>
+            <span className="c-cat-title">Interior Fit Outs</span>
+            <Link href="/interior-fitouts" className="c-cat-link">
+              Explore <ArrowUpRight size={14} aria-hidden />
+            </Link>
+          </div>
+        </article>
+      </section>
+
+      {/* 5. ABOUT */}
+      <section className="c-about-section" id="about" aria-labelledby="about-h">
+        <div className="c-about-content" data-reveal="left">
+          <p className="c-section-kicker">Who We Are</p>
+          <h2 className="c-section-title" id="about-h">
+            Designing today,<br />enriching tomorrow.
+          </h2>
+          <p className="c-about-body">
+            Floor-Space India is a Pune-based general contracting &amp; interior design company delivering exceptional commercial spaces that inspire and perform. From concept to completion, we craft environments that blend aesthetics, functionality, and long-term value across corporate, industrial, healthcare, and institutional sectors.
+          </p>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <Link href="/about" className="c-btn-dark">Read More About Us <ArrowRight size={15} aria-hidden /></Link>
+            <Link href="/work" className="c-btn-outline">Our Portfolio</Link>
+          </div>
+        </div>
+        <div className="c-about-image-wrap" data-reveal="right">
+          <Image alt="Floor-Space India — completed interior" fill loading="lazy" sizes="50vw" src="/images/octillion-workspace.jpg" style={{ objectFit: "cover" }} />
+        </div>
+      </section>
+
+      {/* 6. FEATURED PROJECTS SLIDER */}
+      <section
+        className="c-slider-section"
+        aria-label="Featured projects"
+        onMouseEnter={() => setSliderPaused(true)}
+        onMouseLeave={() => setSliderPaused(false)}
+      >
+        {/* Header row */}
+        <div className="c-slider-header">
+          <div>
+            <p className="c-section-kicker">Featured Work</p>
+            <h2 className="c-slider-heading">Selected Projects</h2>
+          </div>
+          <Link href="/projects" className="c-btn-dark" style={{ flexShrink: 0 }}>
+            View All Projects <ArrowRight size={15} aria-hidden />
+          </Link>
+        </div>
+
+        {/* Slide viewport */}
+        <div className="c-slider-viewport" aria-live="polite" aria-atomic="true">
+          <div
+            className="c-slider-track"
+            style={{ transform: `translateX(-${sliderIndex * 100}%)` }}
+          >
+            {sliderProjects.map((p, i) => (
+              <div
+                key={p.slug}
+                className="c-slider-slide"
+                aria-hidden={i !== sliderIndex}
+              >
+                <Image
+                  src={p.coverImage}
+                  alt={p.coverAlt}
+                  fill
+                  sizes="100vw"
+                  loading={i === 0 ? "eager" : "lazy"}
+                  style={{ objectFit: "cover" }}
+                />
+                <div className="c-slider-overlay" aria-hidden />
+                <div className="c-slider-content">
+                  <div className="c-slider-info">
+                    <span className="c-slider-tag">{p.category}</span>
+                    <h3 className="c-slider-title">{p.name}</h3>
+                    <p className="c-slider-meta">
+                      {p.sector} &nbsp;·&nbsp; {p.city} &nbsp;·&nbsp; {p.area}
+                    </p>
+                  </div>
+                  <Link href={`/projects/${p.slug}`} className="c-slider-cta">
+                    View Gallery <ArrowUpRight size={15} aria-hidden />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Arrows */}
+          <button className="c-slider-arrow c-slider-arrow-prev" onClick={sliderPrev} aria-label="Previous project" type="button">
+            <ChevronLeft size={22} />
+          </button>
+          <button className="c-slider-arrow c-slider-arrow-next" onClick={sliderNext} aria-label="Next project" type="button">
+            <ChevronRight size={22} />
+          </button>
+        </div>
+
+        {/* Dots + counter */}
+        <div className="c-slider-footer">
+          <div className="c-slider-dots" role="tablist" aria-label="Project slides">
+            {sliderProjects.map((p, i) => (
+              <button
+                key={p.slug}
+                className={`c-slider-dot${i === sliderIndex ? " is-active" : ""}`}
+                onClick={() => setSliderIndex(i)}
+                role="tab"
+                aria-selected={i === sliderIndex}
+                aria-label={`Go to ${p.name}`}
+                type="button"
+              />
+            ))}
+          </div>
+          <span className="c-slider-count">
+            {String(sliderIndex + 1).padStart(2, "0")} / {String(sliderProjects.length).padStart(2, "0")}
+          </span>
+        </div>
+      </section>
+
+      {/* 7. SECTORS — hover reveal */}
+      <section className="c-services-section" id="sectors" aria-labelledby="sectors-h" data-reveal>
+        <div className="c-services-content">
+          <p className="c-section-kicker">Sectors We Serve</p>
+          <h2 className="c-section-title" id="sectors-h">Spaces We Transform</h2>
+          <ul className="c-services-list">
+            {sectors.map((s, i) => (
+              <li
+                key={s.label}
+                className={`c-services-item${activeSector === i ? " is-active" : ""}`}
+                onMouseEnter={() => setActiveSector(i)}
+              >
+                <span className="c-services-num">0{i + 1}</span>
+                <span style={{ flex: 1 }}>
+                  <span style={{ display: "block", fontWeight: 650 }}>{s.label}</span>
+                  <span className="c-services-sub">{s.sub}</span>
+                </span>
+                <ArrowUpRight size={16} className="c-services-arrow" aria-hidden />
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="c-services-image" aria-hidden>
+          {sectors.map((s, i) => (
+            <div key={s.label} className="c-services-img-layer" style={{ opacity: activeSector === i ? 1 : 0 }}>
+              <Image alt="" fill loading="eager" sizes="50vw" src={s.img} style={{ objectFit: "cover" }} />
+            </div>
+          ))}
+          <div className="c-services-img-label"><span>{sectors[activeSector].label}</span></div>
+        </div>
+      </section>
+
+      {/* 8. TESTIMONIALS */}
+      <section className="c-testimonials-section" id="testimonials" aria-labelledby="testi-h">
+        <div className="c-section-inner">
+          <div className="c-testimonials-header" data-reveal>
+            <div>
+              <p className="c-section-kicker">Client Stories</p>
+              <h2 className="c-section-title" id="testi-h">What our clients say</h2>
+            </div>
+            <Link href="/contact" className="c-btn-dark" style={{ flexShrink: 0 }}>Work With Us</Link>
+          </div>
+          <div className="c-testimonials-grid" data-stagger>
+            {testimonials.map((t, i) => (
+              <div className={`c-testi-card${i === 0 ? " is-featured" : ""}`} key={t.name}>
+                <div className="c-testi-quote-mark" aria-hidden>&quot;</div>
+                <blockquote className="c-testi-quote">{t.quote}</blockquote>
+                <footer className="c-testi-footer">
+                  <div className="c-testi-avatar" aria-hidden>{t.initials}</div>
+                  <div>
+                    <p className="c-testi-name">{t.name}</p>
+                    <p className="c-testi-role">{t.company}</p>
+                  </div>
+                  <div className="c-testi-stars" aria-label={`${t.rating} stars`} style={{ marginLeft: "auto" }}>
+                    {[...Array(t.rating)].map((_, j) => (
+                      <svg key={j} width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+                      </svg>
+                    ))}
+                  </div>
+                </footer>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 9. CONTACT */}
+      <section className="c-contact-section" id="contact" aria-labelledby="contact-h">
+        <div className="c-contact-inner">
+          <div className="c-contact-left">
+            <p className="c-section-kicker" style={{ color: "rgba(255,255,255,0.5)" }}>Get In Touch</p>
+            <h2 className="c-section-title" id="contact-h" style={{ color: "#fff", maxWidth: 420 }}>
+              Let&apos;s build something remarkable.
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.94rem", lineHeight: 1.7, marginTop: 16, maxWidth: 380 }}>
+              Share your site, scope, city, and timeline. Our team will come back with a clear path forward.
+            </p>
+            <div className="c-contact-info">
+              <a href="tel:+919011999399" className="c-contact-row">
+                <span className="c-contact-icon"><Phone size={16} strokeWidth={1.6} /></span>
+                +91 90119 99399
+              </a>
+              <a href="mailto:rajesh@floor-space.co.in" className="c-contact-row">
+                <span className="c-contact-icon"><Mail size={16} strokeWidth={1.6} /></span>
+                rajesh@floor-space.co.in
+              </a>
+              <div className="c-contact-row">
+                <span className="c-contact-icon"><MapPin size={16} strokeWidth={1.6} /></span>
+                Viman Nagar, Pune – 411014
+              </div>
+              <div className="c-contact-row">
+                <span className="c-contact-icon"><Clock size={16} strokeWidth={1.6} /></span>
+                Mon–Sat, 08:00–18:00
+              </div>
+            </div>
+            <div className="c-contact-social">
+              <a href="https://www.instagram.com/floorspaceindia" target="_blank" rel="noopener noreferrer" className="c-social-btn" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+              <a href="https://www.linkedin.com/company/floor-space-india" target="_blank" rel="noopener noreferrer" className="c-social-btn" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                  <rect x="2" y="9" width="4" height="12"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div className="c-contact-right">
+            {formStatus === "success" ? (
+              <div className="c-form-success" role="alert">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                  <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+                </svg>
+                <p>Thank you! We&apos;ll be in touch within one business day.</p>
+                <button className="c-btn-light" onClick={() => setFormStatus("idle")} style={{ marginTop: "1rem" }}>
+                  Send Another Message
+                </button>
+              </div>
+            ) : (
+              <form ref={formRef} className="c-contact-form" onSubmit={handleContactSubmit} aria-label="Contact form">
+                {/* honeypot for spam prevention */}
+                <input type="checkbox" name="botcheck" style={{ display: "none" }} />
+                <div className="c-form-row">
+                  <div className="c-form-field">
+                    <label className="c-form-label" htmlFor="cf-name">Full Name</label>
+                    <input className="c-form-input" id="cf-name" name="name" type="text" placeholder="Your name" required />
+                  </div>
+                  <div className="c-form-field">
+                    <label className="c-form-label" htmlFor="cf-company">Company</label>
+                    <input className="c-form-input" id="cf-company" name="company" type="text" placeholder="Company name" />
+                  </div>
+                </div>
+                <div className="c-form-row">
+                  <div className="c-form-field">
+                    <label className="c-form-label" htmlFor="cf-email">Email</label>
+                    <input className="c-form-input" id="cf-email" name="email" type="email" placeholder="you@company.com" required />
+                  </div>
+                  <div className="c-form-field">
+                    <label className="c-form-label" htmlFor="cf-phone">Phone</label>
+                    <input className="c-form-input" id="cf-phone" name="phone" type="tel" placeholder="+91 00000 00000" />
+                  </div>
+                </div>
+                <div className="c-form-field">
+                  <label className="c-form-label" htmlFor="cf-city">City &amp; Project Type</label>
+                  <input className="c-form-input" id="cf-city" name="city_project" type="text" placeholder="e.g. Pune — Corporate Office, 8000 sq ft" />
+                </div>
+                <div className="c-form-field">
+                  <label className="c-form-label" htmlFor="cf-msg">Message</label>
+                  <textarea className="c-form-input c-form-textarea" id="cf-msg" name="message" placeholder="Tell us about your project…" rows={4} />
+                </div>
+                {formStatus === "error" && (
+                  <p className="c-form-error" role="alert">
+                    Something went wrong. Please try again or email us directly.
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  className="c-btn-light"
+                  disabled={formStatus === "submitting"}
+                  style={{ width: "100%", justifyContent: "center" }}
+                >
+                  {formStatus === "submitting" ? "Sending…" : <>Send Message <ArrowRight size={16} aria-hidden /></>}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

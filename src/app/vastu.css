@@ -1,0 +1,1436 @@
+.vastu-page {
+  --vastu-cream: #f6f1e7;
+  --vastu-cream-2: #eee3cf;
+  --vastu-gold: #d4a45f;
+  --vastu-gold-dark: #9c6b27;
+  --vastu-espresso: #1f140f;
+  --vastu-espresso-2: #3b281c;
+  --vastu-ivory: #fffdf9;
+  --vastu-sage: #53614b;
+  --vastu-clay: #8b4e32;
+  --vastu-line: rgba(31, 20, 15, 0.12);
+  --vastu-glass: rgba(255, 253, 249, 0.72);
+  --vastu-shadow: 0 26px 70px rgba(58, 40, 26, 0.14);
+  background:
+    radial-gradient(circle at 20% 6%, rgba(212, 164, 95, 0.18), transparent 34rem),
+    linear-gradient(180deg, var(--vastu-cream), var(--vastu-ivory) 44%, var(--vastu-cream));
+  color: var(--vastu-espresso);
+  font-family: var(--font-inter), Arial, sans-serif;
+  min-height: 100svh;
+  overflow: hidden;
+  position: relative;
+}
+
+.vastu-page::before {
+  background:
+    linear-gradient(rgba(156, 107, 39, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(156, 107, 39, 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  content: "";
+  inset: 0;
+  opacity: 0.5;
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+
+.vastu-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.vastu-page h1,
+.vastu-page h2,
+.vastu-page h3 {
+  font-family: var(--font-cormorant), var(--font-playfair), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.vastu-page a {
+  text-decoration: none;
+}
+
+#about,
+#services,
+#testimonials,
+#contact,
+.vastu-process,
+.vastu-stats-strip {
+  scroll-margin-top: 96px;
+}
+
+.vastu-nav {
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 28px;
+  left: 0;
+  padding: 20px 64px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: background 220ms ease, box-shadow 220ms ease, padding 220ms ease;
+  z-index: 50;
+}
+
+.vastu-nav.is-scrolled {
+  background: rgba(255, 253, 249, 0.86);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 1px 0 rgba(31, 20, 15, 0.08), 0 14px 46px rgba(31, 20, 15, 0.08);
+  padding-block: 12px;
+}
+
+.vastu-nav.menu-open {
+  background: transparent;
+  box-shadow: none;
+}
+
+.vastu-logo {
+  align-items: center;
+  color: var(--vastu-gold-dark);
+  display: inline-flex;
+  gap: 12px;
+  min-width: max-content;
+}
+
+.vastu-logo-mark {
+  color: var(--vastu-gold);
+  height: 58px;
+  width: 58px;
+}
+
+.vastu-logo strong,
+.vastu-logo small {
+  display: block;
+  line-height: 1;
+}
+
+.vastu-logo strong {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vastu-logo small {
+  color: var(--vastu-espresso);
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+.vastu-nav.menu-open .vastu-logo small,
+.vastu-nav.menu-open .vastu-logo strong {
+  color: var(--vastu-ivory);
+}
+
+.vastu-nav-links {
+  align-items: center;
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+}
+
+.vastu-nav-links a {
+  color: rgba(31, 20, 15, 0.82);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 8px 0;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.vastu-nav-links a::after {
+  background: var(--vastu-gold);
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 240ms ease;
+  width: 100%;
+}
+
+.vastu-nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.vastu-call,
+.vastu-button,
+.vastu-form button {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  display: inline-flex;
+  font-size: 0.86rem;
+  font-weight: 800;
+  gap: 10px;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 22px;
+  text-transform: uppercase;
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
+  white-space: nowrap;
+}
+
+.vastu-call {
+  background: linear-gradient(135deg, #d9ae68, #ad761f);
+  box-shadow: 0 12px 30px rgba(156, 107, 39, 0.28);
+  color: var(--vastu-ivory);
+}
+
+.vastu-call:hover,
+.vastu-button:hover,
+.vastu-form button:hover {
+  transform: translateY(-2px);
+}
+
+.vastu-menu-toggle {
+  align-items: center;
+  background: rgba(255, 253, 249, 0.84);
+  border: 1px solid rgba(31, 20, 15, 0.12);
+  border-radius: 8px;
+  color: var(--vastu-espresso);
+  display: none;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.vastu-mobile-menu {
+  background: rgba(31, 20, 15, 0.94);
+  backdrop-filter: blur(18px);
+  display: grid;
+  gap: 18px;
+  inset: 0;
+  padding: 120px 28px 34px;
+  position: fixed;
+  z-index: 40;
+}
+
+.vastu-mobile-menu a {
+  border-bottom: 1px solid rgba(255, 253, 249, 0.1);
+  color: var(--vastu-ivory);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 2.3rem;
+  line-height: 1;
+  padding: 16px 0;
+}
+
+.vastu-hero {
+  --mx: 0;
+  --my: 0;
+  min-height: 92svh;
+  padding: 130px 64px 34px;
+}
+
+.vastu-hero-pattern {
+  background:
+    radial-gradient(circle at center, transparent 0 4px, rgba(212, 164, 95, 0.1) 4.5px 5px, transparent 5.5px),
+    conic-gradient(from 0deg, transparent 0 8deg, rgba(212, 164, 95, 0.06) 8deg 9deg, transparent 9deg 30deg);
+  border-radius: 50%;
+  height: 620px;
+  left: -260px;
+  opacity: 0.58;
+  position: absolute;
+  top: 28px;
+  width: 620px;
+}
+
+.vastu-hero-glow {
+  background: radial-gradient(circle, rgba(212, 164, 95, 0.28), rgba(255, 253, 249, 0) 68%);
+  filter: blur(16px);
+  height: 62svh;
+  left: 24%;
+  opacity: 0.9;
+  position: absolute;
+  top: 12%;
+  transform: translate(calc(var(--mx) * 16px), calc(var(--my) * 12px));
+  transition: transform 120ms ease-out;
+  width: 52vw;
+}
+
+.vastu-particle {
+  background: var(--vastu-gold);
+  box-shadow: 0 0 24px rgba(212, 164, 95, 0.72);
+  height: 3px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 3px;
+}
+
+.vastu-particle::before,
+.vastu-particle::after {
+  background: currentColor;
+  content: "";
+  left: 50%;
+  opacity: 0.56;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.vastu-particle::before {
+  height: 1px;
+  width: 52px;
+}
+
+.vastu-particle::after {
+  height: 52px;
+  width: 1px;
+}
+
+.vastu-particle-one {
+  right: 29%;
+  top: 22%;
+}
+
+.vastu-particle-two {
+  right: 11%;
+  top: 45%;
+}
+
+.vastu-hero-content {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.05fr);
+  margin: 0 auto;
+  max-width: 1320px;
+  min-height: 610px;
+}
+
+.vastu-hero-copy {
+  align-self: center;
+  padding: 32px 0 80px;
+  z-index: 2;
+}
+
+.vastu-kicker {
+  align-items: center;
+  color: var(--vastu-gold-dark);
+  display: flex;
+  font-size: 0.82rem;
+  font-weight: 800;
+  gap: 16px;
+  letter-spacing: 0.12em;
+  line-height: 1.45;
+  margin-bottom: 30px;
+  max-width: 520px;
+  text-transform: uppercase;
+}
+
+.vastu-kicker span {
+  background: var(--vastu-gold-dark);
+  flex: 0 0 42px;
+  height: 1px;
+}
+
+.vastu-hero h1 {
+  color: var(--vastu-espresso);
+  font-size: 5.15rem;
+  line-height: 0.96;
+  max-width: 660px;
+}
+
+.vastu-hero h1 em {
+  color: var(--vastu-gold-dark);
+  font-style: normal;
+}
+
+.vastu-hero-subtext {
+  color: rgba(31, 20, 15, 0.78);
+  font-size: 1.03rem;
+  line-height: 1.78;
+  margin-top: 28px;
+  max-width: 520px;
+}
+
+.vastu-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.vastu-button-dark {
+  background: var(--vastu-espresso);
+  box-shadow: 0 14px 32px rgba(31, 20, 15, 0.22);
+  color: var(--vastu-ivory);
+}
+
+.vastu-button-light {
+  background: rgba(255, 253, 249, 0.68);
+  border-color: rgba(31, 20, 15, 0.2);
+  color: var(--vastu-espresso);
+}
+
+.vastu-button-light:hover {
+  border-color: var(--vastu-gold);
+  box-shadow: 0 12px 30px rgba(212, 164, 95, 0.2);
+}
+
+.vastu-hero-visual {
+  border-radius: 8px 0 0 8px;
+  box-shadow: var(--vastu-shadow);
+  min-height: 600px;
+  overflow: hidden;
+  position: relative;
+  transform: translate(calc(var(--mx) * -12px), calc(var(--my) * -8px));
+  transition: transform 140ms ease-out;
+}
+
+.vastu-hero-image,
+.vastu-section-image,
+.vastu-service-image img,
+.vastu-contact-image img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.vastu-hero-image {
+  object-position: center 54%;
+}
+
+.vastu-hero-vignette {
+  background:
+    linear-gradient(90deg, rgba(246, 241, 231, 0.94) 0%, rgba(246, 241, 231, 0.64) 24%, rgba(246, 241, 231, 0.05) 58%),
+    linear-gradient(0deg, rgba(31, 20, 15, 0.16), transparent 44%),
+    radial-gradient(circle at 58% 46%, transparent 0 28%, rgba(31, 20, 15, 0.4) 100%);
+  inset: 0;
+  position: absolute;
+}
+
+.vastu-compass {
+  color: rgba(212, 164, 95, 0.9);
+  filter: drop-shadow(0 0 22px rgba(212, 164, 95, 0.36));
+  height: 430px;
+  position: absolute;
+  right: 17%;
+  top: 16%;
+  transform: translate(calc(var(--mx) * 20px), calc(var(--my) * 20px));
+  transition: transform 140ms ease-out;
+  width: 430px;
+}
+
+.vastu-hero-lower {
+  align-items: start;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr 250px;
+  margin: -56px auto 0;
+  max-width: 1320px;
+}
+
+.vastu-hero-stat-grid {
+  background: rgba(255, 253, 249, 0.7);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 253, 249, 0.86);
+  border-radius: 8px;
+  box-shadow: var(--vastu-shadow);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+}
+
+.vastu-hero-stat {
+  align-items: center;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: auto 1fr;
+  min-height: 124px;
+  padding: 24px;
+}
+
+.vastu-hero-stat + .vastu-hero-stat {
+  border-left: 1px solid rgba(31, 20, 15, 0.1);
+}
+
+.vastu-hero-stat svg {
+  color: var(--vastu-gold-dark);
+}
+
+.vastu-hero-stat strong,
+.vastu-hero-stat span {
+  display: block;
+}
+
+.vastu-hero-stat strong {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.vastu-hero-stat span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.vastu-hero-stat p {
+  color: rgba(31, 20, 15, 0.62);
+  font-size: 0.72rem;
+  line-height: 1.55;
+  margin-top: 8px;
+}
+
+.vastu-quote-card {
+  background: var(--vastu-espresso);
+  border: 1px solid rgba(212, 164, 95, 0.38);
+  border-radius: 8px;
+  box-shadow: 0 28px 54px rgba(31, 20, 15, 0.24);
+  color: rgba(255, 253, 249, 0.84);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 1.06rem;
+  gap: 16px;
+  justify-content: center;
+  line-height: 1.35;
+  margin: 0;
+  padding: 24px;
+}
+
+.vastu-quote-card svg {
+  color: var(--vastu-gold);
+}
+
+.vastu-quote-card cite {
+  color: var(--vastu-gold);
+  font-family: var(--font-inter), Arial, sans-serif;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.vastu-about,
+.vastu-contact {
+  display: grid;
+  gap: 72px;
+  margin: 0 auto;
+  max-width: 1260px;
+  padding: 120px 64px;
+}
+
+.vastu-about {
+  align-items: center;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+}
+
+.vastu-about-media,
+.vastu-contact-image {
+  border-radius: 8px;
+  box-shadow: var(--vastu-shadow);
+  min-height: 420px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vastu-about-media::after,
+.vastu-contact-image::after {
+  background: linear-gradient(0deg, rgba(31, 20, 15, 0.28), transparent 48%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.vastu-about-emblem,
+.vastu-contact-mark {
+  color: rgba(212, 164, 95, 0.88);
+  filter: drop-shadow(0 12px 24px rgba(31, 20, 15, 0.22));
+  height: 136px;
+  position: absolute;
+  right: 26px;
+  top: 24px;
+  width: 136px;
+  z-index: 2;
+}
+
+.vastu-section-label {
+  color: var(--vastu-gold-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.vastu-about h2,
+.vastu-section-heading h2,
+.vastu-contact h2 {
+  color: var(--vastu-espresso);
+  font-size: 3.6rem;
+  line-height: 0.98;
+}
+
+.vastu-title-rule {
+  background: linear-gradient(90deg, var(--vastu-gold), rgba(212, 164, 95, 0));
+  height: 2px;
+  margin: 22px 0 26px;
+  width: 58px;
+}
+
+.vastu-about-copy p:not(.vastu-section-label),
+.vastu-contact-copy > p {
+  color: rgba(31, 20, 15, 0.72);
+  font-size: 1rem;
+  line-height: 1.82;
+  max-width: 620px;
+}
+
+.vastu-about-copy p + p {
+  margin-top: 18px;
+}
+
+.vastu-about-stats {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 42px;
+}
+
+.vastu-about-stats div {
+  align-items: center;
+  display: grid;
+  gap: 4px 14px;
+  grid-template-columns: auto 1fr;
+}
+
+.vastu-about-stats svg {
+  color: var(--vastu-gold-dark);
+  grid-row: span 2;
+}
+
+.vastu-about-stats strong {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.vastu-about-stats span {
+  color: rgba(31, 20, 15, 0.62);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.vastu-services,
+.vastu-process,
+.vastu-testimonials {
+  padding: 112px 64px;
+}
+
+.vastu-services {
+  background:
+    radial-gradient(circle at 82% 12%, rgba(83, 97, 75, 0.11), transparent 30rem),
+    linear-gradient(180deg, rgba(255, 253, 249, 0.6), rgba(246, 241, 231, 0.86));
+}
+
+.vastu-section-heading {
+  margin: 0 auto 48px;
+  max-width: 780px;
+  text-align: center;
+}
+
+.vastu-section-heading .vastu-title-rule {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vastu-service-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 auto;
+  max-width: 1260px;
+}
+
+.vastu-service-card {
+  background: rgba(255, 253, 249, 0.68);
+  border: 1px solid rgba(212, 164, 95, 0.22);
+  border-radius: 8px;
+  box-shadow: 0 16px 48px rgba(58, 40, 26, 0.09);
+  display: flex;
+  flex-direction: column;
+  min-height: 540px;
+  overflow: hidden;
+  padding: 14px 14px 24px;
+  position: relative;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+
+.vastu-service-card:hover {
+  border-color: rgba(212, 164, 95, 0.72);
+  box-shadow: 0 22px 68px rgba(156, 107, 39, 0.18);
+  transform: translateY(-8px);
+}
+
+.vastu-service-image {
+  aspect-ratio: 1.08 / 0.86;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vastu-service-image img {
+  transition: transform 500ms ease;
+}
+
+.vastu-service-card:hover .vastu-service-image img {
+  transform: scale(1.06);
+}
+
+.vastu-service-icon {
+  align-items: center;
+  background: linear-gradient(135deg, #f2d194, var(--vastu-gold-dark));
+  border: 4px solid var(--vastu-ivory);
+  border-radius: 50%;
+  color: var(--vastu-ivory);
+  display: flex;
+  height: 62px;
+  justify-content: center;
+  margin: -31px auto 20px;
+  position: relative;
+  width: 62px;
+  z-index: 2;
+}
+
+.vastu-service-card h3 {
+  font-size: 2rem;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.vastu-service-card > p {
+  color: rgba(31, 20, 15, 0.66);
+  font-size: 0.91rem;
+  line-height: 1.64;
+  margin: 14px 10px 18px;
+  text-align: center;
+}
+
+.vastu-service-card ul {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0 8px;
+}
+
+.vastu-service-card li {
+  align-items: center;
+  color: rgba(31, 20, 15, 0.74);
+  display: flex;
+  font-size: 0.82rem;
+  gap: 9px;
+  line-height: 1.42;
+}
+
+.vastu-service-card li svg {
+  color: var(--vastu-sage);
+  flex: 0 0 auto;
+}
+
+.vastu-service-card a {
+  align-items: center;
+  color: var(--vastu-gold-dark);
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 900;
+  gap: 8px;
+  justify-content: center;
+  letter-spacing: 0.12em;
+  margin-top: auto;
+  text-transform: uppercase;
+}
+
+.vastu-process {
+  background:
+    linear-gradient(90deg, rgba(31, 20, 15, 0.04), transparent 24%, transparent 76%, rgba(31, 20, 15, 0.04)),
+    var(--vastu-ivory);
+  overflow: hidden;
+}
+
+.vastu-process-timeline {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0 auto;
+  max-width: 1220px;
+  position: relative;
+}
+
+.vastu-process-timeline::before {
+  background: linear-gradient(90deg, transparent, rgba(197, 154, 82, 0.78), transparent);
+  content: "";
+  height: 1px;
+  left: 9%;
+  position: absolute;
+  right: 9%;
+  top: 64px;
+}
+
+.vastu-process-step {
+  display: grid;
+  justify-items: center;
+  min-height: 290px;
+  padding: 0 18px;
+  position: relative;
+  text-align: center;
+}
+
+.vastu-process-step:hover .vastu-process-icon {
+  box-shadow: 0 0 0 7px rgba(197, 154, 82, 0.12), 0 18px 36px rgba(156, 107, 39, 0.2);
+  transform: translateY(-6px);
+}
+
+.vastu-process-number {
+  color: rgba(31, 20, 15, 0.3);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  margin-bottom: 20px;
+}
+
+.vastu-process-icon {
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(255, 253, 249, 0.94), rgba(239, 228, 210, 0.78)),
+    var(--vastu-ivory);
+  border: 1px solid rgba(197, 154, 82, 0.44);
+  border-radius: 50%;
+  color: var(--vastu-gold-dark);
+  display: flex;
+  height: 88px;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+  transition: box-shadow 220ms ease, transform 220ms ease;
+  width: 88px;
+  z-index: 1;
+}
+
+.vastu-process-step h3 {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.vastu-process-step p {
+  color: rgba(31, 20, 15, 0.62);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  max-width: 210px;
+}
+
+.vastu-testimonials {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(212, 164, 95, 0.18), transparent 26rem),
+    radial-gradient(circle at 78% 70%, rgba(83, 97, 75, 0.1), transparent 28rem),
+    var(--vastu-cream);
+}
+
+.vastu-testimonial-stage {
+  margin: 0 auto;
+  max-width: 1180px;
+}
+
+.vastu-testimonial-track {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-height: 310px;
+}
+
+.vastu-testimonial-card {
+  background: rgba(255, 253, 249, 0.72);
+  border: 1px solid rgba(255, 253, 249, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(58, 40, 26, 0.11);
+  display: flex;
+  flex-direction: column;
+  min-height: 292px;
+  padding: 30px;
+}
+
+.vastu-testimonial-quote {
+  color: var(--vastu-gold-dark);
+  margin-bottom: 10px;
+}
+
+.vastu-testimonial-card > p {
+  color: rgba(31, 20, 15, 0.72);
+  font-size: 0.98rem;
+  line-height: 1.74;
+}
+
+.vastu-testimonial-person {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.vastu-avatar {
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(83, 97, 75, 0.92), rgba(31, 20, 15, 0.92)),
+    var(--vastu-espresso);
+  border: 2px solid rgba(212, 164, 95, 0.56);
+  border-radius: 50%;
+  color: var(--vastu-ivory);
+  display: grid;
+  flex: 0 0 auto;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  height: 58px;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1;
+  place-items: center;
+  text-align: center;
+  width: 58px;
+}
+
+.vastu-testimonial-person strong,
+.vastu-testimonial-person span {
+  display: block;
+}
+
+.vastu-testimonial-person strong {
+  font-size: 0.94rem;
+}
+
+.vastu-testimonial-person span {
+  color: rgba(31, 20, 15, 0.56);
+  font-size: 0.78rem;
+  margin-top: 3px;
+}
+
+.vastu-testimonial-person div div {
+  color: var(--vastu-gold-dark);
+  display: flex;
+  gap: 2px;
+  margin-top: 7px;
+}
+
+.vastu-testimonial-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.vastu-testimonial-dots button {
+  background: rgba(156, 107, 39, 0.22);
+  border: 0;
+  border-radius: 999px;
+  height: 8px;
+  padding: 0;
+  transition: background 180ms ease, width 180ms ease;
+  width: 8px;
+}
+
+.vastu-testimonial-dots button.is-active {
+  background: var(--vastu-gold-dark);
+  width: 26px;
+}
+
+.vastu-stats-strip {
+  background:
+    radial-gradient(circle at 22% 26%, rgba(212, 164, 95, 0.18), transparent 24rem),
+    radial-gradient(circle at 78% 66%, rgba(139, 78, 50, 0.2), transparent 26rem),
+    linear-gradient(135deg, #1f140f, #2d1d13 58%, #17100d);
+  color: var(--vastu-ivory);
+  padding: 54px 64px;
+}
+
+.vastu-stats-inner {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 auto;
+  max-width: 1120px;
+}
+
+.vastu-counter {
+  border-left: 1px solid rgba(229, 190, 121, 0.2);
+  padding: 10px 28px;
+  text-align: center;
+}
+
+.vastu-counter:first-child {
+  border-left: 0;
+}
+
+.vastu-counter svg {
+  color: var(--vastu-gold);
+  filter: drop-shadow(0 0 14px rgba(212, 164, 95, 0.5));
+  margin: 0 auto 12px;
+}
+
+.vastu-counter strong {
+  display: block;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.vastu-counter span {
+  color: rgba(255, 253, 249, 0.64);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vastu-contact {
+  align-items: stretch;
+  gap: 44px;
+  grid-template-columns: minmax(0, 0.74fr) minmax(260px, 0.62fr) minmax(0, 0.9fr);
+  max-width: 1360px;
+}
+
+.vastu-contact-image {
+  min-height: 520px;
+}
+
+.vastu-contact-copy {
+  align-self: center;
+}
+
+.vastu-contact-details {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.vastu-contact-details a,
+.vastu-contact-details span {
+  align-items: center;
+  color: rgba(31, 20, 15, 0.76);
+  display: inline-flex;
+  font-size: 0.94rem;
+  gap: 12px;
+}
+
+.vastu-contact-details svg {
+  color: var(--vastu-gold-dark);
+}
+
+.vastu-form {
+  align-self: center;
+  background: rgba(255, 253, 249, 0.7);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 253, 249, 0.9);
+  border-radius: 8px;
+  box-shadow: var(--vastu-shadow);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 28px;
+}
+
+.vastu-form input,
+.vastu-form select,
+.vastu-form textarea,
+.vastu-newsletter input {
+  background: rgba(255, 253, 249, 0.92);
+  border: 1px solid rgba(31, 20, 15, 0.1);
+  border-radius: 6px;
+  color: var(--vastu-espresso);
+  min-height: 54px;
+  outline: none;
+  padding: 0 16px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+  width: 100%;
+}
+
+.vastu-form textarea {
+  grid-column: 1 / -1;
+  min-height: 150px;
+  padding-top: 16px;
+  resize: vertical;
+}
+
+.vastu-form input:focus,
+.vastu-form select:focus,
+.vastu-form textarea:focus,
+.vastu-newsletter input:focus {
+  border-color: rgba(212, 164, 95, 0.88);
+  box-shadow: 0 0 0 4px rgba(212, 164, 95, 0.14);
+}
+
+.vastu-form button {
+  background: linear-gradient(135deg, #d9ae68, #ad761f);
+  color: var(--vastu-ivory);
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-width: 190px;
+}
+
+.vastu-footer {
+  background:
+    radial-gradient(circle at 12% 12%, rgba(212, 164, 95, 0.14), transparent 28rem),
+    linear-gradient(135deg, #1f140f, #2a1b12);
+  color: rgba(255, 253, 249, 0.74);
+  display: grid;
+  gap: 50px;
+  grid-template-columns: minmax(260px, 0.55fr) 1fr;
+  padding: 64px 64px 28px;
+}
+
+.vastu-footer .vastu-logo small,
+.vastu-footer .vastu-logo strong {
+  color: var(--vastu-ivory);
+}
+
+.vastu-footer-brand p {
+  line-height: 1.7;
+  margin-top: 20px;
+  max-width: 300px;
+}
+
+.vastu-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.vastu-socials a {
+  align-items: center;
+  border: 1px solid rgba(212, 164, 95, 0.36);
+  border-radius: 50%;
+  color: var(--vastu-gold);
+  display: flex;
+  height: 38px;
+  justify-content: center;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+  width: 38px;
+}
+
+.vastu-socials span {
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.vastu-socials a:hover {
+  background: var(--vastu-gold);
+  color: var(--vastu-espresso);
+  transform: translateY(-2px);
+}
+
+.vastu-footer-links {
+  display: grid;
+  gap: 42px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.vastu-footer-links strong {
+  color: var(--vastu-gold);
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.vastu-footer-links a,
+.vastu-footer-links p {
+  color: rgba(255, 253, 249, 0.66);
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.vastu-footer-links a:hover {
+  color: var(--vastu-gold);
+}
+
+.vastu-newsletter {
+  display: grid;
+  grid-template-columns: 1fr 52px;
+  margin-top: 18px;
+  max-width: 320px;
+}
+
+.vastu-newsletter input {
+  background: transparent;
+  border-color: rgba(212, 164, 95, 0.42);
+  border-radius: 6px 0 0 6px;
+  color: var(--vastu-ivory);
+}
+
+.vastu-newsletter button {
+  align-items: center;
+  background: var(--vastu-gold);
+  border: 0;
+  border-radius: 0 6px 6px 0;
+  color: var(--vastu-espresso);
+  display: flex;
+  justify-content: center;
+}
+
+.vastu-footer-bottom {
+  border-top: 1px solid rgba(255, 253, 249, 0.11);
+  display: flex;
+  font-size: 0.8rem;
+  grid-column: 1 / -1;
+  justify-content: space-between;
+  padding-top: 24px;
+}
+
+@media (max-width: 1180px) {
+  .vastu-nav {
+    padding-inline: 28px;
+  }
+
+  .vastu-nav-links {
+    gap: 16px;
+  }
+
+  .vastu-hero,
+  .vastu-services,
+  .vastu-process,
+  .vastu-testimonials,
+  .vastu-stats-strip,
+  .vastu-about,
+  .vastu-contact,
+  .vastu-footer {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .vastu-hero-content {
+    grid-template-columns: 1fr;
+  }
+
+  .vastu-hero-copy {
+    padding-bottom: 34px;
+  }
+
+  .vastu-hero-visual {
+    min-height: 540px;
+  }
+
+  .vastu-hero-lower,
+  .vastu-about,
+  .vastu-contact {
+    grid-template-columns: 1fr;
+  }
+
+  .vastu-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vastu-process-timeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 34px;
+  }
+
+  .vastu-process-timeline::before {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .vastu-nav {
+    grid-template-columns: auto auto;
+  }
+
+  .vastu-nav-links,
+  .vastu-call {
+    display: none;
+  }
+
+  .vastu-menu-toggle {
+    display: inline-flex;
+    justify-self: end;
+  }
+
+  .vastu-logo-mark {
+    height: 46px;
+    width: 46px;
+  }
+
+  .vastu-logo strong {
+    font-size: 1.45rem;
+  }
+
+  .vastu-logo small {
+    font-size: 0.62rem;
+  }
+
+  .vastu-hero {
+    padding-top: 110px;
+  }
+
+  .vastu-hero h1 {
+    font-size: 4rem;
+  }
+
+  .vastu-hero-stat-grid,
+  .vastu-testimonial-track,
+  .vastu-stats-inner,
+  .vastu-footer,
+  .vastu-footer-links {
+    grid-template-columns: 1fr;
+  }
+
+  .vastu-process-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .vastu-process-step {
+    min-height: auto;
+  }
+
+  .vastu-counter {
+    border-left: 0;
+    border-top: 1px solid rgba(229, 190, 121, 0.2);
+    padding: 24px 20px;
+  }
+
+  .vastu-counter:first-child {
+    border-top: 0;
+  }
+
+  .vastu-hero-stat + .vastu-hero-stat {
+    border-left: 0;
+    border-top: 1px solid rgba(31, 20, 15, 0.1);
+  }
+
+  .vastu-quote-card {
+    min-height: 210px;
+  }
+
+  .vastu-about h2,
+  .vastu-section-heading h2,
+  .vastu-contact h2 {
+    font-size: 3rem;
+  }
+
+  .vastu-about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .vastu-footer-bottom {
+    gap: 12px;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .vastu-nav {
+    padding: 12px 16px;
+  }
+
+  .vastu-hero,
+  .vastu-services,
+  .vastu-process,
+  .vastu-testimonials,
+  .vastu-stats-strip,
+  .vastu-about,
+  .vastu-contact,
+  .vastu-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .vastu-hero {
+    min-height: auto;
+    padding-bottom: 52px;
+  }
+
+  .vastu-kicker {
+    align-items: flex-start;
+    flex-direction: column;
+    font-size: 0.72rem;
+  }
+
+  .vastu-hero h1 {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .vastu-hero-subtext {
+    font-size: 0.96rem;
+  }
+
+  .vastu-hero-actions,
+  .vastu-button,
+  .vastu-form button {
+    width: 100%;
+  }
+
+  .vastu-hero-visual,
+  .vastu-about-media,
+  .vastu-contact-image {
+    min-height: 380px;
+  }
+
+  .vastu-compass {
+    height: 300px;
+    right: -30px;
+    top: 42px;
+    width: 300px;
+  }
+
+  .vastu-hero-lower {
+    margin-top: 22px;
+  }
+
+  .vastu-services,
+  .vastu-process,
+  .vastu-testimonials,
+  .vastu-about,
+  .vastu-contact {
+    padding-bottom: 76px;
+    padding-top: 76px;
+  }
+
+  .vastu-service-grid,
+  .vastu-form {
+    grid-template-columns: 1fr;
+  }
+
+  .vastu-service-card {
+    min-height: auto;
+  }
+
+  .vastu-form textarea,
+  .vastu-form button {
+    grid-column: auto;
+  }
+
+  .vastu-about h2,
+  .vastu-section-heading h2,
+  .vastu-contact h2 {
+    font-size: 2.55rem;
+  }
+
+  .vastu-testimonial-card {
+    min-height: 320px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vastu-page *,
+  .vastu-page *::before,
+  .vastu-page *::after {
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,106 @@
+.hero-media::after {
+  background:
+    linear-gradient(90deg, rgba(15, 16, 14, 0.86) 0%, rgba(15, 16, 14, 0.55) 46%, rgba(15, 16, 14, 0.12) 100%),
+    linear-gradient(0deg, rgba(15, 16, 14, 0.62) 0%, rgba(15, 16, 14, 0.02) 54%);
+}
+
+.hero-image {
+  filter: saturate(0.82) contrast(1.04);
+}
+
+.nav-shell {
+  height: 82px;
+  padding: 0 12px;
+}
+
+.brand-mark-logo {
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+  height: 62px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 5px 10px;
+  width: 280px;
+}
+
+.brand-logo-image {
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.footer-logo-card {
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.18);
+  display: inline-flex;
+  max-width: 390px;
+  overflow: hidden;
+  padding: 12px 16px;
+  width: min(100%, 390px);
+}
+
+.footer-logo-image {
+  height: auto;
+  width: 100%;
+}
+
+.sector-list {
+  gap: 12px;
+  margin-inline: auto;
+  max-width: 860px;
+}
+
+.sector-row {
+  grid-template-areas:
+    "arrow"
+    "icon"
+    "title";
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+}
+
+.sector-icon,
+.sector-row h3 {
+  justify-self: center;
+}
+
+.sector-arrow {
+  align-self: start;
+  justify-self: end;
+}
+
+@media (max-width: 760px) {
+  .hero-media::after {
+    background:
+      linear-gradient(90deg, rgba(21, 23, 20, 0.84), rgba(21, 23, 20, 0.62)),
+      linear-gradient(0deg, rgba(21, 23, 20, 0.72), rgba(21, 23, 20, 0.14));
+  }
+
+  .nav-shell {
+    height: 58px;
+    padding: 0 8px;
+  }
+
+  .brand-mark-logo {
+    height: 46px;
+    padding: 4px 8px;
+    width: 200px;
+  }
+
+  .hero-panel {
+    display: none;
+  }
+
+  .sector-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1020px) and (min-width: 761px) {
+  .sector-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

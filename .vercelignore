@@ -1,0 +1,33 @@
+# Build artefacts
+.git/
+.next/
+node_modules/
+.vercel/
+out/
+*.tsbuildinfo
+.DS_Store
+
+# Root-level raw media folders (too large, not served by the app)
+/images/
+/Videos/
+
+# Prototype routes
+/src/app/dental/
+/src/app/templates/
+/src/app/templates2/
+/src/app/vastu.css
+
+# Local screenshots
+/screenshot.png
+/shot-*.png
+/ss-*.png
+/v2-*.png
+/vastu-*.png
+/scraped-emails.csv
+/scrape-emails.mjs
+/screenshot.mjs
+
+# Large unused videos in public (only floorspace.mp4 is used)
+/public/videos/btpl.mp4
+/public/videos/floor-space-corporate.mp4
+/public/videos/zycus-project.mp4

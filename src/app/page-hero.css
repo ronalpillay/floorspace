@@ -1,0 +1,164 @@
+.about-page-hero {
+  background: var(--color-charcoal);
+  color: var(--color-paper-strong);
+  display: flex;
+  flex-direction: column;
+  min-height: 82svh;
+  overflow: hidden;
+  padding: 120px var(--gutter) 0;
+  position: relative;
+}
+
+.about-page-hero-media {
+  inset: 0;
+  position: absolute;
+}
+
+.about-page-hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(15, 16, 14, 0.9) 0%, rgba(15, 16, 14, 0.62) 52%, rgba(15, 16, 14, 0.18) 100%),
+    linear-gradient(0deg, rgba(15, 16, 14, 0.72) 0%, rgba(15, 16, 14, 0.02) 58%);
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.about-page-hero-image {
+  filter: saturate(0.78) contrast(1.06);
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.about-page-hero-content {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  padding-bottom: 52px;
+  position: relative;
+  z-index: 2;
+}
+
+.about-page-hero-title {
+  color: var(--color-paper-strong);
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(3rem, 5.2vw, 5.25rem);
+  font-weight: 500;
+  line-height: 0.97;
+  margin-bottom: 22px;
+  max-width: 780px;
+}
+
+.about-page-hero-lede {
+  color: rgba(255, 250, 240, 0.74);
+  font-size: 1.15rem;
+  line-height: 1.62;
+  max-width: 540px;
+}
+
+.about-page-hero-rail {
+  border-top: 1px solid rgba(255, 250, 240, 0.16);
+  position: relative;
+  z-index: 2;
+}
+
+/* Small hero variant — used by Work page */
+.page-hero-small {
+  background: var(--color-charcoal);
+  color: var(--color-paper-strong);
+  display: flex;
+  flex-direction: column;
+  min-height: 52svh;
+  overflow: hidden;
+  padding: 120px var(--gutter) 56px;
+  position: relative;
+}
+
+.page-hero-small-media {
+  inset: 0;
+  position: absolute;
+}
+
+.page-hero-small-overlay {
+  background:
+    linear-gradient(180deg, rgba(15, 16, 14, 0.72) 0%, rgba(15, 16, 14, 0.54) 100%),
+    linear-gradient(90deg, rgba(15, 16, 14, 0.72) 0%, rgba(15, 16, 14, 0.08) 100%);
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.page-hero-small-image {
+  filter: saturate(0.76) contrast(1.05);
+  object-fit: cover;
+  object-position: center;
+}
+
+.page-hero-small-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 0 auto;
+  max-width: 1260px;
+  padding-bottom: 0;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+/* Page header band — dark, no image (Contact page) */
+.page-header-band {
+  background: var(--color-charcoal);
+  color: var(--color-paper-strong);
+  padding: 140px var(--gutter) 72px;
+  position: relative;
+}
+
+.page-header-band-inner {
+  margin: 0 auto;
+  max-width: 1260px;
+}
+
+.page-header-band .section-kicker {
+  color: #c9ad86;
+}
+
+.page-header-title {
+  color: var(--color-paper-strong);
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 500;
+  line-height: 0.97;
+  margin-bottom: 22px;
+  max-width: 760px;
+}
+
+.page-header-lede {
+  color: rgba(255, 250, 240, 0.72);
+  font-size: 1.1rem;
+  line-height: 1.65;
+  max-width: 520px;
+}
+
+@media (max-width: 760px) {
+  .about-page-hero {
+    min-height: 90svh;
+    padding-top: 90px;
+  }
+
+  .about-page-hero-overlay {
+    background:
+      linear-gradient(rgba(15, 16, 14, 0.88), rgba(15, 16, 14, 0.7)),
+      linear-gradient(0deg, rgba(15, 16, 14, 0.72), rgba(15, 16, 14, 0.14));
+  }
+
+  .page-hero-small {
+    min-height: 46svh;
+    padding-top: 90px;
+  }
+
+  .page-header-band {
+    padding-top: 110px;
+    padding-bottom: 52px;
+  }
+}

@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+.next/
+out/
+dist/
+build/
+
+# Large raw media — root-level only, NOT public/images
+/images/
+/Videos/
+/Client logos/
+/Floor space new /
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.avi
+
+# Public videos folder (large files)
+public/videos/
+
+# Environment
+.env
+.env.local
+.env.production
+.env*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+
+# Firecrawl
+.firecrawl/

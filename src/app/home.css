@@ -1,0 +1,638 @@
+/* ── Split Hero ── */
+.home-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.home-hero-left {
+  background: var(--color-charcoal);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 130px 56px 84px 52px;
+  position: relative;
+}
+
+.home-hero-left::before {
+  background-image:
+    linear-gradient(rgba(201, 173, 134, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 173, 134, 0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+/* Subtle radial glow behind the headline */
+.home-hero-left::after {
+  background: radial-gradient(ellipse 70% 60% at 30% 48%, rgba(201, 173, 134, 0.07) 0%, transparent 70%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.home-hero-headline {
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero-line {
+  color: var(--color-paper-strong);
+  display: block;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(2.6rem, 4.0vw, 5.2rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 0.95;
+}
+
+.home-hero-line--accent {
+  color: #c9ad86;
+  font-size: clamp(3.8rem, 6.2vw, 7.8rem);
+  letter-spacing: -0.02em;
+  line-height: 0.88;
+}
+
+.home-hero-tagline {
+  color: rgba(255, 250, 240, 0.46);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin-top: 30px;
+  position: relative;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.home-hero-tagline strong {
+  color: #c9ad86;
+}
+
+.home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 38px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero-features {
+  border-top: 1px solid rgba(255, 250, 240, 0.1);
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 56px;
+  padding-top: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero-feature {
+  align-items: center;
+  border-right: 1px solid rgba(255, 250, 240, 0.09);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.home-hero-feature:last-child {
+  border-right: none;
+}
+
+.home-hero-feature-label {
+  color: rgba(255, 250, 240, 0.54);
+  font-size: 0.6rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.home-hero-right {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Thin bronze seam on the left edge of the image panel */
+.home-hero-right::before {
+  background: linear-gradient(180deg, transparent 10%, rgba(201, 173, 134, 0.36) 50%, transparent 90%);
+  content: "";
+  left: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  z-index: 2;
+}
+
+.home-hero-right-image {
+  filter: saturate(0.78) contrast(1.06);
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── Category Cards ── */
+/* Sits between dark hero and white about — use a muted ink tone as a visual shelf */
+.home-cats-wrap {
+  background: var(--color-charcoal-2);
+  padding: 20px var(--gutter) 20px;
+}
+
+.home-cats {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  max-width: 1260px;
+}
+
+.home-cat-card {
+  border-radius: var(--radius-md);
+  min-height: 420px;
+  overflow: hidden;
+  position: relative;
+}
+
+.home-cat-overlay {
+  background:
+    linear-gradient(180deg, rgba(13, 14, 13, 0.08) 0%, rgba(13, 14, 13, 0.78) 100%),
+    linear-gradient(90deg, rgba(13, 14, 13, 0.42), rgba(13, 14, 13, 0.06));
+  inset: 0;
+  position: absolute;
+  transition: background 400ms ease;
+  z-index: 1;
+}
+
+.home-cat-card:hover .home-cat-overlay {
+  background:
+    linear-gradient(180deg, rgba(13, 14, 13, 0.14) 0%, rgba(13, 14, 13, 0.86) 100%),
+    linear-gradient(90deg, rgba(13, 14, 13, 0.48), rgba(13, 14, 13, 0.1));
+}
+
+.home-cat-image {
+  filter: saturate(0.74) contrast(1.07);
+  object-fit: cover;
+  transition: transform 600ms ease;
+}
+
+.home-cat-card:hover .home-cat-image {
+  transform: scale(1.035);
+}
+
+.home-cat-content {
+  bottom: 0;
+  left: 0;
+  padding: 44px 48px;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
+
+.home-cat-badge {
+  color: #c9ad86;
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.home-cat-title {
+  color: var(--color-paper-strong);
+  display: block;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(1.7rem, 2.4vw, 2.8rem);
+  font-weight: 500;
+  line-height: 1.08;
+  margin-bottom: 24px;
+}
+
+.home-cat-link {
+  align-items: center;
+  border: 1px solid rgba(201, 173, 134, 0.5);
+  border-radius: var(--radius-sm);
+  color: #c9ad86;
+  display: inline-flex;
+  font-size: 0.68rem;
+  font-weight: 700;
+  gap: 8px;
+  letter-spacing: 0.1em;
+  padding: 10px 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.home-cat-link:hover {
+  background: rgba(201, 173, 134, 0.16);
+  border-color: #c9ad86;
+  color: #e8d4b4;
+}
+
+/* ── About (inline) ── */
+/* Pure white — crisp visual break from the charcoal cards shelf above */
+.home-about {
+  background: #ffffff;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 540px;
+}
+
+.home-about-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--section-y) 64px var(--section-y) 52px;
+}
+
+.home-about-right {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Thin bronze seam separating copy from image */
+.home-about-right::before {
+  background: linear-gradient(180deg, transparent 8%, rgba(201, 173, 134, 0.28) 50%, transparent 92%);
+  content: "";
+  left: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  z-index: 2;
+}
+
+.home-about-image {
+  filter: saturate(0.8) contrast(1.05);
+  object-fit: cover;
+}
+
+/* ── Sectors ── */
+/* Dark charcoal — strong visual contrast after the white about panel */
+.home-sectors-section {
+  background:
+    linear-gradient(135deg, rgba(201, 173, 134, 0.04) 0%, transparent 52%),
+    var(--color-charcoal);
+  color: var(--color-paper-strong);
+  padding: var(--section-y) var(--gutter);
+  text-align: center;
+}
+
+.home-sectors-inner {
+  margin: 0 auto;
+  max-width: 1260px;
+}
+
+.home-sectors-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 48px;
+  text-align: left;
+}
+
+.home-sector-item {
+  align-items: center;
+  background: rgba(255, 250, 240, 0.022);
+  border: 1px solid rgba(201, 173, 134, 0.2);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 20px;
+  text-align: center;
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+.home-sector-item:hover {
+  background: rgba(201, 173, 134, 0.07);
+  border-color: rgba(201, 173, 134, 0.54);
+  transform: translateY(-2px);
+}
+
+.home-sector-icon {
+  align-items: center;
+  background: rgba(201, 173, 134, 0.08);
+  border: 1px solid rgba(201, 173, 134, 0.28);
+  border-radius: var(--radius-sm);
+  color: #c9ad86;
+  display: flex;
+  height: 58px;
+  justify-content: center;
+  transition: background 220ms ease, border-color 220ms ease;
+  width: 58px;
+}
+
+.home-sector-item:hover .home-sector-icon {
+  background: rgba(201, 173, 134, 0.14);
+  border-color: rgba(201, 173, 134, 0.6);
+}
+
+.home-sector-label {
+  color: rgba(255, 250, 240, 0.76);
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* ── Process ── */
+/* Warm paper — light section after the dark sectors block */
+.home-process-section {
+  background: var(--color-paper);
+  padding: var(--section-y) var(--gutter) 80px;
+  text-align: center;
+}
+
+.home-process-inner {
+  margin: 0 auto;
+  max-width: 1260px;
+}
+
+.home-process-steps {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 68px;
+  position: relative;
+}
+
+/*
+  The dashed connector: top must match exactly half the icon height.
+  Icon is 64px tall, num label is ~28px above it (font 0.68rem + margin 10px = ~21px + ~7px line).
+  Total top offset from ol top = ~21px (num) + 10px (margin-bottom) = 31px, then center of 64px icon = 32px.
+  So top = 31 + 32 = 63px. We account for the num being above, so: top = 30px (approx centroid).
+*/
+.home-process-steps::before {
+  border-top: 1px dashed rgba(141, 111, 77, 0.38);
+  content: "";
+  left: calc(10% + 36px);
+  position: absolute;
+  right: calc(10% + 36px);
+  top: 55px;
+  z-index: 0;
+}
+
+.home-process-step {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 8px;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.home-process-num {
+  color: #c9ad86;
+  display: block;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.home-process-icon {
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid rgba(141, 111, 77, 0.54);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px var(--color-paper), 0 2px 12px rgba(141, 111, 77, 0.16);
+  color: var(--color-bronze);
+  display: flex;
+  height: 64px;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  width: 64px;
+}
+
+.home-process-step:hover .home-process-icon {
+  border-color: #c9ad86;
+  box-shadow: 0 0 0 5px var(--color-paper), 0 4px 20px rgba(141, 111, 77, 0.28);
+}
+
+.home-process-step-title {
+  color: var(--color-ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 9px;
+  text-transform: uppercase;
+}
+
+.home-process-step-desc {
+  color: var(--color-muted);
+  font-size: 0.81rem;
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 144px;
+}
+
+/* ── Testimonials ── */
+/* Dark charcoal — closes the page with weight; breaks the long light stretch at bottom */
+.home-testimonials-section {
+  background: var(--color-charcoal);
+  padding: var(--section-y) var(--gutter);
+  text-align: center;
+}
+
+.home-testimonials-section .section-title {
+  color: var(--color-paper-strong);
+}
+
+.home-testimonials-inner {
+  margin: 0 auto;
+  max-width: 1260px;
+}
+
+.home-testimonials-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 54px;
+  text-align: left;
+}
+
+.home-testimonial-card {
+  background: rgba(255, 250, 240, 0.04);
+  border: 1px solid rgba(201, 173, 134, 0.2);
+  border-top: 2px solid #c9ad86;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px 26px;
+  transition: background 240ms ease, border-color 240ms ease, transform 240ms ease;
+}
+
+.home-testimonial-card:hover {
+  background: rgba(255, 250, 240, 0.07);
+  border-color: rgba(201, 173, 134, 0.42);
+  transform: translateY(-2px);
+}
+
+.home-testimonial-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.home-testimonial-quote {
+  color: rgba(255, 250, 240, 0.7);
+  flex: 1;
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.72;
+  margin: 0;
+}
+
+.home-testimonial-footer {
+  border-top: 1px solid rgba(255, 250, 240, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 15px;
+}
+
+.home-testimonial-name {
+  color: var(--color-paper-strong);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+}
+
+.home-testimonial-role {
+  color: rgba(255, 250, 240, 0.42);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .home-hero-left {
+    padding: 120px 40px 72px 36px;
+  }
+
+  .home-about-copy {
+    padding: var(--section-y) 40px;
+  }
+}
+
+@media (max-width: 1020px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .home-hero-left {
+    min-height: 64svh;
+    padding: 110px 24px 60px;
+  }
+
+  .home-hero-right {
+    min-height: 52svh;
+  }
+
+  .home-hero-features {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 0;
+  }
+
+  .home-hero-feature:nth-child(2) {
+    border-right: none;
+  }
+
+  .home-hero-feature:nth-child(3) {
+    border-right: 1px solid rgba(255, 250, 240, 0.1);
+  }
+
+  .home-about {
+    grid-template-columns: 1fr;
+  }
+
+  .home-about-right {
+    min-height: 380px;
+  }
+
+  .home-about-copy {
+    padding: 52px 24px;
+  }
+
+  .home-sectors-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .home-process-steps {
+    gap: 36px 0;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .home-process-steps::before {
+    display: none;
+  }
+
+  .home-testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .home-cats-wrap {
+    padding: 14px var(--gutter);
+  }
+
+  .home-cats {
+    grid-template-columns: 1fr;
+  }
+
+  .home-cat-card {
+    min-height: 300px;
+  }
+
+  .home-cat-content {
+    padding: 28px 26px;
+  }
+
+  .home-sectors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-process-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 12px;
+  }
+
+  .home-testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .home-hero-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-sectors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-process-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
