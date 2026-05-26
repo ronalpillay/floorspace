@@ -25,60 +25,66 @@
   font-family: var(--font-outfit), Arial, sans-serif;
 }
 
-/* ── Scroll Reveal Animations ── */
-[data-reveal] {
+/* ── Scroll Reveal Animations (Progressive Enhancement) ──
+   Elements are VISIBLE by default. JS adds .js-reveal to <html> once it
+   has already marked above-fold elements as in-view. This means:
+   - No JS → everything visible, no animations (safe fallback)
+   - JS loads → smooth reveal animations as you scroll
+   - JS hangs → 2s timeout removes .js-reveal, everything snaps visible
+*/
+.js-reveal [data-reveal] {
   opacity: 0;
   transform: translateY(32px);
   transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
               transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-[data-reveal].in-view {
+.js-reveal [data-reveal].in-view {
   opacity: 1;
   transform: translateY(0);
 }
 
-[data-reveal="left"] {
+.js-reveal [data-reveal="left"] {
   transform: translateX(-40px);
 }
-[data-reveal="left"].in-view {
+.js-reveal [data-reveal="left"].in-view {
   transform: translateX(0);
 }
 
-[data-reveal="right"] {
+.js-reveal [data-reveal="right"] {
   transform: translateX(40px);
 }
-[data-reveal="right"].in-view {
+.js-reveal [data-reveal="right"].in-view {
   transform: translateX(0);
 }
 
-[data-reveal="scale"] {
+.js-reveal [data-reveal="scale"] {
   transform: scale(0.94);
 }
-[data-reveal="scale"].in-view {
+.js-reveal [data-reveal="scale"].in-view {
   transform: scale(1);
 }
 
 /* Stagger children */
-[data-stagger] > * {
+.js-reveal [data-stagger] > * {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
               transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-[data-stagger].in-view > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0ms; }
-[data-stagger].in-view > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 80ms; }
-[data-stagger].in-view > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 160ms; }
-[data-stagger].in-view > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 240ms; }
-[data-stagger].in-view > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 320ms; }
-[data-stagger].in-view > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 400ms; }
-[data-stagger].in-view > *:nth-child(7) { opacity: 1; transform: none; transition-delay: 480ms; }
-[data-stagger].in-view > *:nth-child(8) { opacity: 1; transform: none; transition-delay: 560ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 80ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 160ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 240ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 320ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 400ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(7) { opacity: 1; transform: none; transition-delay: 480ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(8) { opacity: 1; transform: none; transition-delay: 560ms; }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal],
-  [data-stagger] > * {
+  .js-reveal [data-reveal],
+  .js-reveal [data-stagger] > * {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
