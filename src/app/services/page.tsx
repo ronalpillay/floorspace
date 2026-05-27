@@ -21,9 +21,10 @@ import {
   Monitor,
   ArrowRight,
 } from "lucide-react";
-import Nav from "@/components/Nav";
+import ContemporaryNav from "@/components/ContemporaryNav";
 import Footer from "@/components/Footer";
 import ValueStrip from "@/components/ValueStrip";
+import "../contemporary.css";
 import "../page-hero.css";
 
 export const metadata: Metadata = {
@@ -117,7 +118,7 @@ const steps = [
 export default function ServicesPage() {
   return (
     <>
-      <Nav />
+      <ContemporaryNav solid />
       <main>
         {/* ── Hero ── */}
         <section className="about-page-hero" aria-labelledby="services-hero-h">

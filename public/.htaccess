@@ -5,10 +5,16 @@ Options -MultiViews
 RewriteEngine On
 RewriteBase /
 
+# 1. Redirect www → non-www  (fixes 404 on devices accessing www.floor-space.co.in)
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+
+# 2. Add trailing slash to clean URLs so /about → /about/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^.]+[^/])$ /$1/ [R=301,L]
 
+# 3. Serve the pre-rendered index.html for each route
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ /$1index.html [L]
 
@@ -50,14 +56,15 @@ RewriteRule ^(.*)$ /$1index.html [L]
   ExpiresByType image/x-icon              "access plus 1 year"
 </IfModule>
 
-# ─── Keep-Alive ────────────────────────────────────────────
+# ─── Custom error pages ────────────────────────────────────
+ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html
+
+# ─── Keep-Alive + Security headers ────────────────────────
 <IfModule mod_headers.c>
   Header set Connection keep-alive
-</IfModule>
-
-# ─── Security headers ──────────────────────────────────────
-<IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>

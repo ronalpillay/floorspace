@@ -22,16 +22,34 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "FSIPL — Floor Space India",
+  title: {
+    default: "Floor-Space India — Commercial Interiors & Industrial Construction",
+    template: "%s | Floor-Space India",
+  },
   description:
-    "FSIPL delivers premium commercial interiors and turnkey execution across India with planning, procurement, and site accountability.",
+    "Floor-Space India delivers premium commercial interiors and turnkey industrial construction across Pune, Mumbai, Bangalore, Hyderabad & 20+ cities. 470+ projects, 15+ years, ISO 9001:2015 certified.",
   keywords: [
     "interior contractors India",
     "turnkey interiors Pune",
     "commercial interiors",
-    "pharma interiors",
+    "industrial construction",
+    "office interior design Pune",
     "corporate office design",
+    "pharma interiors",
+    "interior fit-out Mumbai",
   ],
+  openGraph: {
+    title: "Floor-Space India — Commercial Interiors & Industrial Construction",
+    description: "470+ projects across corporate, banking, pharma, and industrial sectors. Turnkey execution across India.",
+    url: "https://floor-space.co.in",
+    siteName: "Floor-Space India",
+    locale: "en_IN",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

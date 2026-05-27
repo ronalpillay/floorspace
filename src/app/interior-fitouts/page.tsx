@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Footer from "@/components/Footer";
+import ContemporaryNav from "@/components/ContemporaryNav";
 import "../contemporary.css";
 
 const services = [
@@ -51,34 +52,7 @@ export default function InteriorFitoutsPage() {
   return (
     <div className="c-page">
 
-      {/* ── Nav (static) ── */}
-      <nav className="c-nav is-scrolled" aria-label="Primary navigation">
-        <Link href="/" className="c-nav-logo" aria-label="Floor-Space India">
-          <Image
-            src="/images/fsipl-logo-new.png"
-            alt="Floor-Space India"
-            width={300}
-            height={80}
-            priority
-            className="c-nav-logo-img is-scrolled"
-            style={{ height: "100%", width: "auto", objectFit: "contain" }}
-          />
-        </Link>
-        <ul className="c-nav-links">
-          {[
-            { label: "Home", href: "/" },
-            { label: "About", href: "/about" },
-            { label: "Services", href: "/services" },
-            { label: "Our Work", href: "/work" },
-            { label: "Contact", href: "/contact" },
-          ].map((item) => (
-            <li key={item.href}>
-              <Link className="c-nav-link" href={item.href}>{item.label}</Link>
-            </li>
-          ))}
-        </ul>
-        <Link href="/contact" className="c-nav-cta">Start a Project</Link>
-      </nav>
+      <ContemporaryNav solid />
 
       {/* ── Hero ── */}
       <section

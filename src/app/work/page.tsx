@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Star } from "lucide-react";
-import Nav from "@/components/Nav";
+import ContemporaryNav from "@/components/ContemporaryNav";
 import Footer from "@/components/Footer";
 import ValueStrip from "@/components/ValueStrip";
+import "../contemporary.css";
 import "../page-hero.css";
 import "./work.css";
 
@@ -105,7 +106,7 @@ const testimonials = [
 export default function WorkPage() {
   return (
     <>
-      <Nav />
+      <ContemporaryNav solid />
       <main>
         {/* ── Hero ── */}
         <section className="page-hero-small" aria-labelledby="work-hero-h">
