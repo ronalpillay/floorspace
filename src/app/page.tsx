@@ -4,14 +4,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-// ── Hero slideshow — best 3 construction + best 3 interior, alternating ──
+// ── Hero slideshow — start with interior (nav always visible), ext-1 moved to last ──
 const heroSlides = [
-  { src: "/images/hero-ext-1.jpg", alt: "Industrial construction" },
   { src: "/images/hero-int-1.jpg", alt: "Interior fit-out" },
   { src: "/images/hero-ext-4.jpg", alt: "Industrial construction" },
   { src: "/images/hero-int-2.jpg", alt: "Interior fit-out" },
   { src: "/images/hero-ext-5.jpg", alt: "Industrial construction" },
   { src: "/images/hero-int-3.jpg", alt: "Interior fit-out" },
+  { src: "/images/hero-ext-1.jpg", alt: "Industrial construction" },
 ];
 import { ArrowRight, ArrowUpRight, MapPin, Phone, Mail, Clock, ChevronLeft, ChevronRight } from "lucide-react";
 import Footer from "@/components/Footer";
