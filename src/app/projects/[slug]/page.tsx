@@ -89,22 +89,31 @@ export default async function ProjectDetailPage({ params }: Props) {
 
       {/* ── Gallery ── */}
       <section className="c-gallery" aria-labelledby="gallery-h">
-        <p className="c-section-kicker" style={{ marginBottom: "0.5rem" }}>
-          Project Gallery
-        </p>
-        <h2
-          id="gallery-h"
-          style={{
-            fontFamily: "var(--font-playfair), Georgia, serif",
-            fontSize: "clamp(1.6rem, 2.5vw, 2.25rem)",
-            fontWeight: 700,
-            marginBottom: "2.5rem",
-            color: "var(--c-ink-1)",
-          }}
-        >
-          {project.images.length} photographs
-        </h2>
-        <ProjectGallery images={project.images} projectName={project.name} />
+        {(() => {
+          // Filter out the cover image if it appears as the first gallery image (avoids duplicate)
+          const galleryImages = project.images.filter((img) => img.src !== project.coverImage);
+          const displayImages = galleryImages.length > 0 ? galleryImages : project.images;
+          return (
+            <>
+              <p className="c-section-kicker" style={{ marginBottom: "0.5rem" }}>
+                Project Gallery
+              </p>
+              <h2
+                id="gallery-h"
+                style={{
+                  fontFamily: "var(--font-playfair), Georgia, serif",
+                  fontSize: "clamp(1.6rem, 2.5vw, 2.25rem)",
+                  fontWeight: 700,
+                  marginBottom: "2.5rem",
+                  color: "var(--c-ink-1)",
+                }}
+              >
+                {displayImages.length} photographs
+              </h2>
+              <ProjectGallery images={displayImages} projectName={project.name} />
+            </>
+          );
+        })()}
       </section>
 
       {/* ── CTA ── */}

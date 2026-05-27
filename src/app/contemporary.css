@@ -2824,13 +2824,17 @@ button[type="submit"]:disabled {
   padding: 6px 14px;
 }
 
-/* ── CTA band ── */
+/* ── CTA band — with atmospheric background image ── */
 .c-cta-band {
-  background: var(--c-accent);
+  background:
+    linear-gradient(rgba(38, 67, 71, 0.84), rgba(38, 67, 71, 0.84)),
+    url('/images/hero-int-4.jpg') center 40% / cover no-repeat;
   border-radius: var(--c-radius-card);
   margin: 0 auto;
   max-width: 900px;
+  overflow: hidden;
   padding: 72px 80px;
+  position: relative;
   text-align: center;
 }
 .c-cta-band-title {

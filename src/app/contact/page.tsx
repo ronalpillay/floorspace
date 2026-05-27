@@ -67,7 +67,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── Form + Info ── */}
-      <section className="c-section" aria-labelledby="form-h">
+      <section className="c-section" style={{ paddingBottom: 40 }} aria-labelledby="form-h">
         <div className="c-section-inner">
           <div className="c-contact-standalone">
 

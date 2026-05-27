@@ -91,12 +91,17 @@ function HeroSlideshow() {
   const [current, setCurrent] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
   const [animating, setAnimating] = useState(false);
+  // Track which slides have been shown — only render Image for those (saves network requests)
+  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(new Set([0, 1]));
 
   useEffect(() => {
     const t = setInterval(() => {
+      const next = (current + 1) % heroSlides.length;
       setPrev(current);
       setAnimating(true);
-      setCurrent((c) => (c + 1) % heroSlides.length);
+      setCurrent(next);
+      // Pre-load the slide AFTER next so there's no pop-in
+      setLoadedSlides((prev) => new Set([...prev, next, (next + 1) % heroSlides.length]));
       setTimeout(() => { setPrev(null); setAnimating(false); }, 1000);
     }, 4500);
     return () => clearInterval(t);
@@ -104,21 +109,24 @@ function HeroSlideshow() {
 
   return (
     <section className="c-hero" aria-labelledby="hero-h">
-      {/* Slides */}
+      {/* Slides — only render Image element for loaded slides */}
       {heroSlides.map((slide, i) => (
         <div
           key={slide.src}
           className={`c-hero-slide ${i === current ? "is-active" : ""} ${i === prev && animating ? "is-leaving" : ""}`}
           aria-hidden={i !== current}
         >
-          <Image
-            src={slide.src}
-            alt={slide.alt}
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            style={{ objectFit: "cover" }}
-          />
+          {loadedSlides.has(i) && (
+            <Image
+              src={slide.src}
+              alt={slide.alt}
+              fill
+              priority={i === 0}
+              fetchPriority={i === 0 ? "high" : "low"}
+              sizes="100vw"
+              style={{ objectFit: "cover" }}
+            />
+          )}
         </div>
       ))}
       <div className="c-hero-overlay" aria-hidden />
@@ -277,6 +285,8 @@ export default function HomePage() {
 
   return (
     <div className="c-page">
+      {/* Preload first hero image for fast LCP */}
+      <link rel="preload" as="image" href="/images/hero-int-1.jpg" fetchPriority="high" />
 
       {/* ── Nav ── */}
       <ContemporaryNav />
