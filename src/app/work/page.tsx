@@ -10,7 +10,7 @@ import "../page-hero.css";
 import "./work.css";
 
 export const metadata: Metadata = {
-  title: "Our Work — Floor Space India",
+  title: "Our Work — Floor-Space India",
   description:
     "470+ commercial spaces delivered across banking, corporate, industrial, and institutional sectors. View selected projects.",
 };

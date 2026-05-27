@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Footer from "@/components/Footer";
 import ContemporaryNav from "@/components/ContemporaryNav";
 import "../contemporary.css";
+
+export const metadata: Metadata = {
+  title: "Industrial Construction — Floor-Space India",
+  description:
+    "Turnkey industrial construction across India. Factories, warehouses, clean rooms, MEP services, and full project management for manufacturing, pharma, and logistics sectors.",
+};
 
 const services = [
   {

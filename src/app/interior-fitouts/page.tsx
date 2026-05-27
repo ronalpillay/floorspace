@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Footer from "@/components/Footer";
 import ContemporaryNav from "@/components/ContemporaryNav";
 import "../contemporary.css";
+
+export const metadata: Metadata = {
+  title: "Interior Fit Outs — Floor-Space India",
+  description:
+    "Premium commercial interior fit-outs across India. Corporate offices, banking interiors, healthcare facilities, retail showrooms, and IT campuses. Turnkey delivery from brief to handover.",
+};
 
 const services = [
   {

@@ -5,6 +5,18 @@ Options -MultiViews
 RewriteEngine On
 RewriteBase /
 
+# ── HTTPS redirect ──────────────────────────────────────────
+# ENABLE ONLY after AutoSSL / Let's Encrypt is active in cPanel
+# (cPanel → Security → SSL/TLS Status → Run AutoSSL for floor-space.co.in)
+# Once the cert is issued and verified, uncomment the four lines below:
+#
+# RewriteCond %{HTTPS} off
+# RewriteCond %{HTTP_HOST} ^(www\.)?floor-space\.co\.in$ [NC]
+# RewriteRule ^ https://floor-space.co.in%{REQUEST_URI} [R=301,L]
+#
+# Then also change the www→non-www rule below to use https:// instead of http://
+# ────────────────────────────────────────────────────────────
+
 # 1. Redirect www → non-www  (fixes 404 on devices accessing www.floor-space.co.in)
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
