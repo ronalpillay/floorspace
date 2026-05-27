@@ -528,7 +528,7 @@ export default function HomePage() {
               </a>
               <div className="c-contact-row">
                 <span className="c-contact-icon"><MapPin size={16} strokeWidth={1.6} /></span>
-                Viman Nagar, Pune – 411014
+                709, 7th Floor, Verdant 84,<br />Koregaon Park Annexe, Pune – 411036
               </div>
               <div className="c-contact-row">
                 <span className="c-contact-icon"><Clock size={16} strokeWidth={1.6} /></span>

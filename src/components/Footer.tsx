@@ -92,7 +92,7 @@ export default function Footer() {
 
       <div className="c-footer-bottom">
         <span>© {new Date().getFullYear()} Floor-Space India Pvt Ltd. All rights reserved.</span>
-        <span className="c-footer-cities">Pune · Mumbai · Bengaluru · Chennai · Hyderabad · Delhi</span>
+        <span className="c-footer-cities">Pune · Mumbai · Goa · Bengaluru · Chennai · Hyderabad · Delhi</span>
       </div>
       <div className="c-footer-madeby">
         Made by{" "}
