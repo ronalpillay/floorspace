@@ -2616,6 +2616,25 @@ button[type="submit"]:disabled {
   line-height: 1.65;
 }
 
+/* ── Certificate feature (two-column ISO layout) ── */
+.c-cert-feature {
+  display: grid;
+  gap: 0;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 52px;
+  border-radius: var(--c-radius-card);
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+}
+.c-cert-feature-img {
+  min-height: 480px;
+  position: relative;
+}
+.c-cert-feature-body {
+  background: var(--c-white);
+  padding: 56px 52px;
+}
+
 /* ── Blog ── */
 .c-blog-featured {
   background: var(--c-white);
@@ -2840,10 +2859,12 @@ button[type="submit"]:disabled {
   .c-page-hero-body, .c-page-hero-teal .c-page-hero-body { padding-left: 48px; padding-right: 48px; }
 }
 @media (max-width: 900px) {
-  .c-blog-featured, .c-two-col, .c-process-grid, .c-contact-standalone {
+  .c-blog-featured, .c-two-col, .c-process-grid, .c-contact-standalone, .c-cert-feature {
     grid-template-columns: 1fr;
   }
   .c-process-image { aspect-ratio: 16/9; }
+  .c-cert-feature-img { min-height: 300px; }
+  .c-cert-feature-body { padding: 36px 28px; }
 }
 /* ═══════════════════════════════════════════
    FEATURED PROJECTS SLIDER (home page)
