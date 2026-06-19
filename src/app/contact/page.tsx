@@ -15,19 +15,13 @@ type FormStatus = "idle" | "submitting" | "success" | "error";
 const offices = [
   {
     name: "Head Office — Pune",
-    address: "302, Sidhdhivinayak Aurum,\nNext to Hotel Hyatt, Viman Nagar,\nPune – 411014",
-    phone: "+91-9011999399",
-    email: "rajesh@floor-space.co.in",
-  },
-  {
-    name: "Corporate Office — Pune",
-    address: "709, 7th Floor, Verdant 84,\nKoregaon Park Annexe,\nPune – 411036",
+    address: "302, Siddhivinayak Aurum,\nBehind Eden Garden, Viman Nagar,\nPune, Maharashtra – 411014",
     phone: "+91-9011999399",
     email: "rajesh@floor-space.co.in",
   },
 ];
 
-const branches = ["Mumbai", "Goa", "Ahmedabad", "Gurgaon", "Delhi", "Bengaluru", "Hyderabad"];
+const branches = ["Mumbai", "Bangalore", "Hyderabad", "Goa", "Gujarat", "Noida"];
 
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
@@ -110,13 +104,13 @@ export default function ContactPage() {
                     <span className="c-feature-icon" style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 10 }}>
                       <MapPin size={16} strokeWidth={1.6} />
                     </span>
-                    Viman Nagar, Pune – 411014
+                    302 Siddhivinayak Aurum, Behind Eden Garden, Viman Nagar, Pune – 411014
                   </div>
                   <div style={{ alignItems: "center", color: "var(--c-ink-2)", display: "flex", gap: 14, fontSize: "0.94rem" }}>
                     <span className="c-feature-icon" style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 10 }}>
                       <Clock size={16} strokeWidth={1.6} />
                     </span>
-                    Mon–Sat, 08:00–18:00
+                    Mon–Sat, 09:30 AM – 06:00 PM
                   </div>
                 </div>
               </div>
@@ -219,7 +213,7 @@ export default function ContactPage() {
               </div>
               <div style={{ alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)", display: "flex", fontSize: "0.82rem", gap: 8, marginTop: 20, paddingTop: 16 }}>
                 <Clock size={13} strokeWidth={1.6} aria-hidden />
-                Mon–Sat, 08:00–18:00
+                Mon–Sat, 09:30 AM – 06:00 PM
               </div>
             </div>
           </div>

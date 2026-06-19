@@ -3433,3 +3433,177 @@ button[type="submit"]:disabled {
   box-shadow: 0 6px 24px rgba(37, 211, 102, 0.6);
   transform: scale(1.08);
 }
+
+/* ── Social FABs (Instagram + LinkedIn above WhatsApp) ── */
+.c-social-fabs {
+  bottom: 92px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: fixed;
+  right: 24px;
+  z-index: 8999;
+}
+
+.c-social-fab {
+  align-items: center;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  width: 48px;
+}
+
+.c-social-fab:hover {
+  transform: scale(1.1);
+}
+
+.c-social-fab--instagram {
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  box-shadow: 0 4px 14px rgba(220, 39, 67, 0.4);
+}
+
+.c-social-fab--instagram:hover {
+  box-shadow: 0 6px 20px rgba(220, 39, 67, 0.55);
+}
+
+.c-social-fab--linkedin {
+  background: #0077b5;
+  box-shadow: 0 4px 14px rgba(0, 119, 181, 0.4);
+}
+
+.c-social-fab--linkedin:hover {
+  box-shadow: 0 6px 20px rgba(0, 119, 181, 0.55);
+}
+
+/* ── Sectors Dark Grid (Spaces We Transform) ── */
+.c-sectors-dark {
+  background: #0e0e0e;
+  padding: clamp(60px, 8vw, 100px) clamp(16px, 4vw, 48px);
+}
+
+.c-sectors-dark-inner {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.c-sectors-dark-header {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.c-sectors-dark-kicker {
+  color: #c9a96e;
+  font-family: var(--font-outfit);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.c-sectors-dark-title {
+  color: #fff;
+  font-family: var(--font-outfit);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.c-sectors-grid {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.c-sector-card {
+  align-items: center;
+  border: 1px solid rgba(201, 169, 110, 0.2);
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: center;
+  padding: clamp(24px, 3vw, 40px) clamp(12px, 2vw, 24px);
+  transition: background 250ms ease, border-color 250ms ease, transform 250ms ease;
+}
+
+.c-sector-card:hover {
+  background: rgba(201, 169, 110, 0.07);
+  border-color: rgba(201, 169, 110, 0.5);
+  transform: translateY(-2px);
+}
+
+.c-sector-icon {
+  color: #c9a96e;
+  display: flex;
+  transition: transform 300ms ease;
+}
+
+.c-sector-card:hover .c-sector-icon {
+  transform: scale(1.12);
+}
+
+.c-sector-label {
+  color: #e8e8e8;
+  font-family: var(--font-outfit);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .c-sectors-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .c-sectors-grid { grid-template-columns: repeat(2, 1fr); }
+  .c-sector-card { padding: 20px 12px; }
+}
+
+/* ── Image hover animations (all service/project images) ── */
+.c-cat-card {
+  overflow: hidden;
+}
+
+.c-cat-image {
+  transition: transform 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.c-cat-card:hover .c-cat-image {
+  transform: scale(1.06) !important;
+}
+
+/* Slider image zoom on hover */
+.c-slider-slide img {
+  transition: transform 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.c-slider-section:hover .c-slider-slide.is-active img {
+  transform: scale(1.04);
+}
+
+/* About section image zoom */
+.c-about-image-wrap {
+  overflow: hidden;
+}
+
+.c-about-image-wrap img {
+  transition: transform 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.c-about-image-wrap:hover img {
+  transform: scale(1.05) !important;
+}
+
+/* Stagger support for 8-item grid */
+.js-reveal [data-stagger].in-view > *:nth-child(7) { opacity: 1; transform: none; transition-delay: 480ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(8) { opacity: 1; transform: none; transition-delay: 560ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(9) { opacity: 1; transform: none; transition-delay: 640ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(10) { opacity: 1; transform: none; transition-delay: 720ms; }
