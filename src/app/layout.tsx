@@ -6,6 +6,7 @@ import "./contemporary.css";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import SmoothScroll from "@/components/SmoothScroll";
 import RevealObserver from "@/components/RevealObserver";
+import CustomCursor from "@/components/CustomCursor";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -61,6 +62,7 @@ export default function RootLayout({
         <ScrollProgressBar />
         <SmoothScroll />
         <RevealObserver />
+        <CustomCursor />
         {children}
         {/* Social FABs — Instagram + LinkedIn above WhatsApp */}
         <div className="c-social-fabs">

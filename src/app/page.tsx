@@ -14,6 +14,7 @@ const heroSlides = [
   { src: "/images/hero-ext-1.jpg", alt: "Industrial construction" },
 ];
 import { ArrowRight, ArrowUpRight, MapPin, Phone, Mail, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { useParallax } from "@/hooks/useParallax";
 import Footer from "@/components/Footer";
 import AnimatedStats from "@/components/AnimatedStats";
 import ContemporaryNav from "@/components/ContemporaryNav";
@@ -187,12 +188,15 @@ function HeroSlideshow() {
       ))}
       <div className="c-hero-overlay" aria-hidden />
       <div className="c-hero-body">
-        <p className="c-hero-eyebrow">Pune · Mumbai · Bangalore · Hyderabad · Goa · Gujarat · Noida</p>
-        <h1 className="c-hero-title" id="hero-h">
-          General Contracting<br />Company
+        <p className="c-hero-eyebrow c-anim-eyebrow">Pune · Mumbai · Bangalore · Hyderabad · Goa · Gujarat · Noida</p>
+        <h1 className="c-hero-title" id="hero-h" aria-label="General Contracting Company">
+          <span className="c-hero-word" style={{ "--wi": 0 } as React.CSSProperties}>General</span>{" "}
+          <span className="c-hero-word" style={{ "--wi": 1 } as React.CSSProperties}>Contracting</span>
+          <br />
+          <span className="c-hero-word" style={{ "--wi": 2 } as React.CSSProperties}>Company</span>
         </h1>
-        <p className="c-hero-sub">15+ years. 470+ projects. One complete partner for industrial construction and interior fit-outs.</p>
-        <div className="c-hero-actions">
+        <p className="c-hero-sub c-anim-sub">15+ years. 470+ projects. One complete partner for industrial construction and interior fit-outs.</p>
+        <div className="c-hero-actions c-anim-actions">
           <Link href="/projects" className="c-btn-hero-primary">
             View Our Work <ArrowRight size={16} aria-hidden />
           </Link>
@@ -289,6 +293,7 @@ function ClientNamesMarquee({ clients }: { clients: { name: string }[] }) {
 export default function HomePage() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const formRef = useRef<HTMLFormElement>(null);
+  const aboutParallax = useParallax(0.1);
 
   // Slider
   const sliderProjects = projects.filter((p) => p.images.length >= 5);
@@ -431,8 +436,10 @@ export default function HomePage() {
             <Link href="/work" className="c-btn-outline">Our Portfolio</Link>
           </div>
         </div>
-        <div className="c-about-image-wrap" data-reveal="right">
-          <Image alt="Floor-Space India — completed interior" fill loading="lazy" sizes="50vw" src="/images/octillion-workspace.jpg" style={{ objectFit: "cover" }} />
+        <div className="c-about-image-wrap c-parallax-wrap" data-reveal="right">
+          <div ref={aboutParallax} className="c-parallax-inner">
+            <Image alt="Floor-Space India — completed interior" fill loading="lazy" sizes="50vw" src="/images/octillion-workspace.jpg" style={{ objectFit: "cover" }} />
+          </div>
         </div>
       </section>
 

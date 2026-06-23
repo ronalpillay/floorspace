@@ -3845,3 +3845,239 @@ button[type="submit"]:disabled {
   .c-india-map-layout { grid-template-columns: 1fr; }
   .c-india-svg-wrap { max-width: 320px; margin: 0 auto; }
 }
+
+/* ════════════════════════════════════════════════════
+   MODERN PROFESSIONAL ANIMATIONS
+   ════════════════════════════════════════════════════ */
+
+/* ── 1. Page entry — every page slides up on mount ── */
+@keyframes c-page-enter {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.c-page {
+  animation: c-page-enter 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── 2. Hero sequence — eyebrow → words → sub → actions ── */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(52px) skewY(2deg); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0)    skewY(0deg); filter: blur(0);   }
+}
+
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.c-anim-eyebrow {
+  animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.c-hero-word {
+  display: inline-block;
+  animation: hero-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.3s + var(--wi, 0) * 0.14s);
+}
+
+.c-anim-sub {
+  animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s both;
+}
+
+.c-anim-actions {
+  animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+}
+
+/* ── 3. Section heading reveals — text rises with depth ── */
+.js-reveal [data-reveal] .c-section-kicker,
+.js-reveal [data-reveal="left"] .c-section-kicker,
+.js-reveal [data-reveal="right"] .c-section-kicker {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 550ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 550ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js-reveal [data-reveal].in-view .c-section-kicker,
+.js-reveal [data-reveal="left"].in-view .c-section-kicker,
+.js-reveal [data-reveal="right"].in-view .c-section-kicker {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-reveal [data-reveal] .c-section-title,
+.js-reveal [data-reveal="left"] .c-section-title,
+.js-reveal [data-reveal="right"] .c-section-title {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1) 100ms,
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1) 100ms;
+}
+.js-reveal [data-reveal].in-view .c-section-title,
+.js-reveal [data-reveal="left"].in-view .c-section-title,
+.js-reveal [data-reveal="right"].in-view .c-section-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 4. Button polish — lift + glow on hover ── */
+.c-btn-dark {
+  transition: background 180ms ease, color 180ms ease,
+              transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 220ms ease;
+}
+.c-btn-dark:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+.c-btn-outline {
+  transition: background 180ms ease, border-color 180ms ease,
+              transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.c-btn-outline:hover {
+  transform: translateY(-2px);
+}
+
+.c-btn-hero-primary {
+  transition: background 180ms ease,
+              transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 250ms ease;
+}
+.c-btn-hero-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(255,255,255,0.25);
+}
+
+.c-btn-hero-ghost {
+  transition: background 180ms ease, border-color 180ms ease,
+              transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.c-btn-hero-ghost:hover {
+  transform: translateY(-3px);
+}
+
+/* ── 5. Image reveal — clip-path wipe on scroll ── */
+.c-img-reveal-wrap {
+  overflow: hidden;
+}
+.js-reveal .c-img-reveal-wrap img,
+.js-reveal .c-img-reveal-wrap > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js-reveal .c-img-reveal-wrap.in-view img,
+.js-reveal .c-img-reveal-wrap.in-view > * {
+  clip-path: inset(0 0 0% 0);
+}
+
+/* ── 6. Parallax image container ── */
+.c-parallax-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.c-parallax-inner {
+  will-change: transform;
+  transition: transform 0.05s linear;
+  height: 115%;
+  top: -7.5%;
+  position: relative;
+}
+
+/* ── 7. Stats number pop ── */
+@keyframes stat-pop {
+  0%   { transform: scale(0.88); opacity: 0; }
+  70%  { transform: scale(1.04); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+.js-reveal [data-stagger].in-view .c-stat-num,
+.js-reveal [data-stagger].in-view .c-stat-num-dark {
+  animation: stat-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.js-reveal [data-stagger].in-view > *:nth-child(1) .c-stat-num { animation-delay: 50ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(2) .c-stat-num { animation-delay: 130ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(3) .c-stat-num { animation-delay: 210ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(4) .c-stat-num { animation-delay: 290ms; }
+
+/* ── 8. Project slider — fade-scale in ── */
+@keyframes slide-fade-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.c-slider-section {
+  animation: slide-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+/* ── 9. Sector card — stagger shimmer border on hover ── */
+.c-sector-card::after {
+  content: "";
+  inset: 0;
+  position: absolute;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  transition: border-color 300ms ease;
+  pointer-events: none;
+}
+.c-sector-card {
+  position: relative;
+}
+.c-sector-card:hover::after {
+  border-color: rgba(201,169,110,0.6);
+}
+
+/* ── 10. Testimonial card pop ── */
+.js-reveal [data-stagger].in-view .c-testi-card {
+  animation: stat-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.js-reveal [data-stagger].in-view > *:nth-child(1) .c-testi-card { animation-delay: 80ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(2) .c-testi-card { animation-delay: 180ms; }
+.js-reveal [data-stagger].in-view > *:nth-child(3) .c-testi-card { animation-delay: 280ms; }
+
+/* ── 11. Footer brand reveal ── */
+.c-footer-brand, .c-footer-group, .c-footer-contact {
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── 12. Custom cursor ── */
+.c-cursor-dot,
+.c-cursor-ring {
+  border-radius: 50%;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.c-cursor-dot {
+  background: #264347;
+  height: 6px;
+  width: 6px;
+}
+
+.c-cursor-ring {
+  border: 1.5px solid rgba(38, 67, 71, 0.55);
+  height: 36px;
+  width: 36px;
+  transition: transform 0ms linear, opacity 300ms ease;
+}
+
+/* Hide on touch devices */
+@media (pointer: coarse) {
+  .c-cursor-dot, .c-cursor-ring { display: none; }
+}
+
+/* ── Reduced motion safety net ── */
+@media (prefers-reduced-motion: reduce) {
+  .c-hero-word,
+  .c-anim-eyebrow,
+  .c-anim-sub,
+  .c-anim-actions,
+  .c-page {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
