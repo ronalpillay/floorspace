@@ -354,12 +354,39 @@ export default function HomePage() {
       {/* 2. STATS STRIP — animated counters */}
       <AnimatedStats stats={stats} />
 
-      {/* 3. CLIENT NAMES MARQUEE */}
+      {/* 3. CLIENT SECTION — logo grid + marquee */}
       <section className="c-clients-section" aria-label="Clients we have worked with">
-        <div className="c-clients-header">
-          <p className="c-clients-count">100<span>+</span></p>
-          <p className="c-clients-headline">Brands that trust us to deliver</p>
+        <div className="c-clients-hero-header">
+          <p className="c-clients-eyebrow">Trusted By Industry Leaders</p>
+          <div className="c-clients-hero-row">
+            <p className="c-clients-count">100<span>+</span></p>
+            <div className="c-clients-hero-text">
+              <p className="c-clients-headline">Brands that trust<br />us to deliver</p>
+              <p className="c-clients-subline">From global MNCs to fast-growing enterprises — across manufacturing, pharma, tech, and banking sectors.</p>
+            </div>
+          </div>
         </div>
+
+        {/* Featured client logos grid */}
+        <div className="c-clients-logo-grid">
+          {[
+            "bridgestone", "eaton", "bajaj-allianz", "lupin",
+            "hindustan-unilever-limited", "new-balance", "dana", "mazak",
+            "amneal-pharmaceuticals", "oerlikon", "marquardt", "geberit",
+          ].map((slug) => (
+            <div key={slug} className="c-client-logo-cell">
+              <Image
+                src={`/images/clients/${slug}.png`}
+                alt={slug.replace(/-/g, " ")}
+                width={120}
+                height={48}
+                style={{ objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.65, maxHeight: 40, width: "auto" }}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="c-clients-marquee-label">And many more…</div>
         <ClientNamesMarquee clients={clientLogos} />
       </section>
 

@@ -220,6 +220,96 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* ── India Presence Map ── */}
+      <section className="c-india-map-section" aria-labelledby="india-map-h">
+        <div className="c-section-inner">
+          <div className="c-india-map-header" data-reveal>
+            <p className="c-section-kicker">Pan-India Presence</p>
+            <h2 className="c-section-title" id="india-map-h">Operating across 7 regions</h2>
+          </div>
+          <div className="c-india-map-layout">
+            {/* SVG India Map */}
+            <div className="c-india-svg-wrap" aria-hidden>
+              <svg viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg" className="c-india-svg">
+                {/* India mainland outline */}
+                <path
+                  className="c-india-outline"
+                  d="
+                    M 55,22 L 75,12 L 105,16 L 140,8 L 175,18 L 205,8 L 240,22 L 255,45
+                    L 240,55 L 255,72 L 242,88 L 248,108 L 232,118 L 228,138
+                    L 215,148 L 218,168 L 208,180 L 195,172 L 185,192
+                    L 178,215 L 165,235 L 148,252 L 132,260 L 115,255
+                    L 98,240 L 82,252 L 72,238 L 58,222 L 48,205
+                    L 38,188 L 30,170 L 38,152 L 28,138 L 22,118
+                    L 32,105 L 22,90 L 30,72 L 48,62 L 38,48
+                    L 55,22 Z
+                  "
+                />
+                {/* Sri Lanka hint */}
+                <ellipse cx="128" cy="278" rx="7" ry="9" className="c-india-srilanka" />
+
+                {/* City dots with pulse rings */}
+                {/* Gujarat */}
+                <circle cx="42" cy="148" r="8" className="c-map-pulse-ring" style={{"--delay":"0s"} as React.CSSProperties}/>
+                <circle cx="42" cy="148" r="5" className="c-map-dot"/>
+                <text x="20" y="138" className="c-map-label">Gujarat</text>
+
+                {/* Mumbai */}
+                <circle cx="38" cy="185" r="8" className="c-map-pulse-ring" style={{"--delay":"0.4s"} as React.CSSProperties}/>
+                <circle cx="38" cy="185" r="5" className="c-map-dot"/>
+                <text x="5" y="182" className="c-map-label">Mumbai</text>
+
+                {/* Pune */}
+                <circle cx="52" cy="198" r="8" className="c-map-pulse-ring" style={{"--delay":"0.2s"} as React.CSSProperties}/>
+                <circle cx="52" cy="198" r="5" className="c-map-dot c-map-dot--hq"/>
+                <text x="60" y="196" className="c-map-label c-map-label--hq">Pune ★</text>
+
+                {/* Goa */}
+                <circle cx="46" cy="222" r="8" className="c-map-pulse-ring" style={{"--delay":"0.6s"} as React.CSSProperties}/>
+                <circle cx="46" cy="222" r="5" className="c-map-dot"/>
+                <text x="8" y="228" className="c-map-label">Goa</text>
+
+                {/* Hyderabad */}
+                <circle cx="100" cy="195" r="8" className="c-map-pulse-ring" style={{"--delay":"0.3s"} as React.CSSProperties}/>
+                <circle cx="100" cy="195" r="5" className="c-map-dot"/>
+                <text x="108" y="198" className="c-map-label">Hyderabad</text>
+
+                {/* Bangalore */}
+                <circle cx="92" cy="232" r="8" className="c-map-pulse-ring" style={{"--delay":"0.5s"} as React.CSSProperties}/>
+                <circle cx="92" cy="232" r="5" className="c-map-dot"/>
+                <text x="100" y="235" className="c-map-label">Bangalore</text>
+
+                {/* Noida / Delhi NCR */}
+                <circle cx="88" cy="82" r="8" className="c-map-pulse-ring" style={{"--delay":"0.1s"} as React.CSSProperties}/>
+                <circle cx="88" cy="82" r="5" className="c-map-dot"/>
+                <text x="96" y="80" className="c-map-label">Noida</text>
+              </svg>
+            </div>
+
+            {/* City cards */}
+            <div className="c-india-cities-list">
+              {[
+                { city: "Pune", tag: "Head Office", accent: true },
+                { city: "Mumbai", tag: "Maharashtra" },
+                { city: "Bangalore", tag: "Karnataka" },
+                { city: "Hyderabad", tag: "Telangana" },
+                { city: "Goa", tag: "Goa" },
+                { city: "Gujarat", tag: "Multiple cities" },
+                { city: "Noida", tag: "Delhi NCR" },
+              ].map(({ city, tag, accent }) => (
+                <div key={city} className={`c-india-city-row${accent ? " is-hq" : ""}`}>
+                  <span className="c-india-city-dot" aria-hidden />
+                  <div>
+                    <span className="c-india-city-name">{city}</span>
+                    <span className="c-india-city-tag">{tag}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
