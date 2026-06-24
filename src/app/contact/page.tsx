@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock, ArrowRight } from "lucide-react";
 import ContemporaryNav from "@/components/ContemporaryNav";
 import Footer from "@/components/Footer";
 import "../contemporary.css";
+import "leaflet/dist/leaflet.css";
+import type { Map as LeafletMap, Marker as LeafletMarker } from "leaflet";
 
 const W3F_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
@@ -23,9 +25,92 @@ const offices = [
 
 const branches = ["Mumbai", "Bangalore", "Hyderabad", "Goa", "Gujarat", "Noida"];
 
+const mapCities = [
+  { city: "Pune",      tag: "Head Office",    isHq: true,  lat: 18.5204, lng: 73.8567 },
+  { city: "Mumbai",    tag: "Maharashtra",               lat: 19.0760, lng: 72.8777 },
+  { city: "Bangalore", tag: "Karnataka",                  lat: 12.9716, lng: 77.5946 },
+  { city: "Hyderabad", tag: "Telangana",                  lat: 17.3850, lng: 78.4867 },
+  { city: "Goa",       tag: "Goa",                        lat: 15.2993, lng: 74.1240 },
+  { city: "Gujarat",   tag: "Multiple cities",            lat: 23.0225, lng: 72.5714 },
+  { city: "Noida",     tag: "Delhi NCR",                  lat: 28.5355, lng: 77.3910 },
+];
+
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const formRef = useRef<HTMLFormElement>(null);
+  const leafletRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<LeafletMap | null>(null);
+  const markersRef = useRef<Record<string, LeafletMarker>>({});
+
+  function flyToCity(city: string, lat: number, lng: number) {
+    const map = mapInstanceRef.current;
+    if (!map) return;
+    map.flyTo([lat, lng], 9, { duration: 1.2 });
+    markersRef.current[city]?.openPopup();
+  }
+
+  useEffect(() => {
+    if (!leafletRef.current || mapInstanceRef.current) return;
+
+    let map: LeafletMap;
+
+    import("leaflet").then((mod) => {
+      const L = mod.default;
+
+      const pinIcon = (isHq: boolean) =>
+        L.divIcon({
+          className: "",
+          html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36" width="24" height="36">
+            <path d="M12 0C5.4 0 0 5.4 0 12c0 8.4 12 24 12 24s12-15.6 12-24C24 5.4 18.6 0 12 0z"
+              fill="${isHq ? "#c9a96e" : "#1a2f4b"}"/>
+            <circle cx="12" cy="12" r="4" fill="white"/>
+          </svg>`,
+          iconSize: [24, 36],
+          iconAnchor: [12, 36],
+          popupAnchor: [0, -40],
+        });
+
+      map = L.map(leafletRef.current!, {
+        center: [20.0, 78.5],
+        zoom: 5,
+        zoomControl: true,
+        scrollWheelZoom: false,
+        attributionControl: true,
+      });
+
+      L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          subdomains: "abcd",
+          maxZoom: 19,
+        }
+      ).addTo(map);
+
+      mapCities.forEach(({ city, tag, isHq, lat, lng }) => {
+        const marker = L.marker([lat, lng], { icon: pinIcon(!!isHq) })
+          .addTo(map)
+          .bindPopup(
+            `<div style="font-family:sans-serif;font-size:13px;line-height:1.5">
+              <strong>${city}</strong><br/>
+              <span style="color:#666">${tag}</span>
+            </div>`,
+            { offset: [0, -30] }
+          );
+        markersRef.current[city] = marker;
+      });
+
+      mapInstanceRef.current = map;
+    });
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -228,76 +313,23 @@ export default function ContactPage() {
             <h2 className="c-section-title" id="india-map-h">Operating across 7 regions</h2>
           </div>
           <div className="c-india-map-layout">
-            {/* SVG India Map */}
-            <div className="c-india-svg-wrap" aria-hidden>
-              <svg viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg" className="c-india-svg">
-                {/* India mainland outline */}
-                <path
-                  className="c-india-outline"
-                  d="
-                    M 55,22 L 75,12 L 105,16 L 140,8 L 175,18 L 205,8 L 240,22 L 255,45
-                    L 240,55 L 255,72 L 242,88 L 248,108 L 232,118 L 228,138
-                    L 215,148 L 218,168 L 208,180 L 195,172 L 185,192
-                    L 178,215 L 165,235 L 148,252 L 132,260 L 115,255
-                    L 98,240 L 82,252 L 72,238 L 58,222 L 48,205
-                    L 38,188 L 30,170 L 38,152 L 28,138 L 22,118
-                    L 32,105 L 22,90 L 30,72 L 48,62 L 38,48
-                    L 55,22 Z
-                  "
-                />
-                {/* Sri Lanka hint */}
-                <ellipse cx="128" cy="278" rx="7" ry="9" className="c-india-srilanka" />
-
-                {/* City dots with pulse rings */}
-                {/* Gujarat */}
-                <circle cx="42" cy="148" r="8" className="c-map-pulse-ring" style={{"--delay":"0s"} as React.CSSProperties}/>
-                <circle cx="42" cy="148" r="5" className="c-map-dot"/>
-                <text x="20" y="138" className="c-map-label">Gujarat</text>
-
-                {/* Mumbai */}
-                <circle cx="38" cy="185" r="8" className="c-map-pulse-ring" style={{"--delay":"0.4s"} as React.CSSProperties}/>
-                <circle cx="38" cy="185" r="5" className="c-map-dot"/>
-                <text x="5" y="182" className="c-map-label">Mumbai</text>
-
-                {/* Pune */}
-                <circle cx="52" cy="198" r="8" className="c-map-pulse-ring" style={{"--delay":"0.2s"} as React.CSSProperties}/>
-                <circle cx="52" cy="198" r="5" className="c-map-dot c-map-dot--hq"/>
-                <text x="60" y="196" className="c-map-label c-map-label--hq">Pune ★</text>
-
-                {/* Goa */}
-                <circle cx="46" cy="222" r="8" className="c-map-pulse-ring" style={{"--delay":"0.6s"} as React.CSSProperties}/>
-                <circle cx="46" cy="222" r="5" className="c-map-dot"/>
-                <text x="8" y="228" className="c-map-label">Goa</text>
-
-                {/* Hyderabad */}
-                <circle cx="100" cy="195" r="8" className="c-map-pulse-ring" style={{"--delay":"0.3s"} as React.CSSProperties}/>
-                <circle cx="100" cy="195" r="5" className="c-map-dot"/>
-                <text x="108" y="198" className="c-map-label">Hyderabad</text>
-
-                {/* Bangalore */}
-                <circle cx="92" cy="232" r="8" className="c-map-pulse-ring" style={{"--delay":"0.5s"} as React.CSSProperties}/>
-                <circle cx="92" cy="232" r="5" className="c-map-dot"/>
-                <text x="100" y="235" className="c-map-label">Bangalore</text>
-
-                {/* Noida / Delhi NCR */}
-                <circle cx="88" cy="82" r="8" className="c-map-pulse-ring" style={{"--delay":"0.1s"} as React.CSSProperties}/>
-                <circle cx="88" cy="82" r="5" className="c-map-dot"/>
-                <text x="96" y="80" className="c-map-label">Noida</text>
-              </svg>
+            {/* Leaflet interactive map */}
+            <div className="c-leaflet-wrap" aria-label="Interactive map of Floor-Space India offices">
+              <div ref={leafletRef} className="c-leaflet-map" />
             </div>
 
-            {/* City cards */}
+            {/* City list */}
             <div className="c-india-cities-list">
-              {[
-                { city: "Pune", tag: "Head Office", accent: true },
-                { city: "Mumbai", tag: "Maharashtra" },
-                { city: "Bangalore", tag: "Karnataka" },
-                { city: "Hyderabad", tag: "Telangana" },
-                { city: "Goa", tag: "Goa" },
-                { city: "Gujarat", tag: "Multiple cities" },
-                { city: "Noida", tag: "Delhi NCR" },
-              ].map(({ city, tag, accent }) => (
-                <div key={city} className={`c-india-city-row${accent ? " is-hq" : ""}`}>
+              {mapCities.map(({ city, tag, isHq, lat, lng }) => (
+                <div
+                  key={city}
+                  className={`c-india-city-row${isHq ? " is-hq" : ""}`}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => flyToCity(city, lat, lng)}
+                  onKeyDown={(e) => e.key === "Enter" && flyToCity(city, lat, lng)}
+                  style={{ cursor: "pointer" }}
+                >
                   <span className="c-india-city-dot" aria-hidden />
                   <div>
                     <span className="c-india-city-name">{city}</span>

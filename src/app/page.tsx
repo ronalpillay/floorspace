@@ -3,6 +3,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 // ── Hero slideshow — start with interior (nav always visible), ext-1 moved to last ──
 const heroSlides = [
@@ -13,8 +18,10 @@ const heroSlides = [
   { src: "/images/hero-int-3.jpg", alt: "Interior fit-out" },
   { src: "/images/hero-ext-1.jpg", alt: "Industrial construction" },
 ];
-import { ArrowRight, ArrowUpRight, MapPin, Phone, Mail, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Phone, Mail, Clock, ChevronLeft, ChevronRight, Building2, Monitor, Factory, HeartPulse, UtensilsCrossed, ShoppingBag, GraduationCap, Home } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useParallax } from "@/hooks/useParallax";
+import Tilt3D from "@/components/Tilt3D";
 import Footer from "@/components/Footer";
 import AnimatedStats from "@/components/AnimatedStats";
 import ContemporaryNav from "@/components/ContemporaryNav";
@@ -59,71 +66,15 @@ const clientLogos = [
   { slug: "smcc-construction-india-limited", name: "SMCC" },
   { slug: "hirschvogel-automotive-group", name: "Hirschvogel" },
 ];
-const sectors = [
-  {
-    label: "Corporate Offices",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M9 21V9"/>
-      </svg>
-    ),
-  },
-  {
-    label: "IT & ITES Spaces",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-      </svg>
-    ),
-  },
-  {
-    label: "Retail Spaces",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
-      </svg>
-    ),
-  },
-  {
-    label: "Hospitality",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M3 11l19-9-9 19-2-8-8-2z"/>
-      </svg>
-    ),
-  },
-  {
-    label: "Industrial & Manufacturing",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M2 20h20M4 20V10l4-4 4 4V6l4-4 4 4v14"/>
-      </svg>
-    ),
-  },
-  {
-    label: "Healthcare & Wellness",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v8M8 12h8"/>
-      </svg>
-    ),
-  },
-  {
-    label: "Educational Institutions",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
-      </svg>
-    ),
-  },
-  {
-    label: "Residential Interiors",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    ),
-  },
+const sectors: { label: string; sub: string; Icon: LucideIcon }[] = [
+  { label: "Corporate Offices",          sub: "", Icon: Building2 },
+  { label: "IT & ITES Spaces",           sub: "", Icon: Monitor },
+  { label: "Retail Spaces",             sub: "", Icon: ShoppingBag },
+  { label: "Hospitality",               sub: "", Icon: UtensilsCrossed },
+  { label: "Industrial & Manufacturing", sub: "", Icon: Factory },
+  { label: "Healthcare & Wellness",      sub: "", Icon: HeartPulse },
+  { label: "Educational Institutions",   sub: "", Icon: GraduationCap },
+  { label: "Residential Interiors",      sub: "", Icon: Home },
 ];
 
 const testimonials = [
@@ -195,7 +146,7 @@ function HeroSlideshow() {
           <br />
           <span className="c-hero-word" style={{ "--wi": 2 } as React.CSSProperties}>Company</span>
         </h1>
-        <p className="c-hero-sub c-anim-sub">15+ years. 470+ projects. One complete partner for industrial construction and interior fit-outs.</p>
+        <p className="c-hero-sub c-anim-sub">15+ years. 470+ projects. Your complete partner for Industrial Construction and Interior Turnkey Solutions.</p>
         <div className="c-hero-actions c-anim-actions">
           <Link href="/projects" className="c-btn-hero-primary">
             View Our Work <ArrowRight size={16} aria-hidden />
@@ -294,6 +245,112 @@ export default function HomePage() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const formRef = useRef<HTMLFormElement>(null);
   const aboutParallax = useParallax(0.1);
+  const pageRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // ── Hero: text body moves up slower than scroll (reverse parallax feel) ──
+    gsap.to(".c-hero-body", {
+      y: -80,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".c-hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1.5,
+      },
+    });
+
+    // ── Stats strip: slide each stat up on entrance ──
+    gsap.from(".c-stats-item", {
+      y: 40,
+      opacity: 0,
+      stagger: 0.12,
+      duration: 0.9,
+      ease: "power3.out",
+      scrollTrigger: { trigger: ".c-stats-strip", start: "top 88%", once: true },
+    });
+
+    // ── Client logo grid: batch stagger fade + scale ──
+    ScrollTrigger.batch(".c-client-logo-cell", {
+      onEnter: (batch) =>
+        gsap.fromTo(batch,
+          { opacity: 0, y: 22, scale: 0.88 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.06, duration: 0.75, ease: "back.out(1.6)", overwrite: "auto" }
+        ),
+      once: true,
+      start: "top 90%",
+    });
+
+    // ── Client section header: word-by-word ──
+    gsap.from(".c-clients-count", {
+      scale: 0.7,
+      opacity: 0,
+      duration: 1.1,
+      ease: "elastic.out(1, 0.6)",
+      scrollTrigger: { trigger: ".c-clients-hero-header", start: "top 85%", once: true },
+    });
+
+    // ── Sector cards: stagger with slight overshoot ──
+    ScrollTrigger.batch(".c-sector-card", {
+      onEnter: (batch) =>
+        gsap.fromTo(batch,
+          { opacity: 0, y: 50, scale: 0.93 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.07, duration: 0.9, ease: "power3.out", overwrite: "auto" }
+        ),
+      once: true,
+      start: "top 88%",
+    });
+
+    // ── Sectors heading: fade up (centered text — y-axis looks better than x) ──
+    gsap.from([".c-sectors-kicker", ".c-sectors-title"], {
+      y: 24,
+      opacity: 0,
+      stagger: 0.14,
+      duration: 0.9,
+      ease: "power3.out",
+      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 80%", once: true },
+    });
+
+    // ── Testimonial cards: stagger from below ──
+    ScrollTrigger.batch(".c-testi-card", {
+      onEnter: (batch) =>
+        gsap.fromTo(batch,
+          { opacity: 0, y: 44 },
+          { opacity: 1, y: 0, stagger: 0.1, duration: 0.85, ease: "power3.out", overwrite: "auto" }
+        ),
+      once: true,
+      start: "top 88%",
+    });
+
+    // ── Slider: header heading + CTA button stagger ──
+    gsap.from([".c-slider-header h2", ".c-slider-header .c-btn-dark"], {
+      y: 24, opacity: 0, stagger: 0.12, duration: 0.8, ease: "power3.out",
+      scrollTrigger: { trigger: ".c-slider-header", start: "top 96%", once: true },
+    });
+
+    // ── Contact: left column slides from left, right column from right ──
+    gsap.from(".c-contact-left", {
+      x: -50, opacity: 0, duration: 1, ease: "power3.out",
+      scrollTrigger: { trigger: ".c-contact-inner", start: "top 82%", once: true },
+    });
+    gsap.from(".c-contact-right", {
+      x: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.1,
+      scrollTrigger: { trigger: ".c-contact-inner", start: "top 82%", once: true },
+    });
+
+    // ── Contact info rows: sequential stagger ──
+    gsap.from(".c-contact-row", {
+      x: -16, opacity: 0, stagger: 0.08, duration: 0.6, ease: "power3.out", delay: 0.3,
+      scrollTrigger: { trigger: ".c-contact-info", start: "top 88%", once: true },
+    });
+
+    // ── Contact heading: clip-path curtain (text rises into view after container starts sliding in) ──
+    gsap.from("#contact-h", {
+      clipPath: "inset(110% 0 0 0)",
+      duration: 1.1, ease: "power4.out", delay: 0.4,
+      scrollTrigger: { trigger: ".c-contact-section", start: "top 80%", once: true },
+    });
+  }, { scope: pageRef });
 
   // Slider
   const sliderProjects = projects.filter((p) => p.images.length >= 5);
@@ -344,7 +401,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="c-page">
+    <div className="c-page" ref={pageRef}>
       {/* Preload first hero image for fast LCP */}
       <link rel="preload" as="image" href="/images/hero-int-1.jpg" fetchPriority="high" />
 
@@ -376,16 +433,16 @@ export default function HomePage() {
         <div className="c-clients-logo-grid">
           {[
             "bridgestone", "eaton", "bajaj-allianz", "lupin",
-            "hindustan-unilever-limited", "new-balance", "dana", "mazak",
-            "amneal-pharmaceuticals", "oerlikon", "marquardt", "geberit",
+            "hindustan-unilever-limited", "new-balance", "mahindra-2-wheelers", "mazak",
+            "schmersal", "oerlikon", "marquardt", "geberit",
           ].map((slug) => (
             <div key={slug} className="c-client-logo-cell">
               <Image
                 src={`/images/clients/${slug}.png`}
                 alt={slug.replace(/-/g, " ")}
-                width={120}
-                height={48}
-                style={{ objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.65, maxHeight: 40, width: "auto" }}
+                width={160}
+                height={60}
+                style={{ objectFit: "contain" }}
               />
             </div>
           ))}
@@ -396,29 +453,37 @@ export default function HomePage() {
       </section>
 
       {/* 4. TWO SERVICE CARDS */}
-      <section className="c-cats-section" aria-label="Core services" data-stagger>
-        <article className="c-cat-card">
-          <Image alt="Industrial Construction" className="c-cat-image" fill loading="lazy" sizes="50vw" src="/images/mazak-exterior.jpg" />
-          <div className="c-cat-overlay" aria-hidden />
-          <div className="c-cat-body">
-            <span className="c-cat-badge">Service 01</span>
-            <span className="c-cat-title">Industrial Construction &amp; Turnkey Solutions</span>
-            <Link href="/industrial-construction" className="c-cat-link">
-              Explore <ArrowUpRight size={14} aria-hidden />
-            </Link>
-          </div>
-        </article>
-        <article className="c-cat-card">
-          <Image alt="Interior Fit Outs" className="c-cat-image" fill loading="lazy" sizes="50vw" src="/images/octillion-reception-main.jpg" />
-          <div className="c-cat-overlay" aria-hidden />
-          <div className="c-cat-body">
-            <span className="c-cat-badge">Service 02</span>
-            <span className="c-cat-title">Commercial &amp; Interior Fit Outs</span>
-            <Link href="/interior-fitouts" className="c-cat-link">
-              Explore <ArrowUpRight size={14} aria-hidden />
-            </Link>
-          </div>
-        </article>
+      <section className="c-cats-section" aria-label="Core services">
+        <div data-reveal="left" className="c-cat-reveal">
+          <Tilt3D intensity={7} className="c-cat-tilt">
+            <article className="c-cat-card">
+              <Image alt="Industrial Construction" className="c-cat-image" fill loading="lazy" sizes="50vw" src="/images/chromewell/03.jpg" />
+              <div className="c-cat-overlay" aria-hidden />
+              <div className="c-cat-body">
+                <span className="c-cat-badge">Service 01</span>
+                <span className="c-cat-title">Industrial Construction &amp; Turnkey Solutions</span>
+                <Link href="/industrial-construction" className="c-cat-link">
+                  Explore <ArrowUpRight size={14} aria-hidden />
+                </Link>
+              </div>
+            </article>
+          </Tilt3D>
+        </div>
+        <div data-reveal="right" className="c-cat-reveal">
+          <Tilt3D intensity={7} className="c-cat-tilt">
+            <article className="c-cat-card">
+              <Image alt="Interior Fit Outs" className="c-cat-image" fill loading="lazy" sizes="50vw" src="/images/octillion-reception-main.jpg" />
+              <div className="c-cat-overlay" aria-hidden />
+              <div className="c-cat-body">
+                <span className="c-cat-badge">Service 02</span>
+                <span className="c-cat-title">Commercial &amp; Interior Fit Outs</span>
+                <Link href="/interior-fitouts" className="c-cat-link">
+                  Explore <ArrowUpRight size={14} aria-hidden />
+                </Link>
+              </div>
+            </article>
+          </Tilt3D>
+        </div>
       </section>
 
       {/* 5. ABOUT */}
@@ -429,7 +494,7 @@ export default function HomePage() {
             Designing today,<br />enriching tomorrow.
           </h2>
           <p className="c-about-body">
-            Floor-Space India is a Pune-based general contracting &amp; interior design company delivering exceptional commercial spaces that inspire and perform. From concept to completion, we craft environments that blend aesthetics, functionality, and long-term value across corporate, industrial, healthcare, and institutional sectors.
+            Floor-Space India is a Pune-based specialist in Industrial Construction and Interior Turnkey Solutions — delivering exceptional spaces that inspire and perform. From concept to completion, we blend aesthetics, functionality, and long-term value across corporate, industrial, healthcare, and institutional sectors.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href="/about" className="c-btn-dark">Read More About Us <ArrowRight size={15} aria-hidden /></Link>
@@ -470,7 +535,7 @@ export default function HomePage() {
             {sliderProjects.map((p, i) => (
               <div
                 key={p.slug}
-                className="c-slider-slide"
+                className={`c-slider-slide${i === sliderIndex ? " is-active" : ""}`}
                 aria-hidden={i !== sliderIndex}
               >
                 <Image
@@ -528,18 +593,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. SECTORS — icon grid (reference design) */}
-      <section className="c-sectors-dark" id="sectors" aria-labelledby="sectors-h">
-        <div className="c-sectors-dark-inner">
-          <div className="c-sectors-dark-header" data-reveal>
-            <p className="c-sectors-dark-kicker">Sectors We Serve</p>
-            <h2 className="c-sectors-dark-title" id="sectors-h">Spaces We Transform</h2>
-          </div>
-          <div className="c-sectors-grid" data-stagger>
-            {sectors.map((s) => (
-              <div key={s.label} className="c-sector-card">
-                <div className="c-sector-icon">{s.icon}</div>
-                <p className="c-sector-label">{s.label}</p>
+      {/* 7. SECTORS — black icon grid */}
+      <section className="c-sectors-black-grid" id="sectors" aria-labelledby="sectors-h">
+        <div className="c-section-inner">
+          <p className="c-section-kicker c-sectors-kicker">Sectors We Serve</p>
+          <h2 className="c-section-title c-sectors-title" id="sectors-h">Spaces We Transform</h2>
+          <div className="c-sectors-icon-grid">
+            {sectors.map(({ label, Icon }) => (
+              <div key={label} className="c-sector-card">
+                <div className="c-sector-card-inner">
+                  <span className="c-sector-icon" aria-hidden>
+                    <Icon size={48} strokeWidth={1.0} />
+                  </span>
+                  <span className="c-sector-name">{label}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -556,7 +623,7 @@ export default function HomePage() {
             </div>
             <Link href="/contact" className="c-btn-dark" style={{ flexShrink: 0 }}>Work With Us</Link>
           </div>
-          <div className="c-testimonials-grid" data-stagger>
+          <div className="c-testimonials-grid">
             {testimonials.map((t, i) => (
               <div className={`c-testi-card${i === 0 ? " is-featured" : ""}`} key={t.name}>
                 <div className="c-testi-quote-mark" aria-hidden>&quot;</div>
@@ -611,7 +678,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="c-contact-social">
-              <a href="https://www.instagram.com/floor_space_india" target="_blank" rel="noopener noreferrer" className="c-social-btn" aria-label="Instagram">
+              <a href="https://www.instagram.com/floor_space_india?igsh=cHU2OXV2bDN5NG5n" target="_blank" rel="noopener noreferrer" className="c-social-btn" aria-label="Instagram">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                   <circle cx="12" cy="12" r="4"/>

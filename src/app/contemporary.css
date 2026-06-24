@@ -535,7 +535,8 @@
   border-right: 1px solid rgba(255,255,255,0.07);
   display: flex;
   justify-content: center;
-  padding: 28px 20px;
+  min-height: 100px;
+  padding: 28px 24px;
   transition: background 220ms ease;
 }
 
@@ -547,9 +548,20 @@
   background: rgba(255,255,255,0.04);
 }
 
+.c-client-logo-cell img {
+  filter: brightness(0) invert(1);
+  max-height: 56px;
+  max-width: 130px;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+
 .c-client-logo-cell:hover img {
-  opacity: 1 !important;
-  filter: brightness(0) invert(1) !important;
+  filter: brightness(0) invert(1);
+  opacity: 1;
+  transform: scale(1.08);
 }
 
 .c-clients-marquee-label {
@@ -1195,6 +1207,99 @@
 }
 
 /* ── Services ── */
+/* ── SECTORS BLACK ICON GRID ── */
+.c-sectors-black-grid {
+  background: #0a0a0a;
+  padding: clamp(60px, 8vw, 100px) clamp(16px, 4vw, 48px);
+  text-align: center;
+}
+
+.c-sectors-kicker {
+  color: #c9a96e !important;
+  text-align: center;
+}
+
+.c-sectors-kicker::before {
+  display: none;
+}
+
+.c-sectors-title {
+  color: #fff !important;
+  margin-bottom: 48px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: none;
+  text-align: center;
+}
+
+.c-sectors-icon-grid {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 48px;
+}
+
+.c-sector-card {
+  align-items: stretch;
+  aspect-ratio: 5 / 3;
+  background: #0f0f0f;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  cursor: default;
+  display: flex;
+  padding: 8px;
+  position: relative;
+  transition: background 300ms ease;
+}
+
+.c-sector-card:hover {
+  background: #141410;
+}
+
+.c-sector-card-inner {
+  align-items: center;
+  border: 1px solid rgba(201,169,110,0.28);
+  border-radius: 3px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 20px 16px 22px;
+  transition: border-color 320ms ease;
+}
+
+.c-sector-card:hover .c-sector-card-inner {
+  border-color: rgba(201,169,110,0.65);
+}
+
+.c-sector-icon {
+  align-items: center;
+  color: #c9a96e;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.c-sector-card:hover .c-sector-icon {
+  transform: translateY(-4px);
+}
+
+.c-sector-name {
+  color: #c9a96e;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .c-sectors-icon-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .c-sector-card { aspect-ratio: 3 / 2; }
+}
+
+/* ── (legacy accordion, kept for reference) ── */
 .c-services-section {
   background: var(--c-white);
   border-top: 1px solid var(--c-border);
@@ -3567,93 +3672,7 @@ button[type="submit"]:disabled {
   box-shadow: 0 6px 20px rgba(0, 119, 181, 0.55);
 }
 
-/* ── Sectors Dark Grid (Spaces We Transform) ── */
-.c-sectors-dark {
-  background: #0e0e0e;
-  padding: clamp(60px, 8vw, 100px) clamp(16px, 4vw, 48px);
-}
-
-.c-sectors-dark-inner {
-  margin: 0 auto;
-  max-width: 1200px;
-}
-
-.c-sectors-dark-header {
-  margin-bottom: 48px;
-  text-align: center;
-}
-
-.c-sectors-dark-kicker {
-  color: #c9a96e;
-  font-family: var(--font-outfit);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.c-sectors-dark-title {
-  color: #fff;
-  font-family: var(--font-outfit);
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
-}
-
-.c-sectors-grid {
-  display: grid;
-  gap: 1px;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.c-sector-card {
-  align-items: center;
-  border: 1px solid rgba(201, 169, 110, 0.2);
-  cursor: default;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  justify-content: center;
-  padding: clamp(24px, 3vw, 40px) clamp(12px, 2vw, 24px);
-  transition: background 250ms ease, border-color 250ms ease, transform 250ms ease;
-}
-
-.c-sector-card:hover {
-  background: rgba(201, 169, 110, 0.07);
-  border-color: rgba(201, 169, 110, 0.5);
-  transform: translateY(-2px);
-}
-
-.c-sector-icon {
-  color: #c9a96e;
-  display: flex;
-  transition: transform 300ms ease;
-}
-
-.c-sector-card:hover .c-sector-icon {
-  transform: scale(1.12);
-}
-
-.c-sector-label {
-  color: #e8e8e8;
-  font-family: var(--font-outfit);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  line-height: 1.4;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-@media (max-width: 900px) {
-  .c-sectors-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  .c-sectors-grid { grid-template-columns: repeat(2, 1fr); }
-  .c-sector-card { padding: 20px 12px; }
-}
+/* stale sectors-dark block removed */
 
 /* ── Image hover animations (all service/project images) ── */
 .c-cat-card {
@@ -3707,26 +3726,46 @@ button[type="submit"]:disabled {
 }
 
 .c-india-map-layout {
-  align-items: center;
+  align-items: stretch;
   display: grid;
-  gap: 48px;
-  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  grid-template-columns: 3fr 2fr;
 }
 
-/* SVG map */
-.c-india-svg-wrap {
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.07);
+/* Leaflet map wrapper */
+.c-leaflet-wrap {
   border-radius: 20px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.06);
-  display: flex;
-  justify-content: center;
-  padding: 32px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+  overflow: hidden;
+  height: 460px;
 }
 
-.c-india-svg {
-  max-height: 380px;
+.c-leaflet-map {
+  height: 100%;
   width: 100%;
+}
+
+/* Leaflet control overrides to match brand */
+.c-leaflet-wrap .leaflet-control-zoom {
+  border: none;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.c-leaflet-wrap .leaflet-control-zoom a {
+  background: #fff;
+  border: none;
+  color: #1a2f4b;
+  font-size: 16px;
+  line-height: 30px;
+}
+.c-leaflet-wrap .leaflet-control-zoom a:hover {
+  background: #f4f6f9;
+}
+.c-leaflet-wrap .leaflet-popup-content-wrapper {
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+.c-leaflet-wrap .leaflet-popup-tip {
+  background: #fff;
 }
 
 .c-india-outline {
@@ -3843,7 +3882,7 @@ button[type="submit"]:disabled {
 
 @media (max-width: 860px) {
   .c-india-map-layout { grid-template-columns: 1fr; }
-  .c-india-svg-wrap { max-width: 320px; margin: 0 auto; }
+  .c-leaflet-wrap { height: 320px; }
 }
 
 /* ════════════════════════════════════════════════════
@@ -4080,4 +4119,1004 @@ button[type="submit"]:disabled {
     transform: none !important;
     filter: none !important;
   }
+}
+
+/* ════════════════════════════════════════════════════
+   ANIMATION EXPANSION v2
+   ════════════════════════════════════════════════════ */
+
+/* ── PRELOADER ── */
+.c-preloader {
+  position: fixed;
+  inset: 0;
+  background: #0c0c0c;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.c-preloader.is-out {
+  transform: translateY(-100%);
+}
+
+.c-preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: preloader-logo-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes preloader-logo-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.c-preloader-tag {
+  color: rgba(255,255,255,0.3);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.c-preloader-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, #264347, #c9a96e);
+  animation: preloader-bar 1.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes preloader-bar {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.c-preloader-count {
+  position: absolute;
+  bottom: 36px;
+  right: 48px;
+  color: rgba(255,255,255,0.2);
+  font-size: 0.72rem;
+  font-family: var(--font-outfit);
+  letter-spacing: 0.1em;
+}
+
+/* ── HERO PARTICLES ── */
+.c-hero-particles {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.c-hero-particle {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  bottom: -10px;
+  position: absolute;
+  animation: particle-rise linear infinite;
+}
+
+@keyframes particle-rise {
+  0%   { transform: translateY(0)       scale(1);   opacity: 0; }
+  5%   { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-110vh)  scale(0.3); opacity: 0; }
+}
+
+/* ── ENHANCED SECTION TITLE — clip-path reveal ── */
+.js-reveal [data-reveal] .c-section-title,
+.js-reveal [data-reveal="left"] .c-section-title,
+.js-reveal [data-reveal="right"] .c-section-title {
+  clip-path: polygon(0 110%, 100% 110%, 100% 110%, 0 110%);
+  opacity: 1;
+  transform: none;
+  transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1) 120ms;
+}
+.js-reveal [data-reveal].in-view .c-section-title,
+.js-reveal [data-reveal="left"].in-view .c-section-title,
+.js-reveal [data-reveal="right"].in-view .c-section-title {
+  clip-path: polygon(0 0%, 100% 0%, 100% 115%, 0 115%);
+}
+
+/* Kicker line draw: a short line extends left of the text */
+.js-reveal [data-reveal] .c-section-kicker,
+.js-reveal [data-reveal="left"] .c-section-kicker,
+.js-reveal [data-reveal="right"] .c-section-kicker {
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 500ms ease,
+              transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js-reveal [data-reveal].in-view .c-section-kicker,
+.js-reveal [data-reveal="left"].in-view .c-section-kicker,
+.js-reveal [data-reveal="right"].in-view .c-section-kicker {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── 3D TILT — sheen layer ── */
+.c-tilt-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 200%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  z-index: 3;
+}
+.c-cat-card:hover .c-tilt-sheen {
+  opacity: 1;
+  background-position: right bottom;
+}
+
+/* ── MAGNETIC BUTTON GLOW ── */
+.c-btn-dark:hover,
+.c-btn-hero-primary:hover {
+  box-shadow: 0 0 0 3px rgba(38, 67, 71, 0.15),
+              0 12px 32px rgba(0,0,0,0.22);
+}
+
+/* ── STAT NUMBER SCRAMBLE FLICKER ── */
+@keyframes stat-flicker {
+  0%,100% { opacity: 1; }
+  10%      { opacity: 0.7; }
+  20%      { opacity: 1; }
+  30%      { opacity: 0.8; }
+}
+.c-stats-value {
+  animation: stat-flicker 0.4s ease 1.8s 1;
+}
+
+/* ── FOOTER STAGGER REVEAL ── */
+.c-footer-top > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.c-footer-top.in-view > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0ms;   }
+.c-footer-top.in-view > *:nth-child(2) { opacity:1; transform:none; transition-delay: 80ms;  }
+.c-footer-top.in-view > *:nth-child(3) { opacity:1; transform:none; transition-delay: 160ms; }
+.c-footer-top.in-view > *:nth-child(4) { opacity:1; transform:none; transition-delay: 240ms; }
+.c-footer-top.in-view > *:nth-child(5) { opacity:1; transform:none; transition-delay: 320ms; }
+
+/* ── LINE DRAW — horizontal accent lines ── */
+@keyframes line-draw {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+.c-section-kicker::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 24px;
+  height: 1.5px;
+  background: var(--c-accent);
+  margin-right: 10px;
+  animation: line-draw 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── ABOUT BODY TEXT REVEAL ── */
+.js-reveal [data-reveal] .c-about-body,
+.js-reveal [data-reveal="left"] .c-about-body {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 700ms ease 250ms, transform 700ms cubic-bezier(0.16, 1, 0.3, 1) 250ms;
+}
+.js-reveal [data-reveal].in-view .c-about-body,
+.js-reveal [data-reveal="left"].in-view .c-about-body {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── SLIDER SLIDE — ken burns on active ── */
+.c-slider-slide.is-active img {
+  animation: ken-burns 6s ease-out forwards;
+}
+@keyframes ken-burns {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1); }
+}
+
+/* ── PROJECT CARD HOVER LIFT + SHADOW ── */
+.c-project-card {
+  transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 350ms ease;
+}
+.c-project-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.16);
+}
+
+/* ── TESTIMONIAL SUBTLE TILT ON HOVER ── */
+.c-testi-card {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 300ms ease;
+}
+.c-testi-card:hover {
+  transform: translateY(-4px) rotate(-0.4deg);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+}
+
+/* ── GOLD SHIMMER on accent text ── */
+@keyframes gold-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.c-hero-eyebrow,
+.c-clients-eyebrow,
+.c-sectors-dark-kicker {
+  background: linear-gradient(
+    90deg,
+    currentColor 0%,
+    #c9a96e 40%,
+    currentColor 60%,
+    currentColor 100%
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gold-shimmer 4s linear infinite 2s;
+}
+
+/* ── NAV LINK animated underline ── */
+.c-nav-link {
+  position: relative;
+}
+.c-nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: width 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.c-nav-link:hover::after {
+  width: 100%;
+}
+
+/* ── IMAGE PARALLAX hero dots depth ── */
+.c-hero-dots {
+  animation: hero-dots-in 0.6s ease 1s both;
+}
+@keyframes hero-dots-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Reduce motion overrides ── */
+@media (prefers-reduced-motion: reduce) {
+  .c-preloader-bar,
+  .c-preloader-inner,
+  .c-hero-particle,
+  .c-stats-value,
+  .c-slider-slide.is-active img,
+  .c-section-kicker::before {
+    animation: none !important;
+  }
+  .c-footer-top > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   ANIMATION EXPANSION v3 — image reveals, parallax,
+   cursor trail, scramble, ambient effects
+   ════════════════════════════════════════════════════ */
+
+/* ── SCROLL REVEAL IMAGE — clip-path wipe from sides ── */
+.sri-wrap {
+  overflow: hidden;
+  display: contents; /* collapses wrapper so it doesn't break grid/flex */
+}
+
+/* Left wipe: image sweeps in from the left */
+.sri-from-left {
+  display: block;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.05s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sri-from-left.sri-visible {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Right wipe: image sweeps in from the right */
+.sri-from-right {
+  display: block;
+  clip-path: inset(0 0% 0 100%);
+  transition: clip-path 1.05s cubic-bezier(0.16, 1, 0.3, 1) 120ms;
+}
+.sri-from-right.sri-visible {
+  clip-path: inset(0 0% 0 0%);
+}
+
+/* Bottom slide: opacity + translate */
+.sri-from-bottom {
+  display: block;
+  opacity: 0;
+  transform: translateY(52px);
+  transition: opacity 0.8s ease,
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sri-from-bottom.sri-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fix so service cat section maintains two-col layout */
+.c-cats-section .sri-from-left,
+.c-cats-section .sri-from-right {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+.c-cats-section .c-cat-card {
+  width: 100%;
+}
+
+/* ── ABOUT IMAGE — side-wipe via data-reveal ── */
+.js-reveal [data-reveal="right"] .c-about-image-wrap,
+.js-reveal [data-reveal="right"].c-about-image-wrap {
+  clip-path: inset(0 0% 0 100%);
+  transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1) 200ms;
+}
+.js-reveal [data-reveal="right"].in-view .c-about-image-wrap,
+.js-reveal [data-reveal="right"].in-view.c-about-image-wrap {
+  clip-path: inset(0 0% 0 0%);
+}
+
+/* ── PARALLAX — oversized inner container ── */
+.c-parallax-wrap {
+  overflow: hidden !important;
+  position: absolute;
+  inset: 0;
+}
+.c-parallax-inner {
+  position: relative;
+  width: 100%;
+  height: 115%;
+  top: -7.5%;
+  will-change: transform;
+}
+
+/* ── CSS SCROLL-DRIVEN PARALLAX on hero slides ──
+   Supported in Chrome 115+, Safari 18+          */
+@supports (animation-timeline: scroll()) {
+  .c-slider-slide.is-active img {
+    animation:
+      ken-burns 6s ease-out forwards,
+      css-parallax linear both;
+    animation-timeline: auto, scroll(root);
+    animation-range: auto, entry 0% exit 100%;
+  }
+  @keyframes css-parallax {
+    from { transform: translateY(-6%); }
+    to   { transform: translateY(6%); }
+  }
+}
+
+/* ── RIPPLE keyframe (used by RippleButton or direct JS) ── */
+@keyframes ripple-expand {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* ── TEXT SCRAMBLE — monospace during animation phase ── */
+.c-sectors-dark-title span[aria-label],
+.c-section-title span[aria-label] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── STAGGER CHILDREN — each `[data-stagger]` child ── */
+.js-reveal [data-stagger] > * {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js-reveal [data-stagger].in-view > *:nth-child(1)  { opacity:1;transform:none;transition-delay:0ms   }
+.js-reveal [data-stagger].in-view > *:nth-child(2)  { opacity:1;transform:none;transition-delay:80ms  }
+.js-reveal [data-stagger].in-view > *:nth-child(3)  { opacity:1;transform:none;transition-delay:160ms }
+.js-reveal [data-stagger].in-view > *:nth-child(4)  { opacity:1;transform:none;transition-delay:240ms }
+.js-reveal [data-stagger].in-view > *:nth-child(5)  { opacity:1;transform:none;transition-delay:320ms }
+.js-reveal [data-stagger].in-view > *:nth-child(6)  { opacity:1;transform:none;transition-delay:400ms }
+.js-reveal [data-stagger].in-view > *:nth-child(7)  { opacity:1;transform:none;transition-delay:480ms }
+.js-reveal [data-stagger].in-view > *:nth-child(8)  { opacity:1;transform:none;transition-delay:560ms }
+
+/* ── ACTIVE SLIDE IMAGE — zoom-in ken burns ── */
+.c-slider-slide img {
+  transform: scale(1.05);
+  transition: transform 6s ease-out;
+}
+.c-slider-slide.is-active img {
+  transform: scale(1);
+}
+
+/* ── NAV scroll-shrink ── */
+.c-nav--scrolled {
+  box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+  backdrop-filter: blur(18px);
+}
+
+/* ── SECTION background gradient shift ── */
+@keyframes bg-drift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.c-engage-section,
+.c-contact-section {
+  background-size: 200% 200%;
+  animation: bg-drift 12s ease infinite;
+}
+
+/* ── SECTOR CARD — staggered scale-in ── */
+.js-reveal [data-stagger].in-view .c-sector-card {
+  animation: sector-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.js-reveal [data-stagger].in-view .c-sector-card:nth-child(1) { animation-delay:  20ms }
+.js-reveal [data-stagger].in-view .c-sector-card:nth-child(2) { animation-delay:  80ms }
+.js-reveal [data-stagger].in-view .c-sector-card:nth-child(3) { animation-delay: 140ms }
+.js-reveal [data-stagger].in-view .c-sector-card:nth-child(4) { animation-delay: 200ms }
+.js-reveal [data-stagger].in-view .c-sector-card:nth-child(5) { animation-delay: 260ms }
+.js-reveal [data-stagger].in-view .c-sector-card:nth-child(6) { animation-delay: 320ms }
+.js-reveal [data-stagger].in-view .c-sector-card:nth-child(7) { animation-delay: 380ms }
+.js-reveal [data-stagger].in-view .c-sector-card:nth-child(8) { animation-delay: 440ms }
+
+@keyframes sector-pop {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+/* ── TESTIMONIAL CARDS — slide-in from bottom with fade ── */
+.js-reveal [data-stagger] .c-testi-card {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js-reveal [data-stagger].in-view .c-testi-card {
+  opacity: 1;
+  transform: none;
+}
+.js-reveal [data-stagger].in-view > *:nth-child(1) .c-testi-card { transition-delay:   0ms }
+.js-reveal [data-stagger].in-view > *:nth-child(2) .c-testi-card { transition-delay:  90ms }
+.js-reveal [data-stagger].in-view > *:nth-child(3) .c-testi-card { transition-delay: 180ms }
+
+/* ── LOGO GRID — letter-box reveal ── */
+.js-reveal .c-clients-logo-grid {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease 200ms, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 200ms;
+}
+.js-reveal .c-clients-section.in-view .c-clients-logo-grid,
+.c-clients-logo-grid {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── CONTACT INFO ROWS — stagger right-to-reveal ── */
+.c-contact-row {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.in-view .c-contact-row:nth-child(1) { opacity:1;transform:none;transition-delay: 100ms }
+.in-view .c-contact-row:nth-child(2) { opacity:1;transform:none;transition-delay: 180ms }
+.in-view .c-contact-row:nth-child(3) { opacity:1;transform:none;transition-delay: 260ms }
+.in-view .c-contact-row:nth-child(4) { opacity:1;transform:none;transition-delay: 340ms }
+
+/* ── DECORATIVE FLOATING ORBS in hero ── */
+.c-hero::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(38,67,71,0.18) 0%, transparent 70%);
+  right: -200px;
+  top: -100px;
+  pointer-events: none;
+  z-index: 1;
+  animation: orb-float 8s ease-in-out infinite;
+}
+.c-hero::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+  left: -100px;
+  bottom: -100px;
+  pointer-events: none;
+  z-index: 1;
+  animation: orb-float 10s ease-in-out infinite reverse;
+}
+@keyframes orb-float {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(30px,-30px) scale(1.08); }
+}
+
+/* ── HERO TITLE — word-by-word float-up stagger ── */
+.c-hero-word {
+  display: inline-block;
+  animation: hero-word-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--wi, 0) * 120ms + 200ms);
+}
+@keyframes hero-word-rise {
+  from { opacity: 0; transform: translateY(40px) skewX(-4deg); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0)    skewX(0deg);  filter: blur(0px); }
+}
+
+/* ── SLIDER SLIDE — title text reveal ── */
+.c-slider-title {
+  overflow: hidden;
+}
+.c-slider-title {
+  animation: slider-title-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.c-slider-slide.is-active .c-slider-title {
+  animation: slider-title-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 200ms both;
+}
+@keyframes slider-title-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.c-slider-slide.is-active .c-slider-tag {
+  animation: slider-title-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
+}
+.c-slider-slide.is-active .c-slider-meta {
+  animation: slider-title-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 320ms both;
+}
+.c-slider-slide.is-active .c-slider-cta {
+  animation: slider-title-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 440ms both;
+}
+
+/* ── ABOUT IMAGE — inner image scale + reveal ── */
+.c-about-image-wrap img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.04);
+}
+.c-about-image-wrap:hover img {
+  transform: scale(1.09);
+}
+
+/* ── IMAGE hover zoom on service cards ── */
+.c-cat-card .c-parallax-inner {
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.c-cat-card:hover .c-parallax-inner {
+  transform: translateY(calc(var(--parallax-y, 0px) - 8px)) scale(1.04) !important;
+}
+
+/* ── SCROLLBAR style ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #264347, #c9a96e);
+  border-radius: 99px;
+}
+
+/* ── SELECTION ── */
+::selection {
+  background: #264347;
+  color: #fff;
+}
+
+/* ── COUNTER stats pop ── */
+.c-stats-value,
+[class*="stat-num"] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── CONTACT form fields — focus reveal line ── */
+.c-contact-form input,
+.c-contact-form textarea,
+.c-contact-form select {
+  position: relative;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.c-contact-form input:focus,
+.c-contact-form textarea:focus,
+.c-contact-form select:focus {
+  border-color: #c9a96e;
+  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+  outline: none;
+}
+
+/* ── FORM SUBMIT button pulse ── */
+.c-btn-light:active,
+.c-btn-dark:active,
+.c-btn-hero-primary:active {
+  transform: scale(0.97);
+}
+
+/* ── REDUCE MOTION catch-all for v3 ── */
+@media (prefers-reduced-motion: reduce) {
+  .c-hero::before,
+  .c-hero::after,
+  .c-hero-word,
+  .sri-from-left,
+  .sri-from-right,
+  .sri-from-bottom,
+  .c-slider-title,
+  .c-slider-slide.is-active .c-slider-tag,
+  .c-slider-slide.is-active .c-slider-meta,
+  .c-slider-slide.is-active .c-slider-cta,
+  .c-sector-card,
+  .c-testi-card {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .js-reveal [data-stagger] > *,
+  .c-contact-row {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   CALM-DOWN PASS — remove circus effects
+   ════════════════════════════════════════════════════ */
+
+/* No floating orbs */
+.c-hero::before,
+.c-hero::after { display: none; }
+
+/* No animated gradient background shift */
+.c-engage-section,
+.c-contact-section {
+  animation: none !important;
+  background-size: auto !important;
+}
+
+/* No gold shimmer on eyebrow text */
+.c-hero-eyebrow,
+.c-clients-eyebrow,
+.c-sectors-dark-kicker {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: currentColor !important;
+  background-clip: unset !important;
+  animation: none !important;
+}
+
+/* Remove custom cursor ring — dot only */
+.c-cursor-ring { display: none !important; }
+
+/* Simpler hero word animation — fade-up only, no blur or skew */
+@keyframes hero-word-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.c-hero-word {
+  animation: hero-word-rise 0.7s ease both;
+  animation-delay: calc(var(--wi, 0) * 100ms + 150ms);
+}
+
+/* Simpler sector card entry — fade-up only, no spring bounce */
+@keyframes sector-pop {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Less aggressive stagger timing */
+.js-reveal [data-stagger].in-view > *:nth-child(1) { transition-delay:  0ms }
+.js-reveal [data-stagger].in-view > *:nth-child(2) { transition-delay: 60ms }
+.js-reveal [data-stagger].in-view > *:nth-child(3) { transition-delay:120ms }
+.js-reveal [data-stagger].in-view > *:nth-child(4) { transition-delay:180ms }
+.js-reveal [data-stagger].in-view > *:nth-child(5) { transition-delay:240ms }
+.js-reveal [data-stagger].in-view > *:nth-child(6) { transition-delay:300ms }
+.js-reveal [data-stagger].in-view > *:nth-child(7) { transition-delay:360ms }
+.js-reveal [data-stagger].in-view > *:nth-child(8) { transition-delay:420ms }
+
+/* Tilt3D — keep but dial back intensity (override via CSS won't help,
+   but ensure no visible seam on mobile by disabling preserve-3d) */
+@media (max-width: 768px) {
+  [style*="preserve-3d"] { transform-style: flat !important; transform: none !important; }
+}
+
+/* ════════════════════════════════════════════════════
+   BUG FIXES — service cards, about image, footer
+   ════════════════════════════════════════════════════ */
+
+/* ── FIX 1: service card reveal wrappers ──
+   c-parallax-wrap global rule forced position:absolute on the
+   about image wrap too — scope it only to the card context.     */
+.c-parallax-wrap {
+  position: relative !important; /* reset the bad global rule */
+  inset: unset !important;
+  overflow: hidden;
+}
+
+/* ── FIX 2: service card layout ──
+   The new data-reveal divs must participate in the flex layout  */
+.c-cats-section {
+  display: flex;
+}
+.c-cat-reveal {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+.c-cat-tilt,
+.c-cat-tilt > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* data-reveal="left/right" on cat-reveal: wipe in from sides
+   (override the default translateX reveal with clip-path)        */
+.js-reveal .c-cat-reveal[data-reveal="left"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.js-reveal .c-cat-reveal[data-reveal="left"].in-view {
+  clip-path: inset(0 0% 0 0);
+}
+.js-reveal .c-cat-reveal[data-reveal="right"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0% 0 100%);
+  transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1) 100ms !important;
+}
+.js-reveal .c-cat-reveal[data-reveal="right"].in-view {
+  clip-path: inset(0 0% 0 0%);
+}
+
+/* ── FIX 3: about image — remove clip-path rule that hid it ──  */
+.js-reveal [data-reveal="right"] .c-about-image-wrap,
+.js-reveal [data-reveal="right"].c-about-image-wrap {
+  clip-path: none !important;
+  transition: opacity 800ms ease, transform 800ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* ── FIX 4: footer stagger — was opacity:0 with no trigger ──   */
+.c-footer-top > * {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   IMAGE ANIMATIONS — Ken Burns, scroll reveals, hover zooms
+   All transitions are compositor-friendly (transform/opacity only).
+   ════════════════════════════════════════════════════════ */
+
+/* ── Service card images ──────────────────────────────────
+   Start zoomed-in; slowly settle to a slight zoom as the
+   clip-path wipe completes (10 s Ken Burns zoom-out).
+   Hover quickly re-zooms for a tactile feel.               */
+.c-cat-image {
+  transform: scale(1.12);
+  transition: transform 10s cubic-bezier(0, 0, 0.2, 1);
+  will-change: transform;
+}
+.c-cat-reveal.in-view .c-cat-image {
+  transform: scale(1.04);
+}
+.c-cat-card:hover .c-cat-image {
+  transform: scale(1.09) !important;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* ── About section image ─────────────────────────────────
+   Tight scale-in (1.06 → 1.0) fires simultaneously with
+   the clip-path slide reveal; they reinforce each other.   */
+.c-about-image-wrap img {
+  transform: scale(1.06);
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.c-about-image-wrap.in-view img {
+  transform: scale(1.0);
+}
+
+/* ── Featured-project slider images ─────────────────────
+   Active slide slowly zooms in over 7 s (longer than the
+   5 s auto-advance so motion is always visible).
+   Outgoing slide resets instantly so the next entry starts
+   at 1.0 again.                                            */
+.c-slider-slide img {
+  transform: scale(1.0);
+  transition: transform 0.5s ease-out;
+}
+.c-slider-slide.is-active img {
+  transform: scale(1.08);
+  transition: transform 7s cubic-bezier(0, 0, 0.2, 1) !important;
+}
+
+/* ── Client logo grid — handled in main client section block above ── */
+
+/* ── Footer logo ─────────────────────────────────────────  */
+.c-footer-logo-wrap img {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.c-footer-logo-wrap:hover img {
+  transform: scale(1.04);
+}
+
+/* ── Reduced motion — all image animation off ────────────  */
+@media (prefers-reduced-motion: reduce) {
+  .c-cat-image,
+  .c-about-image-wrap img,
+  .c-slider-slide img,
+  .c-client-logo-cell img,
+  .c-footer-logo-wrap img {
+    animation: none !important;
+    transform: scale(1) !important;
+    transition: opacity 0.3s ease !important;
+    will-change: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GSAP ANIMATION ENHANCEMENTS — micro-interactions & polish
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Hero button — lift + arrow nudge ── */
+.c-btn-hero-primary {
+  overflow: hidden;
+  position: relative;
+  transition: background 220ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease;
+}
+.c-btn-hero-primary:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  transform: translateY(-3px);
+}
+.c-btn-hero-primary:hover svg { transform: translateX(3px); }
+.c-btn-hero-primary svg { transition: transform 220ms ease; }
+
+.c-btn-hero-ghost {
+  transition: background 220ms ease, border-color 220ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.c-btn-hero-ghost:hover { transform: translateY(-3px); }
+
+/* ── Dark CTA button — elevated press ── */
+.c-btn-dark {
+  transition: background 200ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease;
+}
+.c-btn-dark:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+.c-btn-dark:active { transform: translateY(0); }
+.c-btn-dark svg { transition: transform 200ms ease; }
+.c-btn-dark:hover svg { transform: translateX(4px); }
+
+/* ── Client logo cells — glow on hover ── */
+.c-client-logo-cell {
+  transition: background 240ms ease;
+}
+.c-client-logo-cell:hover {
+  background: rgba(201,169,110,0.06);
+}
+.c-client-logo-cell img {
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+.c-client-logo-cell:hover img {
+  filter: brightness(0) invert(1) sepia(0.2) hue-rotate(10deg);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ── Service cat card overlays ── */
+.c-cat-overlay {
+  transition: opacity 0.5s ease !important;
+}
+.c-cat-card:hover .c-cat-overlay { opacity: 0.65 !important; }
+.c-cat-link {
+  transition: gap 220ms ease, letter-spacing 220ms ease;
+}
+.c-cat-link:hover { gap: 10px; letter-spacing: 0.01em; }
+
+/* ── Testimonial card — elevated hover ── */
+.c-testi-card {
+  transition: box-shadow 320ms ease, transform 320ms cubic-bezier(0.16, 1, 0.3, 1), border-color 320ms ease;
+}
+.c-testi-card:hover {
+  border-color: rgba(201,169,110,0.4);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
+}
+
+/* ── Slider arrows — fluid hover ── */
+.c-slider-arrow {
+  transition: background 220ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease;
+}
+.c-slider-arrow:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  transform: scale(1.1);
+}
+.c-slider-arrow-prev:hover { transform: scale(1.1) translateX(-2px); }
+.c-slider-arrow-next:hover { transform: scale(1.1) translateX(2px); }
+
+/* ── Stats strip — number glow ── */
+.c-stats-value {
+  background: linear-gradient(135deg, var(--c-accent-2), var(--c-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.c-stats-item {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.c-stats-item:hover { transform: translateY(-4px); }
+
+/* ── Section kickers — underline sweep ── */
+.c-section-kicker {
+  position: relative;
+}
+
+/* ── Sector card inner — stronger gold border on hover ── */
+.c-sector-card-inner {
+  transition: border-color 350ms ease, background 350ms ease;
+}
+.c-sector-card:hover .c-sector-card-inner {
+  background: rgba(201,169,110,0.04);
+}
+
+/* ── Office card — lift ── */
+.c-office-card {
+  transition: box-shadow 280ms ease, transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.c-office-card:hover {
+  box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+}
+
+/* ── Hero words — ensure will-change for performance ── */
+.c-hero-word { will-change: transform, opacity; }
+.c-hero-body { will-change: transform; }
+
+/* ── Contact heading clip-path reveal support ── */
+#contact-h {
+  display: block;
+  overflow: hidden;
+}
+
+/* ── Contact left/right — ensure will-change set for split entrance ── */
+.c-contact-left,
+.c-contact-right {
+  will-change: transform, opacity;
+}
+
+/* ── Slider title — will-change for GSAP entrance ── */
+.c-slider-title { will-change: transform, opacity; }
+
+/* ── Sector cards and testimonials — start visible (GSAP handles the entrance) ── */
+.c-sector-card,
+.c-testi-card,
+.c-client-logo-cell {
+  opacity: 1;
+}
+
+/* ── Page entrance ── */
+@keyframes gsap-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

@@ -7,6 +7,7 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import SmoothScroll from "@/components/SmoothScroll";
 import RevealObserver from "@/components/RevealObserver";
 import CustomCursor from "@/components/CustomCursor";
+import Preloader from "@/components/Preloader";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -59,15 +60,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} ${playfair.variable}`} suppressHydrationWarning>
       <body className="grain" suppressHydrationWarning>
+        <Preloader />
         <ScrollProgressBar />
         <SmoothScroll />
         <RevealObserver />
-        <CustomCursor />
+        {/* CustomCursor disabled */}
         {children}
         {/* Social FABs — Instagram + LinkedIn above WhatsApp */}
         <div className="c-social-fabs">
           <a
-            href="https://www.instagram.com/floor_space_india"
+            href="https://www.instagram.com/floor_space_india?igsh=cHU2OXV2bDN5NG5n"
             target="_blank"
             rel="noopener noreferrer"
             className="c-social-fab c-social-fab--instagram"
