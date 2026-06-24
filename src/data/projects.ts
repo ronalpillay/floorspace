@@ -108,8 +108,8 @@ export const projects: Project[] = [
     sector: "Banking & Financial",
     city: "Nagpur",
     area: "12,000 sq ft",
-    coverImage: "/images/hsbc-nagpur/01.jpg",
-    coverAlt: "HSBC Nagpur — banking interior fit-out",
+    coverImage: "/images/hsbc-nagpur/04.jpg",
+    coverAlt: "HSBC Nagpur — signature moss wall with illuminated brand logo",
     desc: "Modern banking interior for HSBC's Nagpur branch, blending global brand standards with local execution.",
     longDesc:
       "A complete interior fit-out for HSBC Bank's Nagpur branch, delivered to the bank's global brand guidelines. The project encompasses a welcoming customer banking hall, teller counters, private banking rooms, back-office workspaces, and executive cabins — all finished with premium materials and brand-compliant design language.",

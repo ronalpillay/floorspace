@@ -281,13 +281,17 @@ export default function HomePage() {
       start: "top 90%",
     });
 
-    // ── Client section header: word-by-word ──
+    // ── Client section: count + headline slide in ──
     gsap.from(".c-clients-count", {
       scale: 0.7,
       opacity: 0,
       duration: 1.1,
       ease: "elastic.out(1, 0.6)",
-      scrollTrigger: { trigger: ".c-clients-hero-header", start: "top 85%", once: true },
+      scrollTrigger: { trigger: ".c-clients-hero-header", start: "top 96%", once: true },
+    });
+    gsap.from([".c-clients-headline", ".c-clients-subline"], {
+      x: 24, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power3.out", delay: 0.25,
+      scrollTrigger: { trigger: ".c-clients-hero-header", start: "top 96%", once: true },
     });
 
     // ── Sector cards: stagger with slight overshoot ──
@@ -348,6 +352,25 @@ export default function HomePage() {
     gsap.from("#contact-h .c-gsap-word", {
       y: 44, opacity: 0, stagger: 0.09, duration: 0.9, ease: "power4.out", delay: 0.35,
       scrollTrigger: { trigger: ".c-contact-section", start: "top 80%", once: true },
+    });
+
+    // ── Contact form fields: sequential stagger ──
+    gsap.from(".c-form-field", {
+      y: 18, opacity: 0, stagger: 0.06, duration: 0.6, ease: "power3.out", delay: 0.55,
+      scrollTrigger: { trigger: ".c-contact-right", start: "top 85%", once: true },
+    });
+
+    // ── Stats dividers: draw from top to bottom ──
+    gsap.from(".c-stats-divider", {
+      scaleY: 0, transformOrigin: "top",
+      stagger: 0.08, duration: 0.6, ease: "power3.out",
+      scrollTrigger: { trigger: ".c-stats-strip", start: "top 88%", once: true },
+    });
+
+    // ── Footer columns: stagger up ──
+    gsap.from(".c-footer-top > *", {
+      y: 22, opacity: 0, stagger: 0.08, duration: 0.75, ease: "power3.out",
+      scrollTrigger: { trigger: ".c-footer-top", start: "top 92%", once: true },
     });
   }, { scope: pageRef });
 

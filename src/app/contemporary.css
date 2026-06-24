@@ -484,7 +484,20 @@
 .c-clients-section {
   background: #111f1d;
   overflow: hidden;
-  padding: 72px 0 80px;
+  padding: 40px 0 80px;
+  position: relative;
+}
+/* Fade-in from stats strip background — softens the hard light→dark edge */
+.c-clients-section::before {
+  background: linear-gradient(to bottom, #f2ede5 0%, transparent 100%);
+  content: "";
+  height: 40px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
 }
 
 /* Enhanced header */
@@ -494,7 +507,7 @@
 }
 
 .c-clients-eyebrow {
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.55);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -4281,18 +4294,8 @@ button[type="submit"]:disabled {
   animation: stat-flicker 0.4s ease 1.8s 1;
 }
 
-/* ── FOOTER STAGGER REVEAL ── */
-.c-footer-top > * {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.c-footer-top.in-view > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0ms;   }
-.c-footer-top.in-view > *:nth-child(2) { opacity:1; transform:none; transition-delay: 80ms;  }
-.c-footer-top.in-view > *:nth-child(3) { opacity:1; transform:none; transition-delay: 160ms; }
-.c-footer-top.in-view > *:nth-child(4) { opacity:1; transform:none; transition-delay: 240ms; }
-.c-footer-top.in-view > *:nth-child(5) { opacity:1; transform:none; transition-delay: 320ms; }
+/* ── FOOTER STAGGER REVEAL — GSAP handles this; CSS just provides the fallback ── */
+/* Only hide when JS reveal system is active — prevents permanent invisible state */
 
 /* ── LINE DRAW — horizontal accent lines ── */
 @keyframes line-draw {
@@ -4895,11 +4898,10 @@ button[type="submit"]:disabled {
   transition: opacity 800ms ease, transform 800ms cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* ── FIX 4: footer stagger — was opacity:0 with no trigger ──   */
+/* Footer columns: GSAP animates these; start visible so no flash if GSAP fails */
 .c-footer-top > * {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
+  opacity: 1;
+  transform: none;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -5072,12 +5074,31 @@ button[type="submit"]:disabled {
   position: relative;
 }
 
+/* ── Sector card: icon spring-bounce on hover ── */
+.c-sector-icon {
+  display: inline-flex;
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.c-sector-card:hover .c-sector-icon {
+  transform: translateY(-4px) scale(1.1);
+}
+
 /* ── Sector card inner — stronger gold border on hover ── */
 .c-sector-card-inner {
   transition: border-color 350ms ease, background 350ms ease;
 }
 .c-sector-card:hover .c-sector-card-inner {
   background: rgba(201,169,110,0.04);
+}
+
+/* ── Testimonial quote mark: scale up on hover ── */
+.c-testi-quote-mark {
+  display: inline-block;
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), color 300ms ease;
+}
+.c-testi-card:hover .c-testi-quote-mark {
+  color: #c9a96e;
+  transform: scale(1.3);
 }
 
 /* ── Office card — lift ── */
