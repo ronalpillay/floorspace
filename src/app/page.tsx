@@ -294,13 +294,6 @@ export default function HomePage() {
       start: "top 85%",
     });
 
-    // ── Services section heading ──
-    gsap.from(".c-services-eyebrow, .c-services-title", {
-      y: 24, opacity: 0, stagger: 0.12, duration: 0.8, ease: P,
-      immediateRender: false,
-      scrollTrigger: { trigger: ".c-services-section", start: "top 80%", once: true },
-    });
-
     // ── Sector cards: stagger up with slight scale ──
     ScrollTrigger.batch(".c-sector-card", {
       onEnter: (batch) =>
@@ -322,24 +315,6 @@ export default function HomePage() {
       y: 40, opacity: 0, stagger: 0.09, duration: 0.8, ease: "power4.out", delay: 0.15,
       immediateRender: false,
       scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
-    });
-
-    // ── About section: heading + body ──
-    gsap.from(".c-about-title, .c-about-body", {
-      y: 24, opacity: 0, stagger: 0.14, duration: 0.85, ease: P,
-      immediateRender: false,
-      scrollTrigger: { trigger: ".c-about-section", start: "top 78%", once: true },
-    });
-
-    // ── Project images: scale reveal (1.06 → 1) ──
-    gsap.utils.toArray<HTMLElement>(".c-slide-bg, .c-portfolio-img").forEach((img) => {
-      gsap.fromTo(img,
-        { scale: 1.06, opacity: 0 },
-        {
-          scale: 1, opacity: 1, duration: 1.1, ease: P,
-          scrollTrigger: { trigger: img, start: "top 85%", once: true },
-        }
-      );
     });
 
     // ── Slider header ──
