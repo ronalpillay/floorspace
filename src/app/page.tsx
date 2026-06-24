@@ -248,129 +248,156 @@ export default function HomePage() {
   const pageRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // ── Hero: text body moves up slower than scroll (reverse parallax feel) ──
+    const E = "expo.out";   // premium exit easing
+    const P = "power3.out"; // standard entrance easing
+
+    // ── Hero: text body slow parallax ──
     gsap.to(".c-hero-body", {
-      y: -80,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".c-hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 1.5,
-      },
+      y: -80, ease: "none",
+      scrollTrigger: { trigger: ".c-hero", start: "top top", end: "bottom top", scrub: 1.5 },
     });
 
-    // ── Stats strip: slide each stat up on entrance ──
+    // ── Stats dividers: draw from top ──
+    gsap.from(".c-stats-divider", {
+      scaleY: 0, transformOrigin: "top", stagger: 0.08, duration: 0.7, ease: P,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-stats-strip", start: "top 82%", once: true },
+    });
+
+    // ── Stats items: slide up with stagger ──
     gsap.from(".c-stats-item", {
-      y: 40,
-      opacity: 0,
-      stagger: 0.12,
-      duration: 0.9,
-      ease: "power3.out",
-      scrollTrigger: { trigger: ".c-stats-strip", start: "top 88%", once: true },
+      y: 30, opacity: 0, stagger: 0.1, duration: 0.8, ease: P,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-stats-strip", start: "top 82%", once: true },
+    });
+
+    // ── Client section: count elastic pop ──
+    gsap.from(".c-clients-count", {
+      scale: 0.75, opacity: 0, duration: 1.0, ease: "elastic.out(1, 0.65)",
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-clients-hero-header", start: "top 85%", once: true },
+    });
+    gsap.from([".c-clients-headline", ".c-clients-subline"], {
+      x: 20, opacity: 0, stagger: 0.12, duration: 0.85, ease: P, delay: 0.2,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-clients-hero-header", start: "top 85%", once: true },
     });
 
     // ── Client logo grid: batch stagger fade + scale ──
     ScrollTrigger.batch(".c-client-logo-cell", {
       onEnter: (batch) =>
         gsap.fromTo(batch,
-          { opacity: 0, y: 22, scale: 0.88 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.06, duration: 0.75, ease: "back.out(1.6)", overwrite: "auto" }
+          { opacity: 0, y: 20, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.05, duration: 0.7, ease: "back.out(1.4)", overwrite: "auto" }
         ),
       once: true,
-      start: "top 90%",
+      start: "top 85%",
     });
 
-    // ── Client section: count + headline slide in ──
-    gsap.from(".c-clients-count", {
-      scale: 0.7,
-      opacity: 0,
-      duration: 1.1,
-      ease: "elastic.out(1, 0.6)",
-      scrollTrigger: { trigger: ".c-clients-hero-header", start: "top 96%", once: true },
-    });
-    gsap.from([".c-clients-headline", ".c-clients-subline"], {
-      x: 24, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power3.out", delay: 0.25,
-      scrollTrigger: { trigger: ".c-clients-hero-header", start: "top 96%", once: true },
+    // ── Services section heading ──
+    gsap.from(".c-services-eyebrow, .c-services-title", {
+      y: 24, opacity: 0, stagger: 0.12, duration: 0.8, ease: P,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-services-section", start: "top 80%", once: true },
     });
 
-    // ── Sector cards: stagger with slight overshoot ──
+    // ── Sector cards: stagger up with slight scale ──
     ScrollTrigger.batch(".c-sector-card", {
       onEnter: (batch) =>
         gsap.fromTo(batch,
-          { opacity: 0, y: 50, scale: 0.93 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.07, duration: 0.9, ease: "power3.out", overwrite: "auto" }
+          { opacity: 0, y: 30, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.07, duration: 0.85, ease: P, overwrite: "auto" }
         ),
       once: true,
-      start: "top 88%",
+      start: "top 83%",
     });
 
-    // ── Sectors: kicker slides up, then title words flip in one-by-one ──
+    // ── Sectors grid: kicker + title words ──
     gsap.from(".c-sectors-kicker", {
-      y: 18, opacity: 0, duration: 0.8, ease: "power3.out",
-      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 80%", once: true },
+      y: 16, opacity: 0, duration: 0.75, ease: P,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
     });
     gsap.from(".c-sectors-title .c-gsap-word", {
-      y: 52, opacity: 0, stagger: 0.1, duration: 0.85, ease: "power4.out", delay: 0.18,
-      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 80%", once: true },
+      y: 40, opacity: 0, stagger: 0.09, duration: 0.8, ease: "power4.out", delay: 0.15,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
     });
 
-    // ── Testimonial cards: stagger from below ──
+    // ── About section: heading + body ──
+    gsap.from(".c-about-title, .c-about-body", {
+      y: 24, opacity: 0, stagger: 0.14, duration: 0.85, ease: P,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-about-section", start: "top 78%", once: true },
+    });
+
+    // ── Project images: scale reveal (1.06 → 1) ──
+    gsap.utils.toArray<HTMLElement>(".c-slide-bg, .c-portfolio-img").forEach((img) => {
+      gsap.fromTo(img,
+        { scale: 1.06, opacity: 0 },
+        {
+          scale: 1, opacity: 1, duration: 1.1, ease: P,
+          scrollTrigger: { trigger: img, start: "top 85%", once: true },
+        }
+      );
+    });
+
+    // ── Slider header ──
+    gsap.from([".c-slider-header h2", ".c-slider-header .c-btn-dark"], {
+      y: 22, opacity: 0, stagger: 0.12, duration: 0.8, ease: P,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-slider-header", start: "top 82%", once: true },
+    });
+
+    // ── Testimonial cards ──
     ScrollTrigger.batch(".c-testi-card", {
       onEnter: (batch) =>
         gsap.fromTo(batch,
-          { opacity: 0, y: 44 },
-          { opacity: 1, y: 0, stagger: 0.1, duration: 0.85, ease: "power3.out", overwrite: "auto" }
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, stagger: 0.1, duration: 0.85, ease: P, overwrite: "auto" }
         ),
       once: true,
-      start: "top 88%",
+      start: "top 83%",
     });
 
-    // ── Slider: header heading + CTA button stagger ──
-    gsap.from([".c-slider-header h2", ".c-slider-header .c-btn-dark"], {
-      y: 24, opacity: 0, stagger: 0.12, duration: 0.8, ease: "power3.out",
-      scrollTrigger: { trigger: ".c-slider-header", start: "top 96%", once: true },
-    });
-
-    // ── Contact: left column slides from left, right column from right ──
+    // ── Contact: columns slide in from sides ──
     gsap.from(".c-contact-left", {
-      x: -50, opacity: 0, duration: 1, ease: "power3.out",
-      scrollTrigger: { trigger: ".c-contact-inner", start: "top 82%", once: true },
+      x: -40, opacity: 0, duration: 0.95, ease: E,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-contact-inner", start: "top 80%", once: true },
     });
     gsap.from(".c-contact-right", {
-      x: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.1,
-      scrollTrigger: { trigger: ".c-contact-inner", start: "top 82%", once: true },
+      x: 40, opacity: 0, duration: 0.95, ease: E, delay: 0.08,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-contact-inner", start: "top 80%", once: true },
     });
 
-    // ── Contact info rows: sequential stagger ──
+    // ── Contact info rows ──
     gsap.from(".c-contact-row", {
-      x: -16, opacity: 0, stagger: 0.08, duration: 0.6, ease: "power3.out", delay: 0.3,
-      scrollTrigger: { trigger: ".c-contact-info", start: "top 88%", once: true },
+      x: -14, opacity: 0, stagger: 0.07, duration: 0.65, ease: P, delay: 0.25,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-contact-info", start: "top 83%", once: true },
     });
 
-    // ── Contact heading: word-by-word reveal (staggered after container slides in) ──
+    // ── Contact heading: word-by-word ──
     gsap.from("#contact-h .c-gsap-word", {
-      y: 44, opacity: 0, stagger: 0.09, duration: 0.9, ease: "power4.out", delay: 0.35,
-      scrollTrigger: { trigger: ".c-contact-section", start: "top 80%", once: true },
+      y: 36, opacity: 0, stagger: 0.08, duration: 0.85, ease: "power4.out", delay: 0.3,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-contact-section", start: "top 78%", once: true },
     });
 
-    // ── Contact form fields: sequential stagger ──
+    // ── Contact form fields ──
     gsap.from(".c-form-field", {
-      y: 18, opacity: 0, stagger: 0.06, duration: 0.6, ease: "power3.out", delay: 0.55,
-      scrollTrigger: { trigger: ".c-contact-right", start: "top 85%", once: true },
+      y: 16, opacity: 0, stagger: 0.06, duration: 0.65, ease: P, delay: 0.45,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-contact-right", start: "top 82%", once: true },
     });
 
-    // ── Stats dividers: draw from top to bottom ──
-    gsap.from(".c-stats-divider", {
-      scaleY: 0, transformOrigin: "top",
-      stagger: 0.08, duration: 0.6, ease: "power3.out",
-      scrollTrigger: { trigger: ".c-stats-strip", start: "top 88%", once: true },
-    });
-
-    // ── Footer columns: stagger up ──
+    // ── Footer columns ──
     gsap.from(".c-footer-top > *", {
-      y: 22, opacity: 0, stagger: 0.08, duration: 0.75, ease: "power3.out",
-      scrollTrigger: { trigger: ".c-footer-top", start: "top 92%", once: true },
+      y: 20, opacity: 0, stagger: 0.08, duration: 0.75, ease: P,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-footer-top", start: "top 88%", once: true },
     });
   }, { scope: pageRef });
 

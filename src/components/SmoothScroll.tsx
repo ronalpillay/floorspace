@@ -25,16 +25,15 @@ export default function SmoothScroll() {
     });
 
     // Synchronize Lenis with GSAP ticker so ScrollTrigger reads correct scroll positions
+    const lenisRAF = (time: number) => { lenis.raf(time * 1000); };
     lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+    gsap.ticker.add(lenisRAF);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.off("scroll", ScrollTrigger.update);
+      gsap.ticker.remove(lenisRAF);
       lenis.destroy();
-      gsap.ticker.remove((time) => { lenis.raf(time * 1000); });
     };
   }, []);
 
