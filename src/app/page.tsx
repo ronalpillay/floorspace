@@ -301,13 +301,13 @@ export default function HomePage() {
       start: "top 88%",
     });
 
-    // ── Sectors heading: fade up (centered text — y-axis looks better than x) ──
-    gsap.from([".c-sectors-kicker", ".c-sectors-title"], {
-      y: 24,
-      opacity: 0,
-      stagger: 0.14,
-      duration: 0.9,
-      ease: "power3.out",
+    // ── Sectors: kicker slides up, then title words flip in one-by-one ──
+    gsap.from(".c-sectors-kicker", {
+      y: 18, opacity: 0, duration: 0.8, ease: "power3.out",
+      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 80%", once: true },
+    });
+    gsap.from(".c-sectors-title .c-gsap-word", {
+      y: 52, opacity: 0, stagger: 0.1, duration: 0.85, ease: "power4.out", delay: 0.18,
       scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 80%", once: true },
     });
 
@@ -344,10 +344,9 @@ export default function HomePage() {
       scrollTrigger: { trigger: ".c-contact-info", start: "top 88%", once: true },
     });
 
-    // ── Contact heading: clip-path curtain (text rises into view after container starts sliding in) ──
-    gsap.from("#contact-h", {
-      clipPath: "inset(110% 0 0 0)",
-      duration: 1.1, ease: "power4.out", delay: 0.4,
+    // ── Contact heading: word-by-word reveal (staggered after container slides in) ──
+    gsap.from("#contact-h .c-gsap-word", {
+      y: 44, opacity: 0, stagger: 0.09, duration: 0.9, ease: "power4.out", delay: 0.35,
       scrollTrigger: { trigger: ".c-contact-section", start: "top 80%", once: true },
     });
   }, { scope: pageRef });
@@ -597,7 +596,11 @@ export default function HomePage() {
       <section className="c-sectors-black-grid" id="sectors" aria-labelledby="sectors-h">
         <div className="c-section-inner">
           <p className="c-section-kicker c-sectors-kicker">Sectors We Serve</p>
-          <h2 className="c-section-title c-sectors-title" id="sectors-h">Spaces We Transform</h2>
+          <h2 className="c-section-title c-sectors-title" id="sectors-h">
+            <span className="c-gsap-word">Spaces</span>{" "}
+            <span className="c-gsap-word">We</span>{" "}
+            <span className="c-gsap-word">Transform</span>
+          </h2>
           <div className="c-sectors-icon-grid">
             {sectors.map(({ label, Icon }) => (
               <div key={label} className="c-sector-card">
@@ -654,7 +657,10 @@ export default function HomePage() {
           <div className="c-contact-left">
             <p className="c-section-kicker" style={{ color: "rgba(255,255,255,0.5)" }}>Get In Touch</p>
             <h2 className="c-section-title" id="contact-h" style={{ color: "#fff", maxWidth: 420 }}>
-              Let&apos;s build something remarkable.
+              <span className="c-gsap-word">Let&apos;s</span>{" "}
+              <span className="c-gsap-word">build</span>{" "}
+              <span className="c-gsap-word">something</span>{" "}
+              <span className="c-gsap-word">remarkable.</span>
             </h2>
             <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.94rem", lineHeight: 1.7, marginTop: 16, maxWidth: 380 }}>
               Share your site, scope, city, and timeline. Our team will come back with a clear path forward.

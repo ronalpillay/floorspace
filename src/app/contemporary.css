@@ -5093,10 +5093,9 @@ button[type="submit"]:disabled {
 .c-hero-word { will-change: transform, opacity; }
 .c-hero-body { will-change: transform; }
 
-/* ── Contact heading clip-path reveal support ── */
-#contact-h {
-  display: block;
-  overflow: hidden;
+/* ── GSAP word-split — keep words inline-block so y-transform works per-word ── */
+.c-gsap-word {
+  display: inline-block;
 }
 
 /* ── Contact left/right — ensure will-change set for split entrance ── */
@@ -5104,9 +5103,6 @@ button[type="submit"]:disabled {
 .c-contact-right {
   will-change: transform, opacity;
 }
-
-/* ── Slider title — will-change for GSAP entrance ── */
-.c-slider-title { will-change: transform, opacity; }
 
 /* ── Sector cards and testimonials — start visible (GSAP handles the entrance) ── */
 .c-sector-card,
