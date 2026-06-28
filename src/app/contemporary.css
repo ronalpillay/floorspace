@@ -379,10 +379,10 @@
 
 /* ── Stats Strip ── */
 .c-stats-strip {
-  background: #f2ede5;
-  border-bottom: 1px solid var(--c-border);
+  background: var(--ink);
+  border-bottom: none;
   display: flex;
-  padding: 0 52px;
+  padding: 0 clamp(24px, 4vw, 52px);
   position: relative;
 }
 
@@ -391,13 +391,13 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 6px;
-  padding: 36px 40px;
+  gap: 10px;
+  padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 40px);
   position: relative;
 }
 
 .c-stats-divider {
-  background: var(--c-border);
+  background: rgba(255,255,255,0.1);
   bottom: 20px;
   left: 0;
   position: absolute;
@@ -406,18 +406,19 @@
 }
 
 .c-stats-value {
-  color: var(--c-accent);
+  color: var(--brown-1);
   font-family: var(--font-playfair), Georgia, serif;
-  font-size: clamp(2rem, 3vw, 2.8rem);
-  font-weight: 600;
+  font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+  font-weight: 700;
+  font-style: italic;
   line-height: 1;
 }
 
 .c-stats-label {
-  color: var(--c-ink-3);
-  font-size: 0.72rem;
-  font-weight: 650;
-  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -425,28 +426,27 @@
   .c-stats-strip {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding: 0 4px;
+    padding: 0;
   }
   .c-stats-item {
-    padding: 24px 16px;
-    align-items: center;
-    text-align: center;
+    padding: 28px 20px;
+    align-items: flex-start;
   }
   .c-stats-divider { display: none; }
   .c-stats-item:nth-child(2),
   .c-stats-item:nth-child(4) {
-    border-left: 1px solid var(--c-border);
+    border-left: 1px solid rgba(255,255,255,0.08);
   }
   .c-stats-item:nth-child(3),
   .c-stats-item:nth-child(4) {
-    border-top: 1px solid var(--c-border);
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
 }
 
 /* ── Client Marquee ── */
 /* ── Clients Section — editorial two-col ── */
 .c-clients-section {
-  background: #f5f4f1;
+  background: var(--warm-white);
   padding: clamp(4rem, 7vw, 9rem) clamp(1.5rem, 5vw, 6rem);
 }
 
@@ -1277,7 +1277,7 @@
 
 /* ── About ── */
 .c-about-section {
-  background: #f8f4ec;
+  background: var(--warm-white);
   display: grid;
   gap: 0;
   grid-template-columns: 1fr 1fr;

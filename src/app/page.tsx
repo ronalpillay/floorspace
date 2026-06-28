@@ -433,7 +433,7 @@ export default function HomePage() {
         </div>
         <div className="c-about-image-wrap c-parallax-wrap" data-reveal="right">
           <div ref={aboutParallax} className="c-parallax-inner">
-            <Image alt="Floor-Space India — completed interior" fill loading="lazy" sizes="50vw" src="/images/octillion-workspace.jpg" style={{ objectFit: "cover" }} />
+            <Image alt="Floor-Space India — completed interior" fill loading="lazy" sizes="50vw" src="/images/octillion-reception-main.jpg" style={{ objectFit: "cover" }} />
           </div>
         </div>
       </section>
