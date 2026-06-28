@@ -24,18 +24,19 @@ const offices = [
 const branches = ["Mumbai", "Bangalore", "Hyderabad", "Goa", "Gujarat", "Noida"];
 
 const mapCities = [
-  { city: "Pune",      tag: "Head Office",      isHq: true },
-  { city: "Mumbai",    tag: "Maharashtra" },
-  { city: "Bangalore", tag: "Karnataka" },
-  { city: "Hyderabad", tag: "Telangana" },
-  { city: "Goa",       tag: "Goa" },
-  { city: "Gujarat",   tag: "Multiple cities" },
-  { city: "Noida",     tag: "Delhi NCR" },
+  { city: "Pune",      tag: "Head Office",    isHq: true, mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=73.8800%2C18.5200%2C73.9200%2C18.5500&layer=mapnik&marker=18.5350%2C73.9000" },
+  { city: "Mumbai",    tag: "Maharashtra",              mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=72.8000%2C18.9000%2C73.0000%2C19.2000&layer=mapnik&marker=19.0760%2C72.8777" },
+  { city: "Bangalore", tag: "Karnataka",                mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=77.5000%2C12.9000%2C77.6500%2C13.0500&layer=mapnik&marker=12.9716%2C77.5946" },
+  { city: "Hyderabad", tag: "Telangana",                mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=78.3800%2C17.3200%2C78.5500%2C17.4500&layer=mapnik&marker=17.3850%2C78.4867" },
+  { city: "Goa",       tag: "Goa",                      mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=73.9000%2C15.1500%2C74.2500%2C15.5000&layer=mapnik&marker=15.2993%2C74.1240" },
+  { city: "Gujarat",   tag: "Multiple cities",          mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=72.4500%2C22.9700%2C72.6500%2C23.1000&layer=mapnik&marker=23.0225%2C72.5714" },
+  { city: "Noida",     tag: "Delhi NCR",                mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=77.2500%2C28.4800%2C77.4500%2C28.6200&layer=mapnik&marker=28.5355%2C77.3910" },
 ];
 
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const formRef = useRef<HTMLFormElement>(null);
+  const [activeCity, setActiveCity] = useState(mapCities[0]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -238,11 +239,12 @@ export default function ContactPage() {
             <h2 className="c-section-title" id="india-map-h">Operating across 7 regions</h2>
           </div>
           <div className="c-india-map-layout">
-            {/* OpenStreetMap embed — Koregaon Park Annexe, Pune */}
+            {/* OpenStreetMap embed — updates on city click */}
             <div className="c-leaflet-wrap">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=73.8800%2C18.5200%2C73.9200%2C18.5500&layer=mapnik&marker=18.5350%2C73.9000"
-                title="Floor-Space India — Office Location"
+                key={activeCity.city}
+                src={activeCity.mapSrc}
+                title={`Floor-Space India — ${activeCity.city} office`}
                 style={{ width: "100%", height: "100%", border: "none" }}
                 loading="lazy"
                 allowFullScreen
@@ -251,15 +253,20 @@ export default function ContactPage() {
 
             {/* City list */}
             <div className="c-india-cities-list">
-              {mapCities.map(({ city, tag, isHq }) => (
+              {mapCities.map((c) => (
                 <div
-                  key={city}
-                  className={`c-india-city-row${isHq ? " is-hq" : ""}`}
+                  key={c.city}
+                  className={`c-india-city-row${c.isHq ? " is-hq" : ""}${activeCity.city === c.city ? " is-active" : ""}`}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActiveCity(c)}
+                  onKeyDown={(e) => e.key === "Enter" && setActiveCity(c)}
+                  style={{ cursor: "pointer" }}
                 >
                   <span className="c-india-city-dot" aria-hidden />
                   <div>
-                    <span className="c-india-city-name">{city}</span>
-                    <span className="c-india-city-tag">{tag}</span>
+                    <span className="c-india-city-name">{c.city}</span>
+                    <span className="c-india-city-tag">{c.tag}</span>
                   </div>
                 </div>
               ))}

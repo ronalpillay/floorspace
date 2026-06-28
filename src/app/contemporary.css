@@ -3690,14 +3690,17 @@ button[type="submit"]:disabled {
   transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
-.c-india-city-row:hover {
-  border-color: rgba(38,67,71,0.3);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+.c-india-city-row:hover,
+.c-india-city-row.is-active {
+  border-color: var(--brown-2);
+  box-shadow: 0 4px 16px rgba(70,70,146,0.12);
 }
 
-.c-india-city-row.is-hq {
+.c-india-city-row.is-hq,
+.c-india-city-row.is-hq.is-active {
   background: #264347;
   border-color: #264347;
+  box-shadow: 0 4px 16px rgba(38,67,71,0.18);
 }
 
 .c-india-city-dot {
