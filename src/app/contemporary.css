@@ -444,50 +444,94 @@
 }
 
 /* ── Client Marquee ── */
-/* ── Clients Section — light minimal design ── */
+/* ── Clients Section — editorial two-col ── */
 .c-clients-section {
   background: #f5f4f1;
-  padding: clamp(4rem, 6vw, 8rem) clamp(1.5rem, 5vw, 6rem);
+  padding: clamp(4rem, 7vw, 9rem) clamp(1.5rem, 5vw, 6rem);
 }
 
 .c-clients-inner {
   max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
 }
 
 .c-clients-eyebrow {
   color: var(--brown-1);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  margin-bottom: 1rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+  margin-bottom: 1.25rem;
 }
 
-.c-clients-title {
-  color: var(--ink);
+.c-clients-stat {
   font-family: var(--font-playfair), Georgia, serif;
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-size: clamp(4.5rem, 7vw, 6.5rem);
   font-weight: 700;
-  line-height: 1.15;
-  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1;
+  margin: 0 0 0.35rem;
+}
+
+.c-clients-stat span {
+  color: var(--brown-1);
+}
+
+.c-clients-tagline {
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 1rem;
+}
+
+.c-clients-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.75;
 }
 
 .c-client-names-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  align-content: start;
+  padding-top: 0.5rem;
 }
 
 .c-client-name-tag {
-  background: #ffffff;
-  border: 1px solid rgba(10, 11, 26, 0.13);
+  border: 1px solid rgba(10, 11, 26, 0.14);
+  background: transparent;
   color: var(--ink);
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.025em;
-  padding: 9px 18px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 9px 16px;
   white-space: nowrap;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+  cursor: default;
+}
+
+.c-client-name-tag:hover {
+  background: var(--ink);
+  color: #f5f4f1;
+  border-color: var(--ink);
+}
+
+@media (max-width: 860px) {
+  .c-clients-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .c-clients-stat {
+    font-size: clamp(3.5rem, 10vw, 5rem);
+  }
 }
 
 /* ── Logo modal ── */

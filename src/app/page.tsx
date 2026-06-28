@@ -363,11 +363,15 @@ export default function HomePage() {
       {/* 2. STATS STRIP — animated counters */}
       <AnimatedStats stats={stats} />
 
-      {/* 3. CLIENT SECTION — minimal name cards on light background */}
+      {/* 3. CLIENT SECTION — editorial two-col with stat anchor */}
       <section className="c-clients-section" aria-label="Clients we have worked with">
         <div className="c-clients-inner">
-          <p className="c-clients-eyebrow">Trusted By Industry Leaders</p>
-          <h2 className="c-clients-title">Clients we&apos;ve<br />worked with</h2>
+          <div className="c-clients-left">
+            <p className="c-clients-eyebrow">Our Clients</p>
+            <p className="c-clients-stat">100<span>+</span></p>
+            <p className="c-clients-tagline">Brands that trust<br />our work</p>
+            <p className="c-clients-desc">Global MNCs to fast-growing enterprises — across manufacturing, banking, pharma, and tech.</p>
+          </div>
           <div className="c-client-names-grid">
             {clientLogos.map((client) => (
               <div key={client.slug} className="c-client-name-tag">
