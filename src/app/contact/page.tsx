@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock, ArrowRight } from "lucide-react";
 import ContemporaryNav from "@/components/ContemporaryNav";
 import Footer from "@/components/Footer";
 import "../contemporary.css";
-import "leaflet/dist/leaflet.css";
-import type { Map as LeafletMap, Marker as LeafletMarker } from "leaflet";
 
 const W3F_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
@@ -26,91 +24,18 @@ const offices = [
 const branches = ["Mumbai", "Bangalore", "Hyderabad", "Goa", "Gujarat", "Noida"];
 
 const mapCities = [
-  { city: "Pune",      tag: "Head Office",    isHq: true,  lat: 18.5204, lng: 73.8567 },
-  { city: "Mumbai",    tag: "Maharashtra",               lat: 19.0760, lng: 72.8777 },
-  { city: "Bangalore", tag: "Karnataka",                  lat: 12.9716, lng: 77.5946 },
-  { city: "Hyderabad", tag: "Telangana",                  lat: 17.3850, lng: 78.4867 },
-  { city: "Goa",       tag: "Goa",                        lat: 15.2993, lng: 74.1240 },
-  { city: "Gujarat",   tag: "Multiple cities",            lat: 23.0225, lng: 72.5714 },
-  { city: "Noida",     tag: "Delhi NCR",                  lat: 28.5355, lng: 77.3910 },
+  { city: "Pune",      tag: "Head Office",      isHq: true },
+  { city: "Mumbai",    tag: "Maharashtra" },
+  { city: "Bangalore", tag: "Karnataka" },
+  { city: "Hyderabad", tag: "Telangana" },
+  { city: "Goa",       tag: "Goa" },
+  { city: "Gujarat",   tag: "Multiple cities" },
+  { city: "Noida",     tag: "Delhi NCR" },
 ];
 
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const formRef = useRef<HTMLFormElement>(null);
-  const leafletRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<LeafletMap | null>(null);
-  const markersRef = useRef<Record<string, LeafletMarker>>({});
-
-  function flyToCity(city: string, lat: number, lng: number) {
-    const map = mapInstanceRef.current;
-    if (!map) return;
-    map.flyTo([lat, lng], 9, { duration: 1.2 });
-    markersRef.current[city]?.openPopup();
-  }
-
-  useEffect(() => {
-    if (!leafletRef.current || mapInstanceRef.current) return;
-
-    let map: LeafletMap;
-
-    import("leaflet").then((mod) => {
-      const L = mod.default;
-
-      const pinIcon = (isHq: boolean) =>
-        L.divIcon({
-          className: "",
-          html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36" width="24" height="36">
-            <path d="M12 0C5.4 0 0 5.4 0 12c0 8.4 12 24 12 24s12-15.6 12-24C24 5.4 18.6 0 12 0z"
-              fill="${isHq ? "#c9a96e" : "#1a2f4b"}"/>
-            <circle cx="12" cy="12" r="4" fill="white"/>
-          </svg>`,
-          iconSize: [24, 36],
-          iconAnchor: [12, 36],
-          popupAnchor: [0, -40],
-        });
-
-      map = L.map(leafletRef.current!, {
-        center: [20.0, 78.5],
-        zoom: 5,
-        zoomControl: true,
-        scrollWheelZoom: false,
-        attributionControl: true,
-      });
-
-      L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: "abcd",
-          maxZoom: 19,
-        }
-      ).addTo(map);
-
-      mapCities.forEach(({ city, tag, isHq, lat, lng }) => {
-        const marker = L.marker([lat, lng], { icon: pinIcon(!!isHq) })
-          .addTo(map)
-          .bindPopup(
-            `<div style="font-family:sans-serif;font-size:13px;line-height:1.5">
-              <strong>${city}</strong><br/>
-              <span style="color:#666">${tag}</span>
-            </div>`,
-            { offset: [0, -30] }
-          );
-        markersRef.current[city] = marker;
-      });
-
-      mapInstanceRef.current = map;
-    });
-
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
-    };
-  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -313,22 +238,23 @@ export default function ContactPage() {
             <h2 className="c-section-title" id="india-map-h">Operating across 7 regions</h2>
           </div>
           <div className="c-india-map-layout">
-            {/* Leaflet interactive map */}
-            <div className="c-leaflet-wrap" aria-label="Interactive map of Floor-Space India offices">
-              <div ref={leafletRef} className="c-leaflet-map" />
+            {/* OpenStreetMap embed — Koregaon Park Annexe, Pune */}
+            <div className="c-leaflet-wrap">
+              <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=73.8800%2C18.5200%2C73.9200%2C18.5500&layer=mapnik&marker=18.5350%2C73.9000"
+                title="Floor-Space India — Office Location"
+                style={{ width: "100%", height: "100%", border: "none" }}
+                loading="lazy"
+                allowFullScreen
+              />
             </div>
 
             {/* City list */}
             <div className="c-india-cities-list">
-              {mapCities.map(({ city, tag, isHq, lat, lng }) => (
+              {mapCities.map(({ city, tag, isHq }) => (
                 <div
                   key={city}
                   className={`c-india-city-row${isHq ? " is-hq" : ""}`}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => flyToCity(city, lat, lng)}
-                  onKeyDown={(e) => e.key === "Enter" && flyToCity(city, lat, lng)}
-                  style={{ cursor: "pointer" }}
                 >
                   <span className="c-india-city-dot" aria-hidden />
                   <div>

@@ -1326,6 +1326,11 @@
   margin-bottom: 48px;
 }
 
+.js-reveal .c-testimonials-header[data-reveal] {
+  transition-duration: 1100ms;
+  transition-delay: 100ms;
+}
+
 .c-testimonials-grid {
   display: grid;
   gap: 16px;
@@ -2334,7 +2339,7 @@ button[type="submit"]:disabled {
 .c-page-hero {
   align-items: flex-end;
   display: flex;
-  min-height: 62vh;
+  min-height: 78vh;
   overflow: hidden;
   position: relative;
 }
@@ -3441,7 +3446,7 @@ button[type="submit"]:disabled {
   .c-stat-rail-item:nth-child(2) { border-right: none; }
   .c-stat-rail-item:nth-child(3) { border-top: 1px solid var(--c-border); }
   .c-stat-rail-item:nth-child(4) { border-top: 1px solid var(--c-border); border-right: none; }
-  .c-page-hero { min-height: 55vh; }
+  .c-page-hero { min-height: 72vh; }
 
   /* Slider mobile — detailed overrides */
   .c-slider-header { padding: 0; }

@@ -235,7 +235,7 @@ export default function HomePage() {
       scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
     });
     gsap.from(".c-sectors-title .c-gsap-word", {
-      y: 40, opacity: 0, stagger: 0.09, duration: 0.8, ease: "power4.out", delay: 0.15,
+      y: 32, opacity: 0, stagger: 0.16, duration: 1.15, ease: "power4.out", delay: 0.2,
       immediateRender: false,
       scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
     });
@@ -279,7 +279,7 @@ export default function HomePage() {
 
     // ── Contact heading: word-by-word ──
     gsap.from("#contact-h .c-gsap-word", {
-      y: 36, opacity: 0, stagger: 0.08, duration: 0.85, ease: "power4.out", delay: 0.3,
+      y: 28, opacity: 0, stagger: 0.15, duration: 1.15, ease: "power4.out", delay: 0.35,
       immediateRender: false,
       scrollTrigger: { trigger: ".c-contact-section", start: "top 78%", once: true },
     });
