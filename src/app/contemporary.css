@@ -444,259 +444,50 @@
 }
 
 /* ── Client Marquee ── */
-/* ── Client logo marquee ── */
-/* .c-clients-section now defined below with dark design */
-
-/* Fade edges */
-.c-logo-marquee-wrap {
-  overflow: hidden;
-  position: relative;
-}
-.c-logo-marquee-wrap::before,
-.c-logo-marquee-wrap::after {
-  content: "";
-  height: 100%;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  width: 120px;
-  z-index: 2;
-}
-.c-logo-marquee-wrap::before {
-  background: linear-gradient(to right, var(--c-bg), transparent);
-  left: 0;
-}
-.c-logo-marquee-wrap::after {
-  background: linear-gradient(to left, var(--c-bg), transparent);
-  right: 0;
-}
-
-/* Scrolling track — JS RAF-driven (no CSS animation = clicks always work) */
-.c-logo-marquee-track {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  width: max-content;
-  will-change: transform;
-}
-
-/* ── Clients Section — dark premium design ── */
+/* ── Clients Section — light minimal design ── */
 .c-clients-section {
-  background: #111f1d;
-  overflow: hidden;
-  padding: 40px 0 80px;
-  position: relative;
-}
-/* Fade-in from stats strip background — softens the hard light→dark edge */
-.c-clients-section::before {
-  background: linear-gradient(to bottom, #f2ede5 0%, transparent 100%);
-  content: "";
-  height: 40px;
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 0;
+  background: #f5f4f1;
+  padding: clamp(4rem, 6vw, 8rem) clamp(1.5rem, 5vw, 6rem);
 }
 
-/* Enhanced header */
-.c-clients-hero-header {
-  margin-bottom: 56px;
-  padding: 0 clamp(20px, 5vw, 80px);
+.c-clients-inner {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .c-clients-eyebrow {
-  color: rgba(255,255,255,0.55);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-}
-
-.c-clients-hero-row {
-  align-items: flex-end;
-  display: flex;
-  gap: 32px;
-}
-
-.c-clients-hero-text {
-  padding-bottom: 8px;
-}
-
-.c-clients-subline {
-  color: rgba(255,255,255,0.35);
-  font-size: 0.85rem;
-  line-height: 1.6;
-  margin-top: 8px;
-  max-width: 380px;
-}
-
-/* Logo grid */
-.c-clients-logo-grid {
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  border-top: 1px solid rgba(255,255,255,0.07);
-  display: grid;
-  gap: 0;
-  grid-template-columns: repeat(6, 1fr);
-  margin: 0 0 20px;
-}
-
-.c-client-logo-cell {
-  align-items: center;
-  border-right: 1px solid rgba(255,255,255,0.07);
-  display: flex;
-  justify-content: center;
-  min-height: 100px;
-  padding: 28px 24px;
-  transition: background 220ms ease;
-}
-
-.c-client-logo-cell:nth-child(6n) {
-  border-right: none;
-}
-
-.c-client-logo-cell:hover {
-  background: rgba(255,255,255,0.04);
-}
-
-.c-client-logo-cell img {
-  filter: brightness(0) invert(1);
-  max-height: 56px;
-  max-width: 130px;
-  object-fit: contain;
-  opacity: 0.7;
-  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  width: 100%;
-}
-
-.c-client-logo-cell:hover img {
-  filter: brightness(0) invert(1);
-  opacity: 1;
-  transform: scale(1.08);
-}
-
-.c-clients-marquee-label {
-  color: rgba(255,255,255,0.25);
+  color: var(--brown-1);
   font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  margin-bottom: 28px;
-  padding: 0 clamp(20px, 5vw, 80px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin-bottom: 1rem;
   text-transform: uppercase;
 }
 
-/* Legacy header (keep for fallback) */
-.c-clients-header {
-  align-items: baseline;
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin-bottom: 52px;
-  padding: 0 32px;
-}
-
-@media (max-width: 900px) {
-  .c-clients-logo-grid { grid-template-columns: repeat(4, 1fr); }
-  .c-client-logo-cell:nth-child(6n) { border-right: 1px solid rgba(255,255,255,0.07); }
-  .c-client-logo-cell:nth-child(4n) { border-right: none; }
-}
-@media (max-width: 560px) {
-  .c-clients-logo-grid { grid-template-columns: repeat(3, 1fr); }
-  .c-client-logo-cell:nth-child(4n) { border-right: 1px solid rgba(255,255,255,0.07); }
-  .c-client-logo-cell:nth-child(3n) { border-right: none; }
-  .c-clients-hero-row { flex-direction: column; gap: 16px; align-items: flex-start; }
-}
-
-.c-clients-count {
-  color: #fff;
+.c-clients-title {
+  color: var(--ink);
   font-family: var(--font-playfair), Georgia, serif;
-  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-size: clamp(2rem, 3.5vw, 3rem);
   font-weight: 700;
-  line-height: 1;
-  margin: 0;
+  line-height: 1.15;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
 }
 
-.c-clients-count span {
-  color: var(--c-accent-2);
-}
-
-.c-clients-headline {
-  color: rgba(255,255,255,0.45);
-  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 1.4;
-  margin: 0;
-  max-width: 200px;
-}
-
-/* Two-row marquee container */
-.c-clients-marquee-outer {
+.c-client-names-grid {
   display: flex;
-  flex-direction: column;
-  gap: 0;
-  overflow: hidden;
-  position: relative;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.c-clients-marquee-outer::before,
-.c-clients-marquee-outer::after {
-  content: "";
-  height: 100%;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  width: 120px;
-  z-index: 2;
-}
-.c-clients-marquee-outer::before {
-  background: linear-gradient(to right, #111f1d, transparent);
-  left: 0;
-}
-.c-clients-marquee-outer::after {
-  background: linear-gradient(to left, #111f1d, transparent);
-  right: 0;
-}
-
-.c-clients-marquee-row {
-  overflow: hidden;
-  padding: 10px 0;
-  contain: layout;
-}
-
-.c-clients-marquee-track {
-  align-items: center;
-  display: flex;
-  gap: 0;
-  width: max-content;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
-.c-clients-name {
-  align-items: center;
-  color: rgba(255,255,255,0.65);
-  display: inline-flex;
-  font-size: clamp(1rem, 1.8vw, 1.3rem);
+.c-client-name-tag {
+  background: #ffffff;
+  border: 1px solid rgba(10, 11, 26, 0.13);
+  color: var(--ink);
+  font-size: 0.85rem;
   font-weight: 500;
-  gap: 20px;
-  letter-spacing: 0.04em;
-  padding: 0 8px;
-  text-transform: uppercase;
-  transition: color 0.2s;
+  letter-spacing: 0.025em;
+  padding: 9px 18px;
   white-space: nowrap;
-}
-
-.c-clients-name:hover { color: #fff; }
-
-.c-clients-sep {
-  color: var(--c-accent-2);
-  font-weight: 300;
-  font-size: 1.1em;
-  opacity: 0.6;
 }
 
 /* ── Logo modal ── */

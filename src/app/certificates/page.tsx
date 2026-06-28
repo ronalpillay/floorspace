@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Award, ArrowRight } from "lucide-react";
 import ContemporaryNav from "@/components/ContemporaryNav";
@@ -47,7 +46,7 @@ export default function CertificatesPage() {
         {[
           { value: "ISO 9001", label: "International Standard" },
           { value: "Bureau Veritas", label: "Certifying Body" },
-          { value: "15+",      label: "Years Compliant" },
+          { value: "17+",      label: "Years Compliant" },
           { value: "100%",     label: "Audit Ready" },
         ].map(({ value, label }) => (
           <div key={label} className="c-stat-rail-item">
@@ -66,14 +65,12 @@ export default function CertificatesPage() {
           </h2>
 
           <div className="c-cert-feature" data-reveal>
-            {/* Image side */}
+            {/* Certificate PDF */}
             <div className="c-cert-feature-img">
-              <Image
-                src="/images/hero-ext-3.jpg"
-                alt="Floor-Space India — ISO certified project site"
-                fill
-                sizes="(max-width:768px) 100vw, 50vw"
-                style={{ objectFit: "cover" }}
+              <iframe
+                src="/certificates/iso-certificate.pdf"
+                title="Floor-Space India — ISO 9001:2015 Certificate"
+                style={{ width: "100%", height: "100%", border: "none", minHeight: 480 }}
               />
             </div>
 

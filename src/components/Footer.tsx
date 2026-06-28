@@ -85,7 +85,7 @@ export default function Footer() {
           <h3 className="c-footer-group-title">Contact</h3>
           <a href="tel:+919011999399" className="c-footer-contact-row">+91 90119 99399</a>
           <a href="mailto:rajesh@floor-space.co.in" className="c-footer-contact-row">rajesh@floor-space.co.in</a>
-          <p className="c-footer-contact-row">302 Siddhivinayak Aurum, Viman Nagar, Pune – 411014</p>
+          <p className="c-footer-contact-row">Office 709, 7th Floor, Verdant 84, Koregaon Park Annexe, Pune – 411036</p>
           <Link href="/contact" className="c-footer-cta">Start a Project →</Link>
         </div>
       </div>

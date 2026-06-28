@@ -25,7 +25,6 @@ import Tilt3D from "@/components/Tilt3D";
 import Footer from "@/components/Footer";
 import AnimatedStats from "@/components/AnimatedStats";
 import ContemporaryNav from "@/components/ContemporaryNav";
-import LogoMarquee from "@/components/LogoMarquee";
 import { projects } from "@/data/projects";
 import "./contemporary.css";
 
@@ -33,8 +32,8 @@ import "./contemporary.css";
 const W3F_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
 const stats = [
-  { value: "470+", label: "Projects Delivered" },
-  { value: "15+", label: "Years of Excellence" },
+  { value: "225+", label: "Projects Delivered" },
+  { value: "17+", label: "Years of Excellence" },
   { value: "20+", label: "Cities Across India" },
   { value: "100%", label: "Turnkey Accountability" },
 ];
@@ -146,7 +145,7 @@ function HeroSlideshow() {
           <br />
           <span className="c-hero-word" style={{ "--wi": 2 } as React.CSSProperties}>Company</span>
         </h1>
-        <p className="c-hero-sub c-anim-sub">15+ years. 470+ projects. Your complete partner for Industrial Construction and Interior Turnkey Solutions.</p>
+        <p className="c-hero-sub c-anim-sub">17+ years. 225+ projects. Your complete partner for Industrial Construction and Interior Turnkey Solutions.</p>
         <div className="c-hero-actions c-anim-actions">
           <Link href="/projects" className="c-btn-hero-primary">
             View Our Work <ArrowRight size={16} aria-hidden />
@@ -165,81 +164,6 @@ function HeroSlideshow() {
 }
 
 // ── Client Names Marquee — two rows, opposite directions ──
-function ClientNamesMarquee({ clients }: { clients: { name: string }[] }) {
-  const row1Ref = useRef<HTMLDivElement>(null);
-  const row2Ref = useRef<HTMLDivElement>(null);
-  const raf1Ref = useRef<number>(0);
-  const raf2Ref = useRef<number>(0);
-  const pos1 = useRef(0);
-  const pos2 = useRef(0);
-  const paused = useRef(false);
-
-  // Split clients into two halves for the two rows
-  const half = Math.ceil(clients.length / 2);
-  const row1 = clients.slice(0, half);
-  const row2 = clients.slice(half);
-
-  useEffect(() => {
-    const t1 = row1Ref.current;
-    const t2 = row2Ref.current;
-    if (!t1 || !t2) return;
-
-    // Row 2 starts offset for staggered appearance
-    pos2.current = (t2.scrollWidth / 2) * 0.4;
-
-    // Single rAF loop drives both rows — halves the per-frame callback count
-    function animate() {
-      if (!paused.current) {
-        pos1.current += 0.5;
-        if (pos1.current >= t1!.scrollWidth / 2) pos1.current -= t1!.scrollWidth / 2;
-        t1!.style.transform = `translateX(-${pos1.current}px)`;
-
-        pos2.current += 0.5;
-        if (pos2.current >= t2!.scrollWidth / 2) pos2.current -= t2!.scrollWidth / 2;
-        t2!.style.transform = `translateX(-${pos2.current}px)`;
-      }
-      raf1Ref.current = requestAnimationFrame(animate);
-    }
-
-    raf1Ref.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(raf1Ref.current);
-  }, []);
-
-  const loop1 = [...row1, ...row1];
-  const loop2 = [...row2, ...row2];
-
-  return (
-    <div
-      className="c-clients-marquee-outer"
-      onMouseEnter={() => { paused.current = true; }}
-      onMouseLeave={() => { paused.current = false; }}
-    >
-      {/* Row 1 — scrolls left */}
-      <div className="c-clients-marquee-row">
-        <div className="c-clients-marquee-track" ref={row1Ref} style={{ transform: "translateX(0)" }}>
-          {loop1.map((c, i) => (
-            <span key={i} className="c-clients-name">
-              <span className="c-clients-sep" aria-hidden>/</span>
-              {c.name}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Row 2 — scrolls slightly offset (looks like opposite direction) */}
-      <div className="c-clients-marquee-row">
-        <div className="c-clients-marquee-track" ref={row2Ref} style={{ transform: "translateX(0)" }}>
-          {loop2.map((c, i) => (
-            <span key={i} className="c-clients-name">
-              <span className="c-clients-sep" aria-hidden>/</span>
-              {c.name}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function HomePage() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
@@ -440,40 +364,19 @@ export default function HomePage() {
       {/* 2. STATS STRIP — animated counters */}
       <AnimatedStats stats={stats} />
 
-      {/* 3. CLIENT SECTION — logo grid + marquee */}
+      {/* 3. CLIENT SECTION — minimal name cards on light background */}
       <section className="c-clients-section" aria-label="Clients we have worked with">
-        <div className="c-clients-hero-header">
+        <div className="c-clients-inner">
           <p className="c-clients-eyebrow">Trusted By Industry Leaders</p>
-          <div className="c-clients-hero-row">
-            <p className="c-clients-count">100<span>+</span></p>
-            <div className="c-clients-hero-text">
-              <p className="c-clients-headline">Brands that trust<br />us to deliver</p>
-              <p className="c-clients-subline">From global MNCs to fast-growing enterprises — across manufacturing, pharma, tech, and banking sectors.</p>
-            </div>
+          <h2 className="c-clients-title">Clients we&apos;ve<br />worked with</h2>
+          <div className="c-client-names-grid">
+            {clientLogos.map((client) => (
+              <div key={client.slug} className="c-client-name-tag">
+                {client.name}
+              </div>
+            ))}
           </div>
         </div>
-
-        {/* Featured client logos grid */}
-        <div className="c-clients-logo-grid">
-          {[
-            "bridgestone", "eaton", "bajaj-allianz", "lupin",
-            "hindustan-unilever-limited", "new-balance", "mahindra-2-wheelers", "mazak",
-            "schmersal", "oerlikon", "marquardt", "geberit",
-          ].map((slug) => (
-            <div key={slug} className="c-client-logo-cell">
-              <Image
-                src={`/images/clients/${slug}.png`}
-                alt={slug.replace(/-/g, " ")}
-                width={160}
-                height={60}
-                style={{ objectFit: "contain" }}
-              />
-            </div>
-          ))}
-        </div>
-
-        <div className="c-clients-marquee-label">And many more…</div>
-        <ClientNamesMarquee clients={clientLogos} />
       </section>
 
       {/* 4. TWO SERVICE CARDS */}
@@ -701,7 +604,7 @@ export default function HomePage() {
               </a>
               <div className="c-contact-row">
                 <span className="c-contact-icon"><MapPin size={16} strokeWidth={1.6} /></span>
-                302 Siddhivinayak Aurum, Behind Eden Garden,<br />Viman Nagar, Pune – 411014
+                Office 709, 7th Floor, Verdant 84,<br />Koregaon Park Annexe, Pune – 411036
               </div>
               <div className="c-contact-row">
                 <span className="c-contact-icon"><Clock size={16} strokeWidth={1.6} /></span>

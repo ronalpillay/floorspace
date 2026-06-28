@@ -17,7 +17,7 @@ type FormStatus = "idle" | "submitting" | "success" | "error";
 const offices = [
   {
     name: "Head Office — Pune",
-    address: "302, Siddhivinayak Aurum,\nBehind Eden Garden, Viman Nagar,\nPune, Maharashtra – 411014",
+    address: "Office 709, 7th Floor,\nVerdant 84, Koregaon Park Annexe,\nPune, Maharashtra – 411036",
     phone: "+91-9011999399",
     email: "rajesh@floor-space.co.in",
   },
@@ -189,7 +189,7 @@ export default function ContactPage() {
                     <span className="c-feature-icon" style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 10 }}>
                       <MapPin size={16} strokeWidth={1.6} />
                     </span>
-                    302 Siddhivinayak Aurum, Behind Eden Garden, Viman Nagar, Pune – 411014
+                    Office 709, 7th Floor, Verdant 84, Koregaon Park Annexe, Pune – 411036
                   </div>
                   <div style={{ alignItems: "center", color: "var(--c-ink-2)", display: "flex", gap: 14, fontSize: "0.94rem" }}>
                     <span className="c-feature-icon" style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 10 }}>

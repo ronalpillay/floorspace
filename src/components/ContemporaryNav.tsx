@@ -106,7 +106,7 @@ export default function ContemporaryNav({ solid = false }: Props) {
           {/* Bottom info */}
           <div className="c-mobile-menu-footer">
             <div className="c-mobile-menu-address">
-              <p>Viman Nagar, Pune – 411014</p>
+              <p>Koregaon Park Annexe, Pune – 411036</p>
               <p>Mumbai · Bengaluru · Delhi</p>
             </div>
             <a href="mailto:rajesh@floor-space.co.in" className="c-mobile-menu-email">
