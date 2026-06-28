@@ -379,8 +379,9 @@
 
 /* ── Stats Strip ── */
 .c-stats-strip {
-  background: var(--ink);
-  border-bottom: none;
+  background: #ffffff;
+  border-top: 1px solid rgba(10,11,26,0.07);
+  border-bottom: 1px solid rgba(10,11,26,0.07);
   display: flex;
   padding: 0 clamp(24px, 4vw, 52px);
   position: relative;
@@ -397,7 +398,7 @@
 }
 
 .c-stats-divider {
-  background: rgba(255,255,255,0.1);
+  background: rgba(10,11,26,0.1);
   bottom: 20px;
   left: 0;
   position: absolute;
@@ -406,7 +407,7 @@
 }
 
 .c-stats-value {
-  color: var(--brown-1);
+  color: var(--brown-2);
   font-family: var(--font-playfair), Georgia, serif;
   font-size: clamp(2.2rem, 3.5vw, 3.4rem);
   font-weight: 700;
@@ -415,7 +416,7 @@
 }
 
 .c-stats-label {
-  color: rgba(255,255,255,0.45);
+  color: var(--muted);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -435,11 +436,11 @@
   .c-stats-divider { display: none; }
   .c-stats-item:nth-child(2),
   .c-stats-item:nth-child(4) {
-    border-left: 1px solid rgba(255,255,255,0.08);
+    border-left: 1px solid rgba(10,11,26,0.08);
   }
   .c-stats-item:nth-child(3),
   .c-stats-item:nth-child(4) {
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid rgba(10,11,26,0.08);
   }
 }
 
