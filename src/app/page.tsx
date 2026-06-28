@@ -14,7 +14,6 @@ const heroSlides = [
   { src: "/images/hero-int-1.jpg", alt: "Interior fit-out" },
   { src: "/images/hero-ext-4.jpg", alt: "Industrial construction" },
   { src: "/images/hero-int-2.jpg", alt: "Interior fit-out" },
-  { src: "/images/hero-ext-5.jpg", alt: "Industrial construction" },
   { src: "/images/hero-int-3.jpg", alt: "Interior fit-out" },
   { src: "/images/hero-ext-1.jpg", alt: "Industrial construction" },
 ];
