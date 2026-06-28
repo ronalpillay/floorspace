@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock, ArrowRight } from "lucide-react";
@@ -24,19 +24,74 @@ const offices = [
 const branches = ["Mumbai", "Bangalore", "Hyderabad", "Goa", "Gujarat", "Noida"];
 
 const mapCities = [
-  { city: "Pune",      tag: "Head Office",    isHq: true, mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=73.8800%2C18.5200%2C73.9200%2C18.5500&layer=mapnik&marker=18.5350%2C73.9000" },
-  { city: "Mumbai",    tag: "Maharashtra",              mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=72.8000%2C18.9000%2C73.0000%2C19.2000&layer=mapnik&marker=19.0760%2C72.8777" },
-  { city: "Bangalore", tag: "Karnataka",                mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=77.5000%2C12.9000%2C77.6500%2C13.0500&layer=mapnik&marker=12.9716%2C77.5946" },
-  { city: "Hyderabad", tag: "Telangana",                mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=78.3800%2C17.3200%2C78.5500%2C17.4500&layer=mapnik&marker=17.3850%2C78.4867" },
-  { city: "Goa",       tag: "Goa",                      mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=73.9000%2C15.1500%2C74.2500%2C15.5000&layer=mapnik&marker=15.2993%2C74.1240" },
-  { city: "Gujarat",   tag: "Multiple cities",          mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=72.4500%2C22.9700%2C72.6500%2C23.1000&layer=mapnik&marker=23.0225%2C72.5714" },
-  { city: "Noida",     tag: "Delhi NCR",                mapSrc: "https://www.openstreetmap.org/export/embed.html?bbox=77.2500%2C28.4800%2C77.4500%2C28.6200&layer=mapnik&marker=28.5355%2C77.3910" },
+  { city: "Pune",      tag: "Head Office",  isHq: true, lat: 18.535,  lng: 73.900,  zoom: 13 },
+  { city: "Mumbai",    tag: "Maharashtra",              lat: 19.076,  lng: 72.878,  zoom: 12 },
+  { city: "Bangalore", tag: "Karnataka",                lat: 12.972,  lng: 77.595,  zoom: 12 },
+  { city: "Hyderabad", tag: "Telangana",                lat: 17.385,  lng: 78.487,  zoom: 12 },
+  { city: "Goa",       tag: "Goa",                      lat: 15.299,  lng: 74.124,  zoom: 11 },
+  { city: "Gujarat",   tag: "Multiple cities",          lat: 23.023,  lng: 72.571,  zoom: 11 },
+  { city: "Noida",     tag: "Delhi NCR",                lat: 28.536,  lng: 77.391,  zoom: 12 },
 ];
 
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const formRef = useRef<HTMLFormElement>(null);
   const [activeCity, setActiveCity] = useState(mapCities[0]);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mapRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (!mapContainerRef.current || mapRef.current) return;
+
+    // Inject CSS once
+    if (!document.getElementById("maplibre-css")) {
+      const link = document.createElement("link");
+      link.id = "maplibre-css";
+      link.rel = "stylesheet";
+      link.href = "https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css";
+      document.head.appendChild(link);
+    }
+
+    import("maplibre-gl").then((mod) => {
+      const maplibregl = mod.default;
+      const map = new maplibregl.Map({
+        container: mapContainerRef.current!,
+        style: "https://tiles.openfreemap.org/styles/positron",
+        center: [mapCities[0].lng, mapCities[0].lat],
+        zoom: mapCities[0].zoom,
+        attributionControl: false,
+      });
+
+      map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+      map.scrollZoom.disable();
+
+      map.on("load", () => {
+        mapCities.forEach(({ city, lat, lng, isHq }) => {
+          const el = document.createElement("div");
+          el.className = isHq ? "c-map-pin c-map-pin--hq" : "c-map-pin";
+          new maplibregl.Marker({ element: el, anchor: "bottom" })
+            .setLngLat([lng, lat])
+            .setPopup(new maplibregl.Popup({ offset: 20, closeButton: false })
+              .setHTML(`<strong>${city}</strong>`))
+            .addTo(map);
+        });
+      });
+
+      mapRef.current = map;
+    });
+
+    return () => {
+      mapRef.current?.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  const handleCityClick = useCallback((c: typeof mapCities[0]) => {
+    setActiveCity(c);
+    mapRef.current?.flyTo({ center: [c.lng, c.lat], zoom: c.zoom, duration: 1400, essential: true });
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -239,16 +294,9 @@ export default function ContactPage() {
             <h2 className="c-section-title" id="india-map-h">Operating across 7 regions</h2>
           </div>
           <div className="c-india-map-layout">
-            {/* OpenStreetMap embed — updates on city click */}
+            {/* Maplibre GL map */}
             <div className="c-leaflet-wrap">
-              <iframe
-                key={activeCity.city}
-                src={activeCity.mapSrc}
-                title={`Floor-Space India — ${activeCity.city} office`}
-                style={{ width: "100%", height: "100%", border: "none" }}
-                loading="lazy"
-                allowFullScreen
-              />
+              <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
             </div>
 
             {/* City list */}
@@ -259,8 +307,8 @@ export default function ContactPage() {
                   className={`c-india-city-row${c.isHq ? " is-hq" : ""}${activeCity.city === c.city ? " is-active" : ""}`}
                   role="button"
                   tabIndex={0}
-                  onClick={() => setActiveCity(c)}
-                  onKeyDown={(e) => e.key === "Enter" && setActiveCity(c)}
+                  onClick={() => handleCityClick(c)}
+                  onKeyDown={(e) => e.key === "Enter" && handleCityClick(c)}
                   style={{ cursor: "pointer" }}
                 >
                   <span className="c-india-city-dot" aria-hidden />
