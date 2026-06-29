@@ -372,10 +372,17 @@ export default function HomePage() {
             <p className="c-clients-tagline">Brands that trust<br />our work</p>
             <p className="c-clients-desc">Global MNCs to fast-growing enterprises — across manufacturing, banking, pharma, and tech.</p>
           </div>
-          <div className="c-client-names-grid">
+          <div className="c-client-logos-grid">
             {clientLogos.map((client) => (
-              <div key={client.slug} className="c-client-name-tag">
-                {client.name}
+              <div key={client.slug} className="c-client-logo-card">
+                <Image
+                  src={`/images/clients/${client.slug}.png`}
+                  alt={client.name}
+                  width={160}
+                  height={64}
+                  loading="lazy"
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                />
               </div>
             ))}
           </div>

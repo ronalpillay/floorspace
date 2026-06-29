@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | Floor-Space India",
   },
   description:
-    "Floor-Space India delivers premium commercial interiors and turnkey industrial construction across Pune, Mumbai, Bangalore, Hyderabad & 20+ cities. 470+ projects, 15+ years, ISO 9001:2015 certified.",
+    "Floor-Space India delivers premium commercial interiors and turnkey industrial construction across Pune, Mumbai, Bangalore, Hyderabad & 20+ cities. 225+ projects, 17+ years, ISO 9001:2015 certified.",
   keywords: [
     "interior contractors India",
     "turnkey interiors Pune",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Floor-Space India — Commercial Interiors & Industrial Construction",
-    description: "470+ projects across corporate, banking, pharma, and industrial sectors. Turnkey execution across India.",
+    description: "225+ projects across corporate, banking, pharma, and industrial sectors. Turnkey execution across India.",
     url: "https://floor-space.co.in",
     siteName: "Floor-Space India",
     locale: "en_IN",

@@ -10,7 +10,7 @@ import "../contemporary.css";
 export const metadata: Metadata = {
   title: "Projects — Floor-Space India",
   description:
-    "470+ commercial spaces delivered across industrial construction, interior fit-out, corporate, banking, and institutional sectors.",
+    "225+ commercial spaces delivered across industrial construction, interior fit-out, corporate, banking, and institutional sectors.",
 };
 
 export default function ProjectsPage() {
@@ -33,7 +33,7 @@ export default function ProjectsPage() {
         <div className="c-page-hero-body">
           <p className="c-page-hero-kicker">Our Work</p>
           <h1 className="c-page-hero-title" id="projects-h">
-            470+ Projects.<br />Every One Built to Last.
+            225+ Projects.<br />Every One Built to Last.
           </h1>
           <p className="c-page-hero-sub">
             From industrial construction to premium interior fit-out — spaces that
@@ -45,8 +45,8 @@ export default function ProjectsPage() {
       {/* ── Stat rail ── */}
       <div className="c-stat-rail">
         {[
-          { value: "470+", label: "Projects Delivered" },
-          { value: "15+",  label: "Years of Excellence" },
+          { value: "225+", label: "Projects Delivered" },
+          { value: "17+",  label: "Years of Excellence" },
           { value: "20+",  label: "Cities Across India" },
           { value: "100%", label: "Turnkey Delivery" },
         ].map(({ value, label }) => (

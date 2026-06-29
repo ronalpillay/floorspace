@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 };
 
 const stats = [
-  { value: "470+", label: "Projects Delivered" },
-  { value: "15+",  label: "Years of Excellence" },
+  { value: "225+", label: "Projects Delivered" },
+  { value: "17+",  label: "Years of Excellence" },
   { value: "20+",  label: "Cities Across India" },
   { value: "100%", label: "Turnkey Accountability" },
 ];

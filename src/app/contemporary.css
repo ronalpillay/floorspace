@@ -497,32 +497,30 @@
   line-height: 1.75;
 }
 
-.c-client-names-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.c-client-logos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
   align-content: start;
   padding-top: 0.5rem;
 }
 
-.c-client-name-tag {
-  border: 1px solid rgba(10, 11, 26, 0.14);
-  background: transparent;
-  color: var(--ink);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  padding: 9px 16px;
-  white-space: nowrap;
-  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
-  cursor: default;
+.c-client-logo-card {
+  background: #fff;
+  border: 1px solid rgba(10, 11, 26, 0.08);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84px;
+  padding: 16px 20px;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 
-.c-client-name-tag:hover {
-  background: var(--ink);
-  color: #f5f4f1;
-  border-color: var(--ink);
+.c-client-logo-card:hover {
+  border-color: rgba(10, 11, 26, 0.16);
+  box-shadow: 0 8px 24px rgba(10, 11, 26, 0.08);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 860px) {

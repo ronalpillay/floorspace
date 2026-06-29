@@ -12,7 +12,7 @@ import "./work.css";
 export const metadata: Metadata = {
   title: "Our Work — Floor-Space India",
   description:
-    "470+ commercial spaces delivered across banking, corporate, industrial, and institutional sectors. View selected projects.",
+    "225+ commercial spaces delivered across banking, corporate, industrial, and institutional sectors. View selected projects.",
 };
 
 const projects = [
@@ -163,7 +163,7 @@ export default function WorkPage() {
                   id="projects-h"
                   style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
                 >
-                  470+ spaces delivered.
+                  225+ spaces delivered.
                 </h2>
               </div>
             </div>
@@ -218,9 +218,9 @@ export default function WorkPage() {
               }}
             >
               {[
-                { stat: "470+", label: "Projects Delivered" },
+                { stat: "225+", label: "Projects Delivered" },
                 { stat: "7", label: "Sectors Served" },
-                { stat: "15+", label: "Years Experience" },
+                { stat: "17+", label: "Years Experience" },
                 { stat: "PAN India", label: "Project Reach" },
               ].map(({ stat, label }) => (
                 <div

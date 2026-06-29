@@ -164,7 +164,7 @@ export default function ServicesPage() {
                   <p>Covered under one roof</p>
                 </div>
                 <div className="hero-rail-item">
-                  <span>470+</span>
+                  <span>225+</span>
                   <p>Spaces delivered</p>
                 </div>
                 <div className="hero-rail-item">
