@@ -25,6 +25,7 @@ import Footer from "@/components/Footer";
 import AnimatedStats from "@/components/AnimatedStats";
 import ContemporaryNav from "@/components/ContemporaryNav";
 import { projects } from "@/data/projects";
+import LogoMarquee from "@/components/LogoMarquee";
 import "./contemporary.css";
 
 // Web3Forms key — set NEXT_PUBLIC_WEB3FORMS_KEY in your .env.local
@@ -699,6 +700,12 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Logo marquee ── */}
+      <div className="c-logo-marquee-section">
+        <p className="c-logo-marquee-label">Trusted by 100+ brands across India</p>
+        <LogoMarquee logos={clientLogos} />
+      </div>
 
       <Footer />
     </div>

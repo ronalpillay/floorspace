@@ -631,6 +631,35 @@
   transform: scale(1.05);
 }
 
+/* ── Logo marquee section (above footer) ── */
+.c-logo-marquee-section {
+  background: var(--warm-white);
+  border-top: 1px solid rgba(10, 11, 26, 0.07);
+  padding: 28px 0;
+  overflow: hidden;
+}
+
+.c-logo-marquee-label {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.c-logo-marquee-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.c-logo-marquee-track {
+  display: flex;
+  align-items: center;
+  will-change: transform;
+}
+
 .c-btn-dark {
   align-items: center;
   background: var(--c-accent);
