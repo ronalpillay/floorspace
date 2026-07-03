@@ -40,9 +40,10 @@ export default function ContemporaryNav({ solid = false }: Props) {
             width={300}
             height={80}
             priority
-            className={`c-nav-logo-img ${scrolled ? "is-scrolled" : ""}`}
-            style={{ height: "100%", width: "auto", objectFit: "contain" }}
+            className="c-nav-logo-img"
+            style={{ height: 44, width: "auto", objectFit: "contain" }}
           />
+          <span className="c-nav-tagline">Committed to Perfection</span>
         </Link>
         <ul className="c-nav-links">
           {navItems.map((item) => (

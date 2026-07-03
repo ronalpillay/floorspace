@@ -123,19 +123,39 @@
 }
 
 .c-nav-logo {
-  height: 52px;
-  max-width: 200px;
-  overflow: hidden;
-  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  max-width: 220px;
+  text-decoration: none;
 }
 
 .c-nav-logo-img {
-  filter: brightness(0) invert(1);
-  transition: filter 200ms ease;
+  filter: none;
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
-.c-nav-logo-img.is-scrolled {
-  filter: none;
+.c-nav-tagline {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+
+.c-nav.is-scrolled .c-nav-tagline {
+  color: var(--muted);
+}
+
+/* Over the dark hero, keep tagline readable */
+.c-nav:not(.is-scrolled) .c-nav-tagline {
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .c-nav-links {
@@ -499,8 +519,8 @@
 
 .c-client-logos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
   align-content: start;
   padding-top: 0.5rem;
 }
@@ -512,8 +532,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 84px;
-  padding: 16px 20px;
+  height: 100px;
+  padding: 18px 24px;
   transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 
@@ -3273,7 +3293,13 @@ button[type="submit"]:disabled {
   padding: 0;
   background: #f0f0ee;
   width: 100%;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(24px);
+}
+.c-gallery-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 .c-gallery-item:hover {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);

@@ -302,15 +302,15 @@ export const projects: Project[] = [
   {
     slug: "chromewell",
     name: "Chromewell",
-    sector: "Corporate Office",
+    sector: "Industrial",
     city: "Pune",
     area: "10,000 sq ft",
-    coverImage: "/images/chromewell/01.jpg",
-    coverAlt: "Chromewell — corporate office fit-out",
-    desc: "A sleek, modern corporate office with premium finishes and functional design.",
+    coverImage: "/images/chromewell/05.jpg",
+    coverAlt: "Chromewell — industrial construction project",
+    desc: "Industrial construction project with premium finishes and functional design.",
     longDesc:
-      "A contemporary corporate fit-out for Chromewell, combining premium aesthetics with highly functional workspaces. The project features a striking reception, open-plan workstations, private cabins, and well-designed collaborative zones that reflect the client's dynamic brand identity.",
-    category: "Interior Fit Out",
+      "A complete industrial construction project for Chromewell, combining robust build quality with highly functional workspaces. The project features a striking reception, open-plan workstations, private cabins, and well-designed collaborative zones that reflect the client's dynamic brand identity.",
+    category: "Industrial Construction",
     images: [
       { src: "/images/chromewell/01.jpg", alt: "Office overview" },
       { src: "/images/chromewell/02.jpg", alt: "Workspace interior" },
@@ -325,15 +325,15 @@ export const projects: Project[] = [
   {
     slug: "john-deere",
     name: "John Deere India",
-    sector: "Agricultural & Industrial",
+    sector: "Industrial & Corporate",
     city: "Pune",
     area: "18,000 sq ft",
     coverImage: "/images/john-deere/03.jpg",
-    coverAlt: "John Deere India — workstation fit-out",
+    coverAlt: "John Deere India — industrial construction and interior design",
     desc: "State-of-the-art office and facility interior for the global equipment giant's India operations.",
     longDesc:
       "A high-spec fit-out for John Deere India's Pune facility, incorporating modern workspaces, technical areas, and collaborative zones that reflect the brand's precision engineering ethos. Delivered within tight timelines to support the company's India expansion.",
-    category: "Industrial Construction",
+    category: "Industrial Construction & Interior Design",
     images: [
       { src: "/images/john-deere/03.jpg", alt: "Workstation installation in progress" },
       { src: "/images/john-deere/04.jpg", alt: "Open-plan floor installation" },

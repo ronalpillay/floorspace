@@ -13,6 +13,30 @@ interface ProjectGalleryProps {
 export default function ProjectGallery({ images, projectName }: ProjectGalleryProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-reveal: staggered fade-up when gallery items enter viewport
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const items = Array.from(grid.querySelectorAll<HTMLElement>(".c-gallery-item"));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const idx = items.indexOf(el);
+            el.style.transitionDelay = `${Math.min(idx % 6, 5) * 60}ms`;
+            el.classList.add("is-revealed");
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    items.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [images]);
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
@@ -56,7 +80,7 @@ export default function ProjectGallery({ images, projectName }: ProjectGalleryPr
   return (
     <>
       {/* ── Masonry grid ── */}
-      <div className="c-gallery-grid">
+      <div className="c-gallery-grid" ref={gridRef}>
         {images.map((img, i) => (
           <button
             key={img.src}

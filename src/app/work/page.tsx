@@ -17,13 +17,13 @@ export const metadata: Metadata = {
 
 const projects = [
   {
-    name: "SMBC Bank — BKC",
-    sector: "Banking & Financial",
-    city: "Mumbai",
-    area: "45,000 sq ft",
-    image: "/images/smbc/001.jpg",
-    alt: "SMBC BKC — banking and executive floor interior",
-    desc: "A landmark banking interior across multiple floors in Mumbai's financial district.",
+    name: "Octillion Capital",
+    sector: "Corporate",
+    city: "Pune",
+    area: "18,000 sq ft",
+    image: "/images/octillion/01.jpg",
+    alt: "Octillion Capital — premium corporate headquarters",
+    desc: "Premium corporate headquarters with lounge, boardroom, and open-plan floors.",
     tall: true,
   },
   {
@@ -35,16 +35,6 @@ const projects = [
     alt: "Tristone Technologies — open-plan workspace",
     desc: "Open-plan and collaborative workspace for a technology consultancy.",
     tall: true,
-  },
-  {
-    name: "Octillion Capital",
-    sector: "Corporate",
-    city: "Pune",
-    area: "18,000 sq ft",
-    image: "/images/octillion-reception.jpg",
-    alt: "Octillion Capital — premium corporate headquarters",
-    desc: "Premium corporate headquarters with lounge, boardroom, and open-plan floors.",
-    tall: false,
   },
   {
     name: "MQT Industries",
