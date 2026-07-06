@@ -21,7 +21,7 @@ const projects = [
     sector: "Corporate",
     city: "Pune",
     area: "18,000 sq ft",
-    image: "/images/octillion/01.jpg",
+    image: "/images/octillion/homepage.jpg",
     alt: "Octillion Capital — premium corporate headquarters",
     desc: "Premium corporate headquarters with lounge, boardroom, and open-plan floors.",
     tall: true,

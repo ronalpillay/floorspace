@@ -78,8 +78,8 @@ export const projects: Project[] = [
     sector: "Corporate & IT Office",
     city: "Pune",
     area: "12,000 sq ft",
-    coverImage: "/images/mqt/06.jpg",
-    coverAlt: "Marquardt Hinjewadi — open-plan office with feature ceiling",
+    coverImage: "/images/mqt/homepage.png",
+    coverAlt: "Marquardt Hinjewadi — industrial facility exterior",
     desc: "A dynamic modern workspace with open ceilings, collaboration zones, and flexible seating.",
     longDesc:
       "A contemporary corporate workspace for Marquardt India's Hinjewadi facility. Features exposed ceiling elements, a modern canteen, open-cell workspace areas, and varied seating zones that support both focused work and spontaneous collaboration. The palette blends industrial texture with warm accents.",
@@ -166,8 +166,8 @@ export const projects: Project[] = [
     sector: "Industrial",
     city: "Pune",
     area: "14,000 sq ft",
-    coverImage: "/images/pyrotek/02.jpg",
-    coverAlt: "Pyrotek India — industrial facility",
+    coverImage: "/images/pyrotek/homepage.jpg",
+    coverAlt: "Pyrotek India — industrial facility exterior",
     desc: "Industrial and office fit-out for Pyrotek's India operations.",
     longDesc:
       "A complete interior and industrial fit-out for Pyrotek India's Pune facility, blending functional manufacturing-support areas with a professional corporate environment. The project was executed with Pyrotek's operational requirements at the forefront, delivering a workspace that supports both production and administration.",
@@ -305,7 +305,7 @@ export const projects: Project[] = [
     sector: "Industrial",
     city: "Pune",
     area: "10,000 sq ft",
-    coverImage: "/images/chromewell/05.jpg",
+    coverImage: "/images/chromewell/homepage.png",
     coverAlt: "Chromewell — industrial construction project",
     desc: "Industrial construction project with premium finishes and functional design.",
     longDesc:
@@ -328,7 +328,7 @@ export const projects: Project[] = [
     sector: "Industrial & Corporate",
     city: "Pune",
     area: "18,000 sq ft",
-    coverImage: "/images/john-deere/03.jpg",
+    coverImage: "/images/john-deere/homepage.png",
     coverAlt: "John Deere India — industrial construction and interior design",
     desc: "State-of-the-art office and facility interior for the global equipment giant's India operations.",
     longDesc:
