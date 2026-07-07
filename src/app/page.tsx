@@ -140,33 +140,6 @@ const clientLogos = [
   { slug: "tti-india",                     name: "TTI India" },
   { slug: "voxeljet-technology",           name: "Voxeljet" },
 ];
-// 24 curated logos for the homepage grid (full 85-logo marquee is separate)
-const gridLogos = [
-  { slug: "bosch",                        name: "Bosch" },
-  { slug: "john-deere",                   name: "John Deere" },
-  { slug: "hindustan-unilever-limited",   name: "Hindustan Unilever" },
-  { slug: "jio",                          name: "Jio" },
-  { slug: "mahindra",                     name: "Mahindra" },
-  { slug: "hsbc",                         name: "HSBC" },
-  { slug: "vodafone",                     name: "Vodafone" },
-  { slug: "bridgestone",                  name: "Bridgestone" },
-  { slug: "itc-hotels",                   name: "ITC Hotels" },
-  { slug: "jabil",                        name: "Jabil" },
-  { slug: "eaton",                        name: "Eaton" },
-  { slug: "lupin",                        name: "Lupin" },
-  { slug: "new-holland-agriculture",      name: "New Holland" },
-  { slug: "smbc-bank",                    name: "SMBC Bank" },
-  { slug: "vanderlande",                  name: "Vanderlande" },
-  { slug: "yazaki",                       name: "Yazaki" },
-  { slug: "mazak",                        name: "Mazak" },
-  { slug: "bajaj-allianz",                name: "Bajaj Allianz" },
-  { slug: "serum-institute-of-india-ltd", name: "Serum Institute" },
-  { slug: "amcor",                        name: "Amcor" },
-  { slug: "autoliv",                      name: "Autoliv" },
-  { slug: "marquardt",                    name: "Marquardt" },
-  { slug: "octillion",                    name: "Octillion" },
-  { slug: "pyrotek",                      name: "Pyrotek" },
-];
 
 const featuredProjects = [
   {
@@ -503,19 +476,9 @@ export default function HomePage() {
             <p className="c-clients-tagline">Brands that trust<br />our work</p>
             <p className="c-clients-desc">Global MNCs to fast-growing enterprises — across manufacturing, banking, pharma, and tech.</p>
           </div>
-          <div className="c-client-logos-grid">
-            {gridLogos.map((client) => (
-              <div key={client.slug} className="c-client-logo-card">
-                <Image
-                  src={`/images/clients/${client.slug}.png`}
-                  alt={client.name}
-                  width={160}
-                  height={64}
-                  loading="lazy"
-                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                />
-              </div>
-            ))}
+          <div className="c-client-marquees">
+            <LogoMarquee logos={clientLogos} />
+            <LogoMarquee logos={clientLogos} reverse />
           </div>
         </div>
       </section>
@@ -792,11 +755,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ── Logo marquee — full 85-brand strip ── */}
-      <div className="c-logo-marquee-section">
-        <LogoMarquee logos={clientLogos} />
-      </div>
 
       <Footer />
     </div>

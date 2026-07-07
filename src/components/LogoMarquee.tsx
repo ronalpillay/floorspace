@@ -11,9 +11,10 @@ interface Logo {
 
 interface Props {
   logos: Logo[];
+  reverse?: boolean;
 }
 
-export default function LogoMarquee({ logos }: Props) {
+export default function LogoMarquee({ logos, reverse = false }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const posRef = useRef(0);
@@ -37,11 +38,19 @@ export default function LogoMarquee({ logos }: Props) {
     const track = trackRef.current;
     if (!track) return;
 
+    // For reverse rows, start at the midpoint so the seam is invisible from frame 1
+    if (reverse) posRef.current = track.scrollWidth / 2;
+
     function animate() {
       if (!pausedRef.current && track) {
-        posRef.current += speedPx;
         const half = track.scrollWidth / 2;
-        if (posRef.current >= half) posRef.current -= half;
+        if (reverse) {
+          posRef.current -= speedPx;
+          if (posRef.current < 0) posRef.current += half;
+        } else {
+          posRef.current += speedPx;
+          if (posRef.current >= half) posRef.current -= half;
+        }
         track.style.transform = `translateX(-${posRef.current}px)`;
       }
       rafRef.current = requestAnimationFrame(animate);
@@ -49,7 +58,7 @@ export default function LogoMarquee({ logos }: Props) {
 
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, []);
+  }, [reverse]);
 
   const pause = useCallback(() => { pausedRef.current = true; }, []);
   const resume = useCallback(() => { pausedRef.current = false; }, []);
