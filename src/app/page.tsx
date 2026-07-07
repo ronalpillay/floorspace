@@ -11,11 +11,11 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 // ── Hero slideshow — start with interior (nav always visible), ext-1 moved to last ──
 const heroSlides = [
-  { src: "/images/hero-int-1.jpg", alt: "Interior fit-out" },
-  { src: "/images/hero-ext-4.jpg", alt: "Industrial construction" },
-  { src: "/images/hero-int-2.jpg", alt: "Interior fit-out" },
-  { src: "/images/hero-int-3.jpg", alt: "Interior fit-out" },
-  { src: "/images/hero-ext-1.jpg", alt: "Industrial construction" },
+  { src: "/images/hero-slide-1.jpg", alt: "Octillion Capital — open-plan corporate office" },
+  { src: "/images/hero-slide-2.jpg", alt: "Chromewell — industrial facility" },
+  { src: "/images/hero-slide-3.jpg", alt: "Marquardt — modern office campus" },
+  { src: "/images/hero-slide-4.jpg", alt: "John Deere — industrial workspace" },
+  { src: "/images/hero-slide-5.jpg", alt: "Pyrotek — industrial construction" },
 ];
 import { ArrowRight, ArrowUpRight, MapPin, Phone, Mail, Clock, Building2, Monitor, Factory, HeartPulse, UtensilsCrossed, ShoppingBag, GraduationCap, Home } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
