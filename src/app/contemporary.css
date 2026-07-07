@@ -3293,22 +3293,18 @@ button[type="submit"]:disabled {
   padding: 0;
   background: #f0f0ee;
   width: 100%;
-  transition: box-shadow 0.3s ease, opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 0;
-  transform: translateY(24px);
-}
-.c-gallery-item.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
+  /* GSAP owns opacity/transform — CSS only handles hover shadow */
+  transition: box-shadow 0.4s ease;
+  will-change: opacity, transform;
 }
 .c-gallery-item:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
 }
 .c-gallery-item img {
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.c-gallery-item:hover img {
-  transform: scale(1.04);
+  display: block;
+  width: 100%;
+  height: auto;
+  /* transition handled via inline style in component for parallax */
 }
 .c-gallery-hover {
   position: absolute;
@@ -3316,14 +3312,15 @@ button[type="submit"]:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0);
+  background: rgba(10, 11, 26, 0);
   color: #fff;
   opacity: 0;
-  transition: opacity 0.3s ease, background 0.3s ease;
+  transition: opacity 0.35s ease, background 0.35s ease;
+  pointer-events: none;
 }
 .c-gallery-item:hover .c-gallery-hover {
   opacity: 1;
-  background: rgba(0, 0, 0, 0.22);
+  background: rgba(10, 11, 26, 0.28);
 }
 
 /* ── Lightbox ── */
