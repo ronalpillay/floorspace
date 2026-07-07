@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
@@ -17,14 +17,13 @@ const heroSlides = [
   { src: "/images/hero-int-3.jpg", alt: "Interior fit-out" },
   { src: "/images/hero-ext-1.jpg", alt: "Industrial construction" },
 ];
-import { ArrowRight, ArrowUpRight, MapPin, Phone, Mail, Clock, ChevronLeft, ChevronRight, Building2, Monitor, Factory, HeartPulse, UtensilsCrossed, ShoppingBag, GraduationCap, Home } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Phone, Mail, Clock, Building2, Monitor, Factory, HeartPulse, UtensilsCrossed, ShoppingBag, GraduationCap, Home } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useParallax } from "@/hooks/useParallax";
 import Tilt3D from "@/components/Tilt3D";
 import Footer from "@/components/Footer";
 import AnimatedStats from "@/components/AnimatedStats";
 import ContemporaryNav from "@/components/ContemporaryNav";
-import { projects } from "@/data/projects";
 import LogoMarquee from "@/components/LogoMarquee";
 import "./contemporary.css";
 
@@ -141,6 +140,73 @@ const clientLogos = [
   { slug: "tti-india",                     name: "TTI India" },
   { slug: "voxeljet-technology",           name: "Voxeljet" },
 ];
+// 24 curated logos for the homepage grid (full 85-logo marquee is separate)
+const gridLogos = [
+  { slug: "bosch",                        name: "Bosch" },
+  { slug: "john-deere",                   name: "John Deere" },
+  { slug: "hindustan-unilever-limited",   name: "Hindustan Unilever" },
+  { slug: "jio",                          name: "Jio" },
+  { slug: "mahindra",                     name: "Mahindra" },
+  { slug: "hsbc",                         name: "HSBC" },
+  { slug: "vodafone",                     name: "Vodafone" },
+  { slug: "bridgestone",                  name: "Bridgestone" },
+  { slug: "itc-hotels",                   name: "ITC Hotels" },
+  { slug: "jabil",                        name: "Jabil" },
+  { slug: "eaton",                        name: "Eaton" },
+  { slug: "lupin",                        name: "Lupin" },
+  { slug: "new-holland-agriculture",      name: "New Holland" },
+  { slug: "smbc-bank",                    name: "SMBC Bank" },
+  { slug: "vanderlande",                  name: "Vanderlande" },
+  { slug: "yazaki",                       name: "Yazaki" },
+  { slug: "mazak",                        name: "Mazak" },
+  { slug: "bajaj-allianz",                name: "Bajaj Allianz" },
+  { slug: "serum-institute-of-india-ltd", name: "Serum Institute" },
+  { slug: "amcor",                        name: "Amcor" },
+  { slug: "autoliv",                      name: "Autoliv" },
+  { slug: "marquardt",                    name: "Marquardt" },
+  { slug: "octillion",                    name: "Octillion" },
+  { slug: "pyrotek",                      name: "Pyrotek" },
+];
+
+const featuredProjects = [
+  {
+    slug: "octillion-capital",
+    name: "Octillion Capital",
+    category: "Corporate Office",
+    city: "Pune",
+    area: "18,000 sq ft",
+    image: "/images/octillion/homepage.jpg",
+    alt: "Octillion Capital — premium corporate headquarters",
+  },
+  {
+    slug: "chromewell",
+    name: "Chromewell",
+    category: "Industrial Construction",
+    city: "Pune",
+    area: "40,000 sq ft",
+    image: "/images/chromewell/homepage.png",
+    alt: "Chromewell — industrial facility aerial view",
+  },
+  {
+    slug: "john-deere",
+    name: "John Deere",
+    category: "Industrial Workspace",
+    city: "Pune",
+    area: "28,000 sq ft",
+    image: "/images/john-deere/homepage.png",
+    alt: "John Deere — large-scale industrial workspace",
+  },
+  {
+    slug: "tristone-flowtech",
+    name: "Tristone Technologies",
+    category: "Corporate Workspace",
+    city: "Pune",
+    area: "22,000 sq ft",
+    image: "/images/tristone/01.jpg",
+    alt: "Tristone Technologies — open-plan workspace",
+  },
+];
+
 const sectors: { label: string; sub: string; Icon: LucideIcon }[] = [
   { label: "Corporate Offices",          sub: "", Icon: Building2 },
   { label: "IT & ITES Spaces",           sub: "", Icon: Monitor },
@@ -284,88 +350,99 @@ export default function HomePage() {
     });
 
     // ── Client logo grid: batch stagger fade + scale ──
-    ScrollTrigger.batch(".c-client-logo-cell", {
+    ScrollTrigger.batch(".c-client-logo-card", {
       onEnter: (batch) =>
         gsap.fromTo(batch,
           { opacity: 0, y: 20, scale: 0.9 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.05, duration: 0.7, ease: "back.out(1.4)", overwrite: "auto" }
+          { opacity: 1, y: 0, scale: 1, stagger: 0.04, duration: 0.8, ease: "back.out(1.2)", overwrite: "auto" }
         ),
       once: true,
       start: "top 85%",
     });
 
-    // ── Sector cards: stagger up with slight scale ──
+    // ── Sector cards: smooth stagger up ──
     ScrollTrigger.batch(".c-sector-card", {
       onEnter: (batch) =>
         gsap.fromTo(batch,
-          { opacity: 0, y: 30, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.07, duration: 0.85, ease: P, overwrite: "auto" }
+          { opacity: 0, y: 40, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.14, duration: 1.1, ease: "power2.out", overwrite: "auto" }
         ),
       once: true,
-      start: "top 83%",
+      start: "top 76%",
     });
 
     // ── Sectors grid: kicker + title words ──
     gsap.from(".c-sectors-kicker", {
-      y: 16, opacity: 0, duration: 0.75, ease: P,
+      y: 14, opacity: 0, duration: 1.0, ease: P,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
+      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 76%", once: true },
     });
     gsap.from(".c-sectors-title .c-gsap-word", {
-      y: 32, opacity: 0, stagger: 0.16, duration: 1.15, ease: "power4.out", delay: 0.2,
+      y: 28, opacity: 0, stagger: 0.2, duration: 1.3, ease: "power2.out", delay: 0.15,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
+      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 76%", once: true },
     });
 
-    // ── Slider header ──
-    gsap.from([".c-slider-header h2", ".c-slider-header .c-btn-dark"], {
-      y: 22, opacity: 0, stagger: 0.12, duration: 0.8, ease: P,
+    // ── Featured projects header ──
+    gsap.from([".c-featured-eyebrow", ".c-featured-heading", ".c-featured-header .c-btn-light"], {
+      y: 22, opacity: 0, stagger: 0.14, duration: 1.1, ease: P,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-slider-header", start: "top 82%", once: true },
+      scrollTrigger: { trigger: ".c-featured-header", start: "top 80%", once: true },
     });
 
-    // ── Testimonial cards ──
+    // ── Featured project cards: staggered entrance ──
+    ScrollTrigger.batch(".c-featured-card", {
+      onEnter: (batch) =>
+        gsap.fromTo(batch,
+          { opacity: 0, y: 50, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.16, duration: 1.3, ease: "power2.out", overwrite: "auto" }
+        ),
+      once: true,
+      start: "top 80%",
+    });
+
+    // ── Testimonial cards: smooth entrance ──
     ScrollTrigger.batch(".c-testi-card", {
       onEnter: (batch) =>
         gsap.fromTo(batch,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, stagger: 0.1, duration: 0.85, ease: P, overwrite: "auto" }
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, stagger: 0.18, duration: 1.2, ease: "power2.out", overwrite: "auto" }
         ),
       once: true,
-      start: "top 83%",
+      start: "top 78%",
     });
 
     // ── Contact: columns slide in from sides ──
     gsap.from(".c-contact-left", {
-      x: -40, opacity: 0, duration: 0.95, ease: E,
+      x: -30, opacity: 0, duration: 1.3, ease: "power2.out",
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-inner", start: "top 80%", once: true },
+      scrollTrigger: { trigger: ".c-contact-inner", start: "top 78%", once: true },
     });
     gsap.from(".c-contact-right", {
-      x: 40, opacity: 0, duration: 0.95, ease: E, delay: 0.08,
+      x: 30, opacity: 0, duration: 1.3, ease: "power2.out", delay: 0.1,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-inner", start: "top 80%", once: true },
+      scrollTrigger: { trigger: ".c-contact-inner", start: "top 78%", once: true },
     });
 
     // ── Contact info rows ──
     gsap.from(".c-contact-row", {
-      x: -14, opacity: 0, stagger: 0.07, duration: 0.65, ease: P, delay: 0.25,
+      x: -12, opacity: 0, stagger: 0.12, duration: 1.0, ease: P, delay: 0.3,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-info", start: "top 83%", once: true },
+      scrollTrigger: { trigger: ".c-contact-info", start: "top 80%", once: true },
     });
 
     // ── Contact heading: word-by-word ──
     gsap.from("#contact-h .c-gsap-word", {
-      y: 28, opacity: 0, stagger: 0.15, duration: 1.15, ease: "power4.out", delay: 0.35,
+      y: 22, opacity: 0, stagger: 0.2, duration: 1.3, ease: "power2.out", delay: 0.2,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-section", start: "top 78%", once: true },
+      scrollTrigger: { trigger: ".c-contact-section", start: "top 76%", once: true },
     });
 
     // ── Contact form fields ──
     gsap.from(".c-form-field", {
-      y: 16, opacity: 0, stagger: 0.06, duration: 0.65, ease: P, delay: 0.45,
+      y: 14, opacity: 0, stagger: 0.1, duration: 1.0, ease: P, delay: 0.4,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-right", start: "top 82%", once: true },
+      scrollTrigger: { trigger: ".c-contact-right", start: "top 80%", once: true },
     });
 
     // ── Footer columns ──
@@ -376,29 +453,6 @@ export default function HomePage() {
     });
   }, { scope: pageRef });
 
-  // Slider
-  const sliderProjects = projects.filter((p) => p.images.length >= 5);
-  const [sliderIndex, setSliderIndex] = useState(0);
-  const [sliderPaused, setSliderPaused] = useState(false);
-  const sliderPrev = useCallback(() => setSliderIndex((i) => (i - 1 + sliderProjects.length) % sliderProjects.length), [sliderProjects.length]);
-  const sliderNext = useCallback(() => setSliderIndex((i) => (i + 1) % sliderProjects.length), [sliderProjects.length]);
-
-  // Slider auto-advance
-  useEffect(() => {
-    if (sliderPaused) return;
-    const t = setInterval(sliderNext, 5000);
-    return () => clearInterval(t);
-  }, [sliderPaused, sliderNext]);
-
-  // Slider keyboard nav
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") sliderPrev();
-      if (e.key === "ArrowRight") sliderNext();
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [sliderPrev, sliderNext]);
 
   async function handleContactSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -450,7 +504,7 @@ export default function HomePage() {
             <p className="c-clients-desc">Global MNCs to fast-growing enterprises — across manufacturing, banking, pharma, and tech.</p>
           </div>
           <div className="c-client-logos-grid">
-            {clientLogos.map((client) => (
+            {gridLogos.map((client) => (
               <div key={client.slug} className="c-client-logo-card">
                 <Image
                   src={`/images/clients/${client.slug}.png`}
@@ -522,88 +576,50 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. FEATURED PROJECTS SLIDER */}
-      <section
-        className="c-slider-section"
-        aria-label="Featured projects"
-        onMouseEnter={() => setSliderPaused(true)}
-        onMouseLeave={() => setSliderPaused(false)}
-      >
-        {/* Header row */}
-        <div className="c-slider-header">
-          <div>
-            <p className="c-section-kicker">Featured Work</p>
-            <h2 className="c-slider-heading">Selected Projects</h2>
+      {/* 6. SELECTED PROJECTS — editorial full-bleed cards */}
+      <section className="c-featured-section" aria-labelledby="featured-h">
+        <div className="c-featured-inner">
+          <div className="c-featured-header">
+            <div>
+              <p className="c-featured-eyebrow">Selected Work</p>
+              <h2 className="c-featured-heading" id="featured-h">
+                Spaces built to<br />inspire and perform.
+              </h2>
+            </div>
+            <Link href="/work" className="c-btn-light" style={{ flexShrink: 0 }}>
+              View All Projects <ArrowRight size={15} aria-hidden />
+            </Link>
           </div>
-          <Link href="/projects" className="c-btn-dark" style={{ flexShrink: 0 }}>
-            View All Projects <ArrowRight size={15} aria-hidden />
-          </Link>
-        </div>
 
-        {/* Slide viewport */}
-        <div className="c-slider-viewport" aria-live="polite" aria-atomic="true">
-          <div
-            className="c-slider-track"
-            style={{ transform: `translateX(-${sliderIndex * 100}%)` }}
-          >
-            {sliderProjects.map((p, i) => (
-              <div
-                key={p.slug}
-                className={`c-slider-slide${i === sliderIndex ? " is-active" : ""}`}
-                aria-hidden={i !== sliderIndex}
-              >
-                <Image
-                  src={p.coverImage}
-                  alt={p.coverAlt}
-                  fill
-                  sizes="100vw"
-                  loading={i === 0 ? "eager" : "lazy"}
-                  style={{ objectFit: "cover" }}
-                />
-                <div className="c-slider-overlay" aria-hidden />
-                <div className="c-slider-content">
-                  <div className="c-slider-info">
-                    <span className="c-slider-tag">{p.category}</span>
-                    <h3 className="c-slider-title">{p.name}</h3>
-                    <p className="c-slider-meta">
-                      {p.sector} &nbsp;·&nbsp; {p.city} &nbsp;·&nbsp; {p.area}
-                    </p>
+          <div className="c-featured-grid">
+            {featuredProjects.map((p, i) => (
+              <article key={p.slug} className="c-featured-card">
+                <Link href={`/projects/${p.slug}`} className="c-featured-card-link" aria-label={`View ${p.name}`}>
+                  <div className="c-featured-img-wrap">
+                    <Image
+                      src={p.image}
+                      alt={p.alt}
+                      fill
+                      sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
+                      loading={i < 2 ? "eager" : "lazy"}
+                      style={{ objectFit: "cover" }}
+                    />
+                    <div className="c-featured-img-overlay" aria-hidden />
                   </div>
-                  <Link href={`/projects/${p.slug}`} className="c-slider-cta">
-                    View Gallery <ArrowUpRight size={15} aria-hidden />
-                  </Link>
-                </div>
-              </div>
+                  <div className="c-featured-card-body">
+                    <span className="c-featured-index">0{i + 1}</span>
+                    <div>
+                      <h3 className="c-featured-card-title">{p.name}</h3>
+                      <p className="c-featured-card-loc">{p.city} &nbsp;·&nbsp; {p.category}</p>
+                    </div>
+                    <span className="c-featured-card-cta">
+                      View Project <ArrowUpRight size={13} aria-hidden />
+                    </span>
+                  </div>
+                </Link>
+              </article>
             ))}
           </div>
-
-          {/* Arrows */}
-          <button className="c-slider-arrow c-slider-arrow-prev" onClick={sliderPrev} aria-label="Previous project" type="button">
-            <ChevronLeft size={22} />
-          </button>
-          <button className="c-slider-arrow c-slider-arrow-next" onClick={sliderNext} aria-label="Next project" type="button">
-            <ChevronRight size={22} />
-          </button>
-        </div>
-
-        {/* Dots + counter */}
-        <div className="c-slider-footer">
-          <div className="c-slider-dots" role="tablist" aria-label="Project slides">
-            {sliderProjects.map((p, i) => (
-              <button
-                key={p.slug}
-                className={`c-slider-dot${i === sliderIndex ? " is-active" : ""}`}
-                onClick={() => setSliderIndex(i)}
-                role="tab"
-                aria-selected={i === sliderIndex}
-                aria-label={`Go to ${p.name}`}
-                type="button"
-              />
-            ))}
-          </div>
-          <span className="c-slider-count">
-            {String(sliderIndex + 1).padStart(2, "0")} / {String(sliderProjects.length).padStart(2, "0")}
-          </span>
         </div>
       </section>
 
@@ -777,9 +793,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Logo marquee ── */}
+      {/* ── Logo marquee — full 85-brand strip ── */}
       <div className="c-logo-marquee-section">
-        <p className="c-logo-marquee-label">Trusted by 100+ brands across India</p>
         <LogoMarquee logos={clientLogos} />
       </div>
 
