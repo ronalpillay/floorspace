@@ -295,28 +295,48 @@ export default function HomePage() {
       start: "top 85%",
     });
 
-    // ── Sector cards: smooth stagger up ──
-    ScrollTrigger.batch(".c-sector-card", {
-      onEnter: (batch) =>
-        gsap.fromTo(batch,
-          { opacity: 0, y: 40, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.14, duration: 1.1, ease: "power2.out", overwrite: "auto" }
-        ),
-      once: true,
-      start: "top 76%",
-    });
-
-    // ── Sectors grid: kicker + title words ──
+    // ── SECTORS: grid-wave reveal ──
     gsap.from(".c-sectors-kicker", {
-      y: 14, opacity: 0, duration: 1.0, ease: P,
+      y: 22, opacity: 0, duration: 1.0, ease: "power3.out",
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 76%", once: true },
+      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
     });
     gsap.from(".c-sectors-title .c-gsap-word", {
-      y: 28, opacity: 0, stagger: 0.2, duration: 1.3, ease: "power2.out", delay: 0.15,
+      y: 48, opacity: 0, stagger: 0.12, duration: 1.1, ease: "power3.out", delay: 0.15,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 76%", once: true },
+      scrollTrigger: { trigger: ".c-sectors-black-grid", start: "top 78%", once: true },
     });
+    // Cards wave in column-by-column via grid stagger
+    gsap.fromTo(".c-sector-card",
+      { opacity: 0, y: 55, scale: 0.88 },
+      {
+        opacity: 1, y: 0, scale: 1, duration: 0.78, ease: "power3.out",
+        stagger: { amount: 0.85, grid: [2, 4], from: "start" },
+        immediateRender: false,
+        scrollTrigger: { trigger: ".c-sectors-icon-grid", start: "top 82%", once: true },
+      }
+    );
+    // Icons: elastic pop after cards land
+    gsap.fromTo(".c-sector-icon",
+      { scale: 0.2, opacity: 0, rotate: -25 },
+      {
+        scale: 1, opacity: 1, rotate: 0, duration: 0.9, ease: "elastic.out(1, 0.55)",
+        stagger: { amount: 0.85, grid: [2, 4], from: "start" },
+        delay: 0.3,
+        immediateRender: false,
+        scrollTrigger: { trigger: ".c-sectors-icon-grid", start: "top 82%", once: true },
+      }
+    );
+    gsap.fromTo(".c-sector-name",
+      { opacity: 0, y: 10 },
+      {
+        opacity: 1, y: 0, duration: 0.5, ease: "power2.out",
+        stagger: { amount: 0.85, grid: [2, 4], from: "start" },
+        delay: 0.55,
+        immediateRender: false,
+        scrollTrigger: { trigger: ".c-sectors-icon-grid", start: "top 82%", once: true },
+      }
+    );
 
     // ── Featured projects header ──
     gsap.from([".c-featured-eyebrow", ".c-featured-heading", ".c-featured-header .c-btn-light"], {
@@ -336,48 +356,91 @@ export default function HomePage() {
       start: "top 80%",
     });
 
-    // ── Testimonial cards: smooth entrance ──
-    ScrollTrigger.batch(".c-testi-card", {
-      onEnter: (batch) =>
-        gsap.fromTo(batch,
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, stagger: 0.18, duration: 1.2, ease: "power2.out", overwrite: "auto" }
-        ),
-      once: true,
-      start: "top 78%",
-    });
+    // ── TESTIMONIALS: stage entrance ──
+    // Featured card: dramatic slide from left with tilt
+    gsap.fromTo(".c-testi-card.is-featured",
+      { opacity: 0, x: -55, rotation: -1.5, scale: 0.95 },
+      {
+        opacity: 1, x: 0, rotation: 0, scale: 1,
+        duration: 1.2, ease: "power3.out", delay: 0.1,
+        immediateRender: false,
+        scrollTrigger: { trigger: ".c-testimonials-grid", start: "top 82%", once: true },
+      }
+    );
+    // Other cards: cascade from below
+    gsap.fromTo(".c-testi-card:not(.is-featured)",
+      { opacity: 0, y: 70, scale: 0.94 },
+      {
+        opacity: 1, y: 0, scale: 1, duration: 1.1, ease: "power3.out",
+        stagger: 0.14, delay: 0.22,
+        immediateRender: false,
+        scrollTrigger: { trigger: ".c-testimonials-grid", start: "top 82%", once: true },
+      }
+    );
+    // Quote marks: elastic scale-in
+    gsap.fromTo(".c-testi-quote-mark",
+      { scale: 0, opacity: 0 },
+      {
+        scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.7)",
+        stagger: 0.12, delay: 0.55,
+        immediateRender: false,
+        scrollTrigger: { trigger: ".c-testimonials-grid", start: "top 82%", once: true },
+      }
+    );
 
-    // ── Contact: columns slide in from sides ──
-    gsap.from(".c-contact-left", {
-      x: -30, opacity: 0, duration: 1.3, ease: "power2.out",
+    // ── CONTACT: power reveal ──
+    // Section lifts in as a unit
+    gsap.from(".c-contact-section", {
+      y: 32, opacity: 0, duration: 1.1, ease: "power3.out",
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-inner", start: "top 78%", once: true },
+      scrollTrigger: { trigger: ".c-contact-section", start: "top 88%", once: true },
     });
-    gsap.from(".c-contact-right", {
-      x: 30, opacity: 0, duration: 1.3, ease: "power2.out", delay: 0.1,
-      immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-inner", start: "top 78%", once: true },
-    });
-
-    // ── Contact info rows ──
-    gsap.from(".c-contact-row", {
-      x: -12, opacity: 0, stagger: 0.12, duration: 1.0, ease: P, delay: 0.3,
-      immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-info", start: "top 80%", once: true },
-    });
-
-    // ── Contact heading: word-by-word ──
+    // Heading: larger word-by-word reveal
     gsap.from("#contact-h .c-gsap-word", {
-      y: 22, opacity: 0, stagger: 0.2, duration: 1.3, ease: "power2.out", delay: 0.2,
+      y: 50, opacity: 0, stagger: 0.13, duration: 1.3, ease: "power3.out", delay: 0.25,
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-section", start: "top 76%", once: true },
+      scrollTrigger: { trigger: ".c-contact-section", start: "top 82%", once: true },
     });
-
-    // ── Contact form fields ──
-    gsap.from(".c-form-field", {
-      y: 14, opacity: 0, stagger: 0.1, duration: 1.0, ease: P, delay: 0.4,
+    gsap.from(".c-contact-left .c-section-kicker", {
+      y: 20, opacity: 0, duration: 0.9, ease: "power3.out",
       immediateRender: false,
-      scrollTrigger: { trigger: ".c-contact-right", start: "top 80%", once: true },
+      scrollTrigger: { trigger: ".c-contact-section", start: "top 82%", once: true },
+    });
+    // Info rows: stagger from left with more travel
+    gsap.from(".c-contact-row", {
+      x: -28, opacity: 0, stagger: 0.1, duration: 0.9, ease: "power3.out", delay: 0.45,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-contact-info", start: "top 84%", once: true },
+    });
+    // Contact icons: elastic pop
+    gsap.fromTo(".c-contact-icon",
+      { scale: 0, opacity: 0 },
+      {
+        scale: 1, opacity: 1, stagger: 0.1, duration: 0.65, ease: "elastic.out(1, 0.6)", delay: 0.5,
+        immediateRender: false,
+        scrollTrigger: { trigger: ".c-contact-info", start: "top 84%", once: true },
+      }
+    );
+    // Social buttons: back-out pop
+    gsap.fromTo(".c-social-btn",
+      { scale: 0, opacity: 0, rotate: -20 },
+      {
+        scale: 1, opacity: 1, rotate: 0, stagger: 0.08, duration: 0.6, ease: "back.out(1.8)", delay: 0.7,
+        immediateRender: false,
+        scrollTrigger: { trigger: ".c-contact-info", start: "top 84%", once: true },
+      }
+    );
+    // Form: slides up from below
+    gsap.from(".c-contact-right", {
+      y: 45, opacity: 0, duration: 1.2, ease: "power3.out", delay: 0.2,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-contact-inner", start: "top 82%", once: true },
+    });
+    // Form fields: individual stagger
+    gsap.from(".c-form-field", {
+      y: 20, opacity: 0, stagger: 0.09, duration: 0.9, ease: "power3.out", delay: 0.5,
+      immediateRender: false,
+      scrollTrigger: { trigger: ".c-contact-right", start: "top 84%", once: true },
     });
 
     // ── Footer columns ──

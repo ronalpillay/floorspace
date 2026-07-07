@@ -19,10 +19,19 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
   const rafRef = useRef<number>(0);
   const posRef = useRef(0);
   const pausedRef = useRef(false);
-  const speedPx = 0.55; // pixels per frame (~33px/s at 60fps)
+  const speedPx = 0.55;
 
-  // Modal state
   const [activeLogo, setActiveLogo] = useState<Logo | null>(null);
+  const [loadedSlugs, setLoadedSlugs] = useState<Set<string>>(new Set());
+
+  const markLoaded = useCallback((slug: string) => {
+    setLoadedSlugs((prev) => {
+      if (prev.has(slug)) return prev;
+      const next = new Set(prev);
+      next.add(slug);
+      return next;
+    });
+  }, []);
 
   // Close modal on Escape
   useEffect(() => {
@@ -33,12 +42,11 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
     return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [activeLogo]);
 
-  // JS-driven marquee — immune to CSS animation click-event issues
+  // JS-driven marquee
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
-    // For reverse rows, start at the midpoint so the seam is invisible from frame 1
     if (reverse) posRef.current = track.scrollWidth / 2;
 
     function animate() {
@@ -63,35 +71,50 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
   const pause = useCallback(() => { pausedRef.current = true; }, []);
   const resume = useCallback(() => { pausedRef.current = false; }, []);
 
-  // Duplicated for seamless loop
   const looped = [...logos, ...logos];
+
+  // Derive a short placeholder label from the company name
+  function getInitials(name: string): string {
+    const words = name.trim().split(/\s+/);
+    if (words.length === 1) return name.slice(0, 6).toUpperCase();
+    return words.slice(0, 3).map((w) => w[0]).join("").toUpperCase();
+  }
 
   return (
     <>
-      {/* ── Marquee ── */}
       <div className="c-logo-marquee-wrap" onMouseEnter={pause} onMouseLeave={resume}>
         <div className="c-logo-marquee-track" ref={trackRef} style={{ transform: "translateX(0)" }}>
-          {looped.map((logo, i) => (
-            <button
-              key={`${logo.slug}-${i}`}
-              className="c-logo-card"
-              onClick={() => setActiveLogo(logo)}
-              aria-label={`View ${logo.name} logo`}
-              type="button"
-            >
-              <Image
-                src={`/images/clients/${logo.slug}.png`}
-                alt={logo.name}
-                width={200}
-                height={72}
-                style={{ width: "100%", height: "100%", objectFit: "contain" }}
-              />
-            </button>
-          ))}
+          {looped.map((logo, i) => {
+            const loaded = loadedSlugs.has(logo.slug);
+            return (
+              <button
+                key={`${logo.slug}-${i}`}
+                className="c-logo-card"
+                onClick={() => setActiveLogo(logo)}
+                aria-label={`View ${logo.name} logo`}
+                type="button"
+              >
+                {/* Text placeholder — visible while image loads */}
+                <span className={`c-logo-ph${loaded ? " is-gone" : ""}`} aria-hidden>
+                  {getInitials(logo.name)}
+                </span>
+                {/* Logo image — fades in on load */}
+                <span className={`c-logo-img-wrap${loaded ? " is-loaded" : ""}`}>
+                  <Image
+                    src={`/images/clients/${logo.slug}.png`}
+                    alt={logo.name}
+                    width={200}
+                    height={72}
+                    onLoad={() => markLoaded(logo.slug)}
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                  />
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* ── Modal ── */}
       {activeLogo && (
         <div
           className="c-logo-modal-backdrop"

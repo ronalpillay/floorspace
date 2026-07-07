@@ -630,25 +630,57 @@
 /* Individual logo card — margin creates spacing so loop math stays exact */
 .c-logo-card {
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   width: 160px;
   height: 72px;
   background: #fff;
   border: 1px solid #e8eaed;
   border-radius: 10px;
-  padding: 12px 20px;
+  padding: 0;
   margin-left: 16px;
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   appearance: none;
   -webkit-appearance: none;
+  overflow: hidden;
 }
 .c-logo-card:hover {
   border-color: #c8ccd4;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
   transform: scale(1.05);
+}
+
+/* Placeholder text shown while logo loads */
+.c-logo-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #adb5bd;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+  user-select: none;
+}
+.c-logo-ph.is-gone {
+  opacity: 0;
+}
+
+/* Image wrapper — fades in once loaded */
+.c-logo-img-wrap {
+  position: absolute;
+  inset: 8px 16px;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.c-logo-img-wrap.is-loaded {
+  opacity: 1;
 }
 
 .c-logo-card img {
@@ -3447,7 +3479,8 @@ button[type="submit"]:disabled {
   .c-slider-footer { padding: 12px 0 0; }
 
   /* Logo marquee mobile */
-  .c-logo-card { width: 130px; height: 60px; padding: 8px 14px; margin-left: 12px; }
+  .c-logo-card { width: 130px; height: 60px; padding: 0; margin-left: 12px; }
+  .c-logo-img-wrap { inset: 6px 12px; }
 
   /* About section mobile */
   .c-about-section {
