@@ -5069,174 +5069,203 @@ button[type="submit"]:disabled {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   SELECTED WORK — editorial full-bleed cards (Flipspaces-style)
+   SELECTED WORK — Flipspaces-style stacked card deck
 ───────────────────────────────────────────────────────────── */
-.c-featured-section {
-  background: var(--ink);
-  padding: clamp(64px, 8vw, 120px) clamp(20px, 5vw, 80px);
+.c-stack-section {
+  background: #fff;
+  padding: clamp(56px, 7vw, 110px) clamp(20px, 5vw, 80px);
+  overflow: hidden;
 }
 
-.c-featured-inner {
-  max-width: 1360px;
+.c-stack-inner {
+  max-width: 1320px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: clamp(40px, 5vw, 80px);
+  align-items: center;
 }
 
-.c-featured-header {
+.c-stack-header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: clamp(36px, 5vw, 64px);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0;
 }
 
-.c-featured-eyebrow {
-  font-size: 0.7rem;
+.c-stack-eyebrow {
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--brown-1);
-  margin: 0 0 14px;
+  margin: 0 0 16px;
 }
 
-.c-featured-heading {
+.c-stack-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
   font-weight: 400;
-  color: #fff;
+  color: var(--ink);
   line-height: 1.1;
-  margin: 0;
+  margin: 0 0 20px;
 }
 
-/* 4-column equal grid; first card spans full width */
-.c-featured-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+.c-stack-sub {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin: 0 0 20px;
 }
 
-.c-featured-card {
+.c-stack-dots {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.c-stack-dot {
+  width: 28px;
+  height: 3px;
+  border: none;
+  border-radius: 2px;
+  background: rgba(10, 11, 26, 0.15);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease, width 0.3s ease;
+}
+
+.c-stack-dot.is-active {
+  background: var(--ink);
+  width: 44px;
+}
+
+/* ── Card stack container ── */
+.c-stack-cards {
   position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  aspect-ratio: 3 / 4;
-  will-change: opacity, transform;
+  height: clamp(340px, 48vw, 540px);
 }
 
-/* First card: panoramic full-width hero */
-.c-featured-card:first-child {
-  grid-column: 1 / -1;
-  aspect-ratio: 21 / 8;
-}
-
-.c-featured-card-link {
-  display: block;
-  width: 100%;
+/* Individual card */
+.c-stack-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 200px);
   height: 100%;
-  position: relative;
-  text-decoration: none;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform  0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity    0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
 }
 
-.c-featured-img-wrap {
+.c-stack-card-img {
   position: absolute;
   inset: 0;
-  overflow: hidden;
 }
 
-.c-featured-img-wrap img {
-  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+.c-stack-card-img img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.c-featured-card:hover .c-featured-img-wrap img {
-  transform: scale(1.06);
+.c-stack-card:hover .c-stack-card-img img {
+  transform: scale(1.05) !important;
 }
 
-.c-featured-img-overlay {
+.c-stack-card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to top,
     rgba(10, 11, 26, 0.88) 0%,
-    rgba(10, 11, 26, 0.3) 45%,
-    rgba(10, 11, 26, 0.06) 100%
+    rgba(10, 11, 26, 0.35) 40%,
+    rgba(10, 11, 26, 0.05) 100%
   );
 }
 
-.c-featured-card-body {
+.c-stack-card-body {
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(24px, 3.5vw, 40px);
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: clamp(18px, 3vw, 32px);
-  gap: 6px;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
-.c-featured-index {
-  font-size: 0.68rem;
+.c-stack-card-category {
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.38);
-  margin-bottom: 4px;
+  color: var(--brown-1);
+  margin: 0 0 8px;
 }
 
-.c-featured-card-title {
+.c-stack-card-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.2rem, 2.2vw, 2rem);
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
   font-weight: 400;
   color: #fff;
-  margin: 0;
-  line-height: 1.15;
+  margin: 0 0 6px;
+  line-height: 1.1;
 }
 
-.c-featured-card:first-child .c-featured-card-title {
-  font-size: clamp(1.5rem, 3vw, 2.8rem);
-}
-
-.c-featured-card-loc {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.55);
+.c-stack-card-loc {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
   margin: 0;
 }
 
-.c-featured-card-cta {
+.c-stack-card-cta {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--brown-1);
-  text-transform: uppercase;
-  margin-top: 6px;
-  transition: gap 0.25s ease;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  padding-bottom: 2px;
+  flex-shrink: 0;
+  margin-left: 24px;
+  transition: border-color 0.25s, gap 0.25s;
 }
 
-.c-featured-card:hover .c-featured-card-cta {
-  gap: 10px;
+.c-stack-card-cta:hover {
+  border-color: #fff;
+  gap: 12px;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .c-featured-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .c-featured-card:first-child {
-    grid-column: 1 / -1;
-    aspect-ratio: 16 / 7;
-  }
-}
-
-@media (max-width: 600px) {
-  .c-featured-grid {
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .c-stack-inner {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 32px;
   }
-  .c-featured-card,
-  .c-featured-card:first-child {
-    grid-column: 1;
-    aspect-ratio: 4 / 3;
+  .c-stack-cards {
+    height: clamp(300px, 65vw, 480px);
+  }
+  .c-stack-card {
+    width: calc(100% - 120px);
+  }
+}
+
+@media (max-width: 560px) {
+  .c-stack-card {
+    width: calc(100% - 80px);
+  }
+  .c-stack-card-body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .c-stack-card-cta {
+    margin-left: 0;
   }
 }
 

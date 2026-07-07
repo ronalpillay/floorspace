@@ -25,6 +25,7 @@ import Footer from "@/components/Footer";
 import AnimatedStats from "@/components/AnimatedStats";
 import ContemporaryNav from "@/components/ContemporaryNav";
 import LogoMarquee from "@/components/LogoMarquee";
+import FeaturedStack from "@/components/FeaturedStack";
 import "./contemporary.css";
 
 // Web3Forms key — set NEXT_PUBLIC_WEB3FORMS_KEY in your .env.local
@@ -139,45 +140,6 @@ const clientLogos = [
   { slug: "serum-institute-of-india-ltd",  name: "Serum Institute" },
   { slug: "tti-india",                     name: "TTI India" },
   { slug: "voxeljet-technology",           name: "Voxeljet" },
-];
-
-const featuredProjects = [
-  {
-    slug: "octillion-capital",
-    name: "Octillion Capital",
-    category: "Corporate Office",
-    city: "Pune",
-    area: "18,000 sq ft",
-    image: "/images/octillion/homepage.jpg",
-    alt: "Octillion Capital — premium corporate headquarters",
-  },
-  {
-    slug: "chromewell",
-    name: "Chromewell",
-    category: "Industrial Construction",
-    city: "Pune",
-    area: "40,000 sq ft",
-    image: "/images/chromewell/homepage.png",
-    alt: "Chromewell — industrial facility aerial view",
-  },
-  {
-    slug: "john-deere",
-    name: "John Deere",
-    category: "Industrial Workspace",
-    city: "Pune",
-    area: "28,000 sq ft",
-    image: "/images/john-deere/homepage.png",
-    alt: "John Deere — large-scale industrial workspace",
-  },
-  {
-    slug: "tristone-flowtech",
-    name: "Tristone Technologies",
-    category: "Corporate Workspace",
-    city: "Pune",
-    area: "22,000 sq ft",
-    image: "/images/tristone/01.jpg",
-    alt: "Tristone Technologies — open-plan workspace",
-  },
 ];
 
 const sectors: { label: string; sub: string; Icon: LucideIcon }[] = [
@@ -539,52 +501,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. SELECTED PROJECTS — editorial full-bleed cards */}
-      <section className="c-featured-section" aria-labelledby="featured-h">
-        <div className="c-featured-inner">
-          <div className="c-featured-header">
-            <div>
-              <p className="c-featured-eyebrow">Selected Work</p>
-              <h2 className="c-featured-heading" id="featured-h">
-                Spaces built to<br />inspire and perform.
-              </h2>
-            </div>
-            <Link href="/work" className="c-btn-light" style={{ flexShrink: 0 }}>
-              View All Projects <ArrowRight size={15} aria-hidden />
-            </Link>
-          </div>
-
-          <div className="c-featured-grid">
-            {featuredProjects.map((p, i) => (
-              <article key={p.slug} className="c-featured-card">
-                <Link href={`/projects/${p.slug}`} className="c-featured-card-link" aria-label={`View ${p.name}`}>
-                  <div className="c-featured-img-wrap">
-                    <Image
-                      src={p.image}
-                      alt={p.alt}
-                      fill
-                      sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
-                      loading={i < 2 ? "eager" : "lazy"}
-                      style={{ objectFit: "cover" }}
-                    />
-                    <div className="c-featured-img-overlay" aria-hidden />
-                  </div>
-                  <div className="c-featured-card-body">
-                    <span className="c-featured-index">0{i + 1}</span>
-                    <div>
-                      <h3 className="c-featured-card-title">{p.name}</h3>
-                      <p className="c-featured-card-loc">{p.city} &nbsp;·&nbsp; {p.category}</p>
-                    </div>
-                    <span className="c-featured-card-cta">
-                      View Project <ArrowUpRight size={13} aria-hidden />
-                    </span>
-                  </div>
-                </Link>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* 6. SELECTED PROJECTS — stacked card deck */}
+      <FeaturedStack />
 
       {/* 7. SECTORS — black icon grid */}
       <section className="c-sectors-black-grid" id="sectors" aria-labelledby="sectors-h">
