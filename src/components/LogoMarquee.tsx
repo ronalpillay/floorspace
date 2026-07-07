@@ -73,11 +73,8 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
 
   const looped = [...logos, ...logos];
 
-  // Derive a short placeholder label from the company name
-  function getInitials(name: string): string {
-    const words = name.trim().split(/\s+/);
-    if (words.length === 1) return name.slice(0, 6).toUpperCase();
-    return words.slice(0, 3).map((w) => w[0]).join("").toUpperCase();
+  function getFirstWord(name: string): string {
+    return name.trim().split(/\s+/)[0];
   }
 
   return (
@@ -96,7 +93,7 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
               >
                 {/* Text placeholder — visible while image loads */}
                 <span className={`c-logo-ph${loaded ? " is-gone" : ""}`} aria-hidden>
-                  {getInitials(logo.name)}
+                  {getFirstWord(logo.name)}
                 </span>
                 {/* Logo image — fades in on load */}
                 <span className={`c-logo-img-wrap${loaded ? " is-loaded" : ""}`}>
