@@ -1,14 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const PROJECTS = [
   {
@@ -47,176 +42,173 @@ const PROJECTS = [
 
 const N = PROJECTS.length;
 
-// Progress thresholds at which each card becomes "active" (front)
-const ACTIVE_THRESHOLDS = [0, 0.38, 0.56, 0.74];
-
 export default function FeaturedStack() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLParagraphElement>(null);
   const dotsRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    // ── Mobile: no pinning, plain vertical stack ──
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     if (window.innerWidth < 768) return;
 
-    const cardEls = gsap.utils.toArray<HTMLElement>(".fs-stack-card", section);
-    if (cardEls.length < 4) return; // guard
+    let ctx: { revert: () => void } | null = null;
 
-    // Delay setup by 600ms so the .c-page transform animation finishes before
-    // GSAP records positions for the pin (transform on ancestor breaks position:fixed)
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 600);
+    async function init() {
+      const gsapModule = await import("gsap");
+      const gsap = gsapModule.default;
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
 
-    // All cards start perfectly stacked (Flipspaces approach)
-    gsap.set(cardEls, {
-      x: 0,
-      y: 0,
-      scale: 1,
-      opacity: 1,
-      zIndex: (i: number) => N - i,
-    });
+      const section = sectionRef.current;
+      if (!section) return;
 
-    const masterTL = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "+=200%",
-        pin: true,
-        scrub: true,
-        invalidateOnRefresh: true,
-        anticipatePin: 1,
-        onUpdate(self) {
-          // Update counter and dots without React re-render
-          const prog = self.progress;
-          let idx = 0;
-          for (let i = ACTIVE_THRESHOLDS.length - 1; i >= 0; i--) {
-            if (prog >= ACTIVE_THRESHOLDS[i]) { idx = i; break; }
-          }
-          if (counterRef.current) {
-            counterRef.current.textContent =
-              `${String(idx + 1).padStart(2, "0")} / ${String(N).padStart(2, "0")}`;
-          }
-          if (dotsRef.current) {
-            dotsRef.current.querySelectorAll<HTMLElement>(".fs-dot").forEach((d, i) => {
-              d.classList.toggle("is-active", i === idx);
-            });
-          }
-        },
-      },
-    });
+      const cards = Array.from(
+        section.querySelectorAll<HTMLElement>(".fs-card")
+      );
+      if (cards.length < 4) return;
 
-    // Phase 1 – spread: front card nudges left, back cards fan right at smaller scales
-    masterTL
-      .to(cardEls[0], { scale: 1.05, x: -200, ease: "none" })
-      .to(cardEls[1], { scale: 0.8,  x: 150,  ease: "none" }, "<")
-      .to(cardEls[2], { scale: 0.6,  x: 350,  ease: "none" }, "<")
-      .to(cardEls[3], { scale: 0.5,  x: 450,  opacity: 1, ease: "none" }, "<")
+      // Stack all cards at the same position, highest z on top
+      gsap.set(cards, { x: 0, y: 0, scale: 1, opacity: 1 });
+      cards.forEach((c, i) => { c.style.zIndex = String(N - i); });
 
-      // Phase 2 – sequential exit: each card flies left, next takes over
-      .to(cardEls[0], { opacity: 0, x: -250, scale: 1.1, pointerEvents: "none" }, "+=0.2")
-      .to(cardEls[1], { x: -100, scale: 1.1 }, "<0.2")
-      .to(cardEls[1], { opacity: 0, x: -150, pointerEvents: "none" }, "<0.25")
-      .to(cardEls[2], { x: -100, scale: 1.1 }, "<0.25")
-      .to(cardEls[2], { opacity: 0, x: -150, pointerEvents: "none" }, "<0.3")
-      .to(cardEls[3], { x: 0, scale: 1.1, opacity: 1, zIndex: 4 }, "<0.3");
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            // section is 400vh tall; sticky child keeps visual in place
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1,
+            invalidateOnRefresh: true,
+            onUpdate(self) {
+              const p = self.progress;
+              // each card owns ~25% of the scroll range
+              const idx = Math.min(N - 1, Math.floor(p * N));
+              if (counterRef.current) {
+                counterRef.current.textContent =
+                  `${String(idx + 1).padStart(2, "0")} / ${String(N).padStart(2, "0")}`;
+              }
+              dotsRef.current
+                ?.querySelectorAll<HTMLElement>(".fs-dot")
+                .forEach((d, i) => d.classList.toggle("is-active", i === idx));
+            },
+          },
+        });
 
-    return () => clearTimeout(timer);
-  }, { scope: sectionRef });
+        // Phase 1 — spread (identical to Flipspaces anim.js)
+        tl.to(cards[0], { scale: 1.05, x: -200, ease: "none" })
+          .to(cards[1], { scale: 0.8,  x: 150,  ease: "none" }, "<")
+          .to(cards[2], { scale: 0.6,  x: 350,  ease: "none" }, "<")
+          .to(cards[3], { scale: 0.5,  x: 450, opacity: 1, ease: "none" }, "<")
+
+          // Phase 2 — sequential exit left
+          .to(cards[0], { opacity: 0, x: -250, scale: 1.1, pointerEvents: "none" }, "+=0.2")
+          .to(cards[1], { x: -100, scale: 1.1 }, "<0.2")
+          .to(cards[1], { opacity: 0, x: -150, pointerEvents: "none" }, "<0.25")
+          .to(cards[2], { x: -100, scale: 1.1 }, "<0.25")
+          .to(cards[2], { opacity: 0, x: -150, pointerEvents: "none" }, "<0.3")
+          .to(cards[3], { x: 0, scale: 1.1, opacity: 1, zIndex: 4 }, "<0.3");
+      });
+    }
+
+    init();
+    return () => ctx?.revert();
+  }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="c-stack-section"
-      aria-labelledby="featured-h"
-    >
-      <div className="c-stack-inner">
-        {/* ── Left panel ── */}
-        <div className="c-stack-header">
-          <p className="c-stack-eyebrow">Selected Work</p>
-          <h2 className="c-stack-title" id="featured-h">
-            Spaces built to<br />inspire and perform.
-          </h2>
-          <p className="c-stack-sub" ref={counterRef}>
-            01 / 04
-          </p>
-          <div className="c-stack-dots" ref={dotsRef} role="tablist" aria-label="Project slides">
-            {PROJECTS.map((p, i) => (
-              <span
-                key={p.slug}
-                className={`c-stack-dot fs-dot${i === 0 ? " is-active" : ""}`}
-                role="tab"
-                aria-label={p.name}
-              />
-            ))}
-          </div>
-          <Link href="/work" className="c-btn-dark" style={{ alignSelf: "flex-start", marginTop: "1.25rem" }}>
-            View All Projects <ArrowRight size={15} aria-hidden />
-          </Link>
-        </div>
+    <>
+      {/* ── Desktop: tall section + sticky inner ── */}
+      <div ref={sectionRef} className="fs-section" aria-labelledby="featured-h">
+        <div className="fs-sticky">
+          <div className="fs-inner">
+            {/* Left panel */}
+            <div className="fs-header">
+              <p className="fs-eyebrow">Selected Work</p>
+              <h2 className="fs-title" id="featured-h">
+                Spaces built to<br />inspire and perform.
+              </h2>
+              <p className="fs-counter" ref={counterRef}>01 / 04</p>
+              <div className="fs-dots" ref={dotsRef}>
+                {PROJECTS.map((p, i) => (
+                  <span
+                    key={p.slug}
+                    className={`fs-dot${i === 0 ? " is-active" : ""}`}
+                    aria-label={p.name}
+                  />
+                ))}
+              </div>
+              <Link href="/work" className="c-btn-dark" style={{ alignSelf: "flex-start", marginTop: "1.5rem" }}>
+                View All Projects <ArrowRight size={15} aria-hidden />
+              </Link>
+            </div>
 
-        {/* ── Stacked cards ── */}
-        <div className="c-stack-cards">
-          {PROJECTS.map((p, i) => (
-            <article
-              key={p.slug}
-              className="c-stack-card fs-stack-card"
-              style={{ zIndex: N - i }}
-              aria-label={p.name}
-            >
-              <div className="c-stack-card-img">
-                <Image
-                  src={p.image}
-                  alt={p.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 60vw"
-                  priority={i === 0}
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-              <div className="c-stack-card-overlay" aria-hidden />
-              <div className="c-stack-card-body">
-                <div>
-                  <p className="c-stack-card-category">{p.category}</p>
-                  <h3 className="c-stack-card-title">{p.name}</h3>
-                  <p className="c-stack-card-loc">{p.location}</p>
-                </div>
-                <Link
-                  href={`/projects/${p.slug}`}
-                  className="c-stack-card-cta"
-                  tabIndex={i === 0 ? 0 : -1}
-                  onClick={e => e.stopPropagation()}
+            {/* Card stack */}
+            <div className="fs-cards">
+              {PROJECTS.map((p, i) => (
+                <article
+                  key={p.slug}
+                  className="fs-card"
+                  style={{ zIndex: N - i }}
                 >
-                  View Details
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden>
-                    <path d="M10.837 3.692L1.529 13 0 11.471l9.307-9.308H1.104V0H13v11.896h-2.163V3.692z" fill="currentColor"/>
-                  </svg>
-                </Link>
-              </div>
-            </article>
-          ))}
+                  <Image
+                    src={p.image}
+                    alt={p.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 60vw"
+                    priority={i === 0}
+                    style={{ objectFit: "cover" }}
+                  />
+                  <div className="fs-card-overlay" aria-hidden />
+                  <div className="fs-card-body">
+                    <div>
+                      <p className="fs-card-cat">{p.category}</p>
+                      <h3 className="fs-card-name">{p.name}</h3>
+                      <p className="fs-card-loc">{p.location}</p>
+                    </div>
+                    <Link
+                      href={`/projects/${p.slug}`}
+                      className="fs-card-cta"
+                      tabIndex={i === 0 ? 0 : -1}
+                      onClick={e => e.stopPropagation()}
+                    >
+                      View Details
+                      <svg width="12" height="12" viewBox="0 0 13 13" fill="none" aria-hidden>
+                        <path d="M10.837 3.692L1.529 13 0 11.471l9.307-9.308H1.104V0H13v11.896h-2.163V3.692z" fill="currentColor"/>
+                      </svg>
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Mobile: plain vertical list */}
-      <div className="c-stack-mobile">
+      {/* ── Mobile: plain vertical list ── */}
+      <div className="fs-mobile" aria-label="Selected projects">
+        <div className="fs-mobile-header">
+          <p className="fs-eyebrow">Selected Work</p>
+          <h2 className="fs-title" id="featured-h-m">
+            Spaces built to<br />inspire and perform.
+          </h2>
+        </div>
         {PROJECTS.map(p => (
-          <Link key={p.slug} href={`/projects/${p.slug}`} className="c-stack-mobile-card">
-            <div className="c-stack-mobile-img">
+          <Link key={p.slug} href={`/projects/${p.slug}`} className="fs-mobile-card">
+            <div className="fs-mobile-img">
               <Image src={p.image} alt={p.alt} fill style={{ objectFit: "cover" }} sizes="100vw" />
-              <div className="c-stack-card-overlay" aria-hidden />
+              <div className="fs-card-overlay" aria-hidden />
             </div>
-            <div className="c-stack-mobile-body">
-              <span className="c-stack-card-category">{p.category}</span>
-              <h3 className="c-stack-card-title">{p.name}</h3>
-              <span className="c-stack-card-loc">{p.location}</span>
+            <div className="fs-mobile-body">
+              <p className="fs-card-cat">{p.category}</p>
+              <h3 className="fs-card-name">{p.name}</h3>
+              <p className="fs-card-loc">{p.location}</p>
             </div>
           </Link>
         ))}
+        <Link href="/work" className="c-btn-dark" style={{ marginTop: "8px" }}>
+          View All Projects <ArrowRight size={15} aria-hidden />
+        </Link>
       </div>
-    </section>
+    </>
   );
 }

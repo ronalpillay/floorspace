@@ -5057,8 +5057,7 @@ button[type="submit"]:disabled {
 .c-sector-card,
 .c-testi-card,
 .c-client-logo-cell,
-.c-client-logo-card,
-.c-featured-card {
+.c-client-logo-card {
   opacity: 1;
 }
 
@@ -5069,30 +5068,44 @@ button[type="submit"]:disabled {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   SELECTED WORK — Flipspaces-style stacked card deck
+   SELECTED WORK — CSS sticky + GSAP scrub (no pin:true)
 ───────────────────────────────────────────────────────────── */
-.c-stack-section {
+
+/* Tall scroll container — gives 300vh of scroll distance */
+.fs-section {
+  display: none; /* hidden on mobile */
+  height: 400vh;
   background: #fff;
-  padding: clamp(56px, 7vw, 110px) clamp(20px, 5vw, 80px);
-  /* NO overflow:hidden — GSAP animates cards outside section bounds during spread */
 }
 
-.c-stack-inner {
+/* Sticky panel — stays visible while section scrolls */
+.fs-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden; /* safe here — sticky child, not a GSAP pin */
+  display: flex;
+  align-items: center;
+}
+
+.fs-inner {
+  width: 100%;
   max-width: 1320px;
   margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 80px);
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: clamp(40px, 5vw, 80px);
   align-items: center;
 }
 
-.c-stack-header {
+/* Left panel */
+.fs-header {
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
-.c-stack-eyebrow {
+.fs-eyebrow {
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -5101,100 +5114,82 @@ button[type="submit"]:disabled {
   margin: 0 0 16px;
 }
 
-.c-stack-title {
+.fs-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  font-size: clamp(1.9rem, 2.8vw, 2.8rem);
   font-weight: 400;
   color: var(--ink);
   line-height: 1.1;
   margin: 0 0 20px;
 }
 
-.c-stack-sub {
+.fs-counter {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--muted);
   letter-spacing: 0.08em;
-  margin: 0 0 20px;
+  color: var(--muted);
+  margin: 0 0 16px;
 }
 
-.c-stack-dots {
+.fs-dots {
   display: flex;
   gap: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 0;
 }
 
-.c-stack-dot {
+.fs-dot {
+  display: block;
   width: 28px;
   height: 3px;
-  border: none;
   border-radius: 2px;
   background: rgba(10, 11, 26, 0.15);
-  cursor: pointer;
-  padding: 0;
-  transition: background 0.3s ease, width 0.3s ease;
+  transition: background 0.3s, width 0.3s;
 }
 
-.c-stack-dot.is-active {
+.fs-dot.is-active {
   background: var(--ink);
   width: 44px;
 }
 
-/* ── Card stack container ── */
-.c-stack-cards {
+/* Card stack */
+.fs-cards {
   position: relative;
-  height: clamp(400px, 52vw, 600px);
+  height: clamp(420px, 54vw, 620px);
+  /* overflow:visible so cards can spread outside without clipping */
 }
 
-/* Individual card — GSAP drives all transforms, no CSS transitions */
-.c-stack-card {
+.fs-card {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   border-radius: 14px;
   overflow: hidden;
   will-change: transform, opacity;
 }
 
-.c-stack-card-img {
-  position: absolute;
-  inset: 0;
-}
-
-.c-stack-card-img img {
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-.c-stack-card:hover .c-stack-card-img img {
-  transform: scale(1.05) !important;
-}
-
-.c-stack-card-overlay {
+.fs-card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to top,
     rgba(10, 11, 26, 0.88) 0%,
-    rgba(10, 11, 26, 0.35) 40%,
-    rgba(10, 11, 26, 0.05) 100%
+    rgba(10, 11, 26, 0.35) 42%,
+    rgba(10, 11, 26, 0.04) 100%
   );
 }
 
-.c-stack-card-body {
+.fs-card-body {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: clamp(24px, 3.5vw, 40px);
+  padding: clamp(20px, 3vw, 36px);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
 
-.c-stack-card-category {
-  font-size: 0.66rem;
+.fs-card-cat {
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -5202,57 +5197,66 @@ button[type="submit"]:disabled {
   margin: 0 0 8px;
 }
 
-.c-stack-card-title {
+.fs-card-name {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
   font-weight: 400;
   color: #fff;
-  margin: 0 0 6px;
+  margin: 0 0 5px;
   line-height: 1.1;
 }
 
-.c-stack-card-loc {
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.6);
+.fs-card-loc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.58);
   margin: 0;
 }
 
-.c-stack-card-cta {
+.fs-card-cta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #fff;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
   padding-bottom: 2px;
   flex-shrink: 0;
-  margin-left: 24px;
+  margin-left: 20px;
   transition: border-color 0.25s, gap 0.25s;
 }
 
-.c-stack-card-cta:hover {
+.fs-card-cta:hover {
   border-color: #fff;
   gap: 12px;
 }
 
-/* ── Mobile: hide GSAP area, show plain list ── */
-.c-stack-mobile {
+/* ── Mobile ── */
+.fs-mobile {
   display: none;
 }
 
+/* Desktop shows fs-section, hides fs-mobile */
+@media (min-width: 768px) {
+  .fs-section { display: block; }
+  .fs-mobile  { display: none;  }
+}
+
+/* Mobile shows fs-mobile, hides fs-section */
 @media (max-width: 767px) {
-  .c-stack-inner {
-    display: none; /* hide the pinned desktop layout */
-  }
-  .c-stack-mobile {
+  .fs-section { display: none; }
+  .fs-mobile  {
     display: flex;
     flex-direction: column;
     gap: 16px;
     padding: 48px 20px 60px;
+    background: #fff;
   }
-  .c-stack-mobile-card {
+  .fs-mobile-header {
+    margin-bottom: 8px;
+  }
+  .fs-mobile-card {
     display: block;
     position: relative;
     border-radius: 12px;
@@ -5260,30 +5264,16 @@ button[type="submit"]:disabled {
     text-decoration: none;
     aspect-ratio: 4 / 3;
   }
-  .c-stack-mobile-img {
+  .fs-mobile-img {
     position: absolute;
     inset: 0;
   }
-  .c-stack-mobile-body {
+  .fs-mobile-body {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-}
-
-/* ── Tablet: smaller but still pinned ── */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .c-stack-inner {
-    grid-template-columns: 240px 1fr;
-    gap: 32px;
-  }
-  .c-stack-cards {
-    height: clamp(320px, 55vw, 500px);
+    padding: 20px 16px;
   }
 }
 
