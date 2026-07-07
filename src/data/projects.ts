@@ -78,7 +78,7 @@ export const projects: Project[] = [
     sector: "Corporate & IT Office",
     city: "Pune",
     area: "12,000 sq ft",
-    coverImage: "/images/mqt/homepage.png",
+    coverImage: "/images/mqt/homepage.jpg",
     coverAlt: "Marquardt Hinjewadi — industrial facility exterior",
     desc: "A dynamic modern workspace with open ceilings, collaboration zones, and flexible seating.",
     longDesc:
@@ -305,7 +305,7 @@ export const projects: Project[] = [
     sector: "Industrial",
     city: "Pune",
     area: "10,000 sq ft",
-    coverImage: "/images/chromewell/homepage.png",
+    coverImage: "/images/chromewell/homepage.jpg",
     coverAlt: "Chromewell — industrial construction project",
     desc: "Industrial construction project with premium finishes and functional design.",
     longDesc:
@@ -328,7 +328,7 @@ export const projects: Project[] = [
     sector: "Industrial & Corporate",
     city: "Pune",
     area: "18,000 sq ft",
-    coverImage: "/images/john-deere/homepage.png",
+    coverImage: "/images/john-deere/homepage.jpg",
     coverAlt: "John Deere India — industrial construction and interior design",
     desc: "State-of-the-art office and facility interior for the global equipment giant's India operations.",
     longDesc:
