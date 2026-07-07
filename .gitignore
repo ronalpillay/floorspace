@@ -42,3 +42,7 @@ npm-debug.log*
 
 # Firecrawl
 .firecrawl/
+
+# Local scraper outputs — never commit scraped data
+scraped-emails.csv
+scrape-emails.mjs
