@@ -5074,7 +5074,7 @@ button[type="submit"]:disabled {
 .c-stack-section {
   background: #fff;
   padding: clamp(56px, 7vw, 110px) clamp(20px, 5vw, 80px);
-  overflow: hidden;
+  /* NO overflow:hidden — GSAP animates cards outside section bounds during spread */
 }
 
 .c-stack-inner {

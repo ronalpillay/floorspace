@@ -63,6 +63,13 @@ export default function FeaturedStack() {
     if (window.innerWidth < 768) return;
 
     const cardEls = gsap.utils.toArray<HTMLElement>(".fs-stack-card", section);
+    if (cardEls.length < 4) return; // guard
+
+    // Delay setup by 600ms so the .c-page transform animation finishes before
+    // GSAP records positions for the pin (transform on ancestor breaks position:fixed)
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 600);
 
     // All cards start perfectly stacked (Flipspaces approach)
     gsap.set(cardEls, {
@@ -79,7 +86,7 @@ export default function FeaturedStack() {
         start: "top top",
         end: "+=200%",
         pin: true,
-        scrub: 1,
+        scrub: true,
         invalidateOnRefresh: true,
         anticipatePin: 1,
         onUpdate(self) {
@@ -117,6 +124,7 @@ export default function FeaturedStack() {
       .to(cardEls[2], { opacity: 0, x: -150, pointerEvents: "none" }, "<0.3")
       .to(cardEls[3], { x: 0, scale: 1.1, opacity: 1, zIndex: 4 }, "<0.3");
 
+    return () => clearTimeout(timer);
   }, { scope: sectionRef });
 
   return (
