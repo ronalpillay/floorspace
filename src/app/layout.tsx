@@ -8,6 +8,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import RevealObserver from "@/components/RevealObserver";
 import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
+import BackToTop from "@/components/BackToTop";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -47,6 +48,20 @@ export const metadata: Metadata = {
     siteName: "Floor-Space India",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "https://floor-space.co.in/images/tristone/01.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Floor-Space India — Premium commercial interior",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Floor-Space India — Commercial Interiors & Industrial Construction",
+    description: "225+ projects across corporate, banking, pharma, and industrial sectors.",
+    images: ["https://floor-space.co.in/images/tristone/01.jpg"],
   },
   robots: {
     index: true,
@@ -59,6 +74,55 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${playfair.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "Floor-Space India Pvt. Ltd.",
+              alternateName: "FSIPL",
+              url: "https://floor-space.co.in",
+              logo: "https://floor-space.co.in/images/fsipl-logo-new.png",
+              image: "https://floor-space.co.in/images/tristone/01.jpg",
+              description:
+                "Turnkey commercial interior contractors and industrial construction specialists. 225+ projects delivered across India in 17+ years.",
+              telephone: "+91-90119-99399",
+              email: "rajesh@floor-space.co.in",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Pune",
+                addressRegion: "Maharashtra",
+                addressCountry: "IN",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 18.5204,
+                longitude: 73.8567,
+              },
+              areaServed: [
+                "Pune", "Mumbai", "Bengaluru", "Chennai", "Hyderabad",
+                "Delhi", "Kolkata", "Ahmedabad",
+              ],
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Interior & Construction Services",
+                itemListElement: [
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Corporate Office Interiors" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Industrial Construction" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pharma & Healthcare Interiors" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Turnkey Interior Fit-Out" } },
+                ],
+              },
+              sameAs: [
+                "https://www.instagram.com/floor_space_india",
+                "https://www.linkedin.com/company/floor-space-india-private-limited/",
+              ],
+            }),
+          }}
+        />
+      </head>
       <body className="grain" suppressHydrationWarning>
         <Preloader />
         <ScrollProgressBar />
@@ -66,6 +130,7 @@ export default function RootLayout({
         <RevealObserver />
         {/* CustomCursor disabled */}
         {children}
+        <BackToTop />
         {/* Social FABs — Instagram + LinkedIn above WhatsApp */}
         <div className="c-social-fabs">
           <a

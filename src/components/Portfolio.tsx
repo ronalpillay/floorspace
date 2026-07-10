@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const projects = [
-  { title:"SMBC Banking",          img:"/images/smbc-lobby.jpg",              aspect:"4/5" },
+  { title:"Octillion Capital",      img:"/images/octillion/01.jpg",           aspect:"4/5" },
   { title:"Zycus Inc.",            img:"/images/zycus-corridor.jpg",          aspect:"1/1" },
   { title:"Octillion Reception",   img:"/images/octillion-reception.jpg",     aspect:"3/4" },
   { title:"Mazak Corporation",     img:"/images/mazak-exterior.jpg",          aspect:"4/3" },

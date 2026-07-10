@@ -21,9 +21,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) return { title: "Project Not Found — Floor-Space India" };
+  const ogImageUrl = `https://floor-space.co.in${project.coverImage}`;
   return {
     title: `${project.name} — Floor-Space India`,
     description: project.longDesc,
+    openGraph: {
+      title: `${project.name} — Floor-Space India`,
+      description: project.longDesc,
+      url: `https://floor-space.co.in/projects/${project.slug}`,
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: project.coverAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.name} — Floor-Space India`,
+      description: project.desc,
+      images: [ogImageUrl],
+    },
   };
 }
 

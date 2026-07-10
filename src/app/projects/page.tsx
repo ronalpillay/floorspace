@@ -21,8 +21,8 @@ export default function ProjectsPage() {
       {/* ── Hero ── */}
       <section className="c-page-hero" aria-labelledby="projects-h">
         <Image
-          src="/images/smbc-bkc-reception.jpg"
-          alt="Featured project interior"
+          src="/images/octillion/01.jpg"
+          alt="Octillion Capital — featured project interior"
           fill
           fetchPriority="high"
           priority

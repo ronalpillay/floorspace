@@ -73,10 +73,6 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
 
   const looped = [...logos, ...logos];
 
-  function getFirstWord(name: string): string {
-    return name.trim().split(/\s+/)[0];
-  }
-
   return (
     <>
       <div className="c-logo-marquee-wrap" onMouseEnter={pause} onMouseLeave={resume}>
@@ -93,17 +89,17 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
               >
                 {/* Text placeholder — visible while image loads */}
                 <span className={`c-logo-ph${loaded ? " is-gone" : ""}`} aria-hidden>
-                  {getFirstWord(logo.name)}
+                  {logo.name}
                 </span>
                 {/* Logo image — fades in on load */}
                 <span className={`c-logo-img-wrap${loaded ? " is-loaded" : ""}`}>
                   <Image
                     src={`/images/clients/${logo.slug}.png`}
                     alt={logo.name}
-                    width={200}
-                    height={72}
+                    fill
+                    sizes="128px"
                     onLoad={() => markLoaded(logo.slug)}
-                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                    style={{ objectFit: "contain" }}
                   />
                 </span>
               </button>
