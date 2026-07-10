@@ -41,10 +41,8 @@ const stats = [
 // All client logos — now all converted to transparent PNG
 const clientLogos = [
   // Row 1 from client list
-  { slug: "amcor",                         name: "Amcor" },
   { slug: "amneal-pharmaceuticals",        name: "Amneal" },
   { slug: "autoliv",                       name: "Autoliv" },
-  { slug: "bonfiglioli",                   name: "Bonfiglioli" },
   { slug: "bridgestone",                   name: "Bridgestone" },
   { slug: "jio",                           name: "Jio" },
   { slug: "smcc-construction-india-limited", name: "SMCC" },
@@ -68,7 +66,6 @@ const clientLogos = [
   { slug: "smbc-bank",                     name: "SMBC Bank" },
   { slug: "new-holland-agriculture",       name: "New Holland" },
   { slug: "vanderlande",                   name: "Vanderlande" },
-  { slug: "trumpf",                        name: "Trumpf" },
   { slug: "schmalz",                       name: "Schmalz" },
   { slug: "acs-industries",               name: "ACS Industries" },
   { slug: "magnetic-motion-technologies",  name: "Magnetic" },
@@ -102,12 +99,10 @@ const clientLogos = [
   // Row 6
   { slug: "l-t-infotech",                  name: "L&T Infotech" },
   { slug: "vodafone",                      name: "Vodafone" },
-  { slug: "idea",                          name: "Idea" },
   { slug: "ross",                          name: "Ross" },
   { slug: "oetiker",                       name: "Oetiker" },
   { slug: "schmersal",                     name: "Schmersal" },
   { slug: "lupin",                         name: "Lupin" },
-  { slug: "schwabe-group",                 name: "Schwabe Group" },
   { slug: "dana",                          name: "Dana" },
   { slug: "jll",                           name: "JLL" },
   { slug: "gestamp",                       name: "Gestamp" },
