@@ -4,6 +4,20 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 
+// Slugs that have a transparent SVG in public/images/clients/
+const SVG_SLUGS = new Set([
+  "amneal-pharmaceuticals", "axletech-international", "bajaj-allianz", "bmc",
+  "bridgestone", "dana", "das", "denyo", "eaton", "geberit",
+  "hindustan-unilever-limited", "hirschvogel-automotive-group", "iucaa", "jabil",
+  "john-deere", "kama-corporation", "l-t-infotech", "lintec", "lupin",
+  "mahindra-2-wheelers", "marquardt", "mazak", "mgm-new-bombay-hospital",
+  "neumann", "new-balance", "new-holland-construction", "octillion", "oerlikon",
+  "onward-technologies-limited", "osg", "plethico", "ross", "rossini", "sca",
+  "schmersal", "serum-institute-of-india-ltd", "shimz", "smbc-bank",
+  "smcc-construction-india-limited", "tristone", "tti-india", "unicharm",
+  "vanderlande", "vector", "voxeljet-technology", "wika", "zf", "zycus",
+]);
+
 interface Logo {
   slug: string;
   name: string;
@@ -23,19 +37,9 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
 
   const [activeLogo, setActiveLogo] = useState<Logo | null>(null);
   const [loadedSlugs, setLoadedSlugs] = useState<Set<string>>(new Set());
-  const [svgFailed, setSvgFailed] = useState<Set<string>>(new Set());
 
   const markLoaded = useCallback((slug: string) => {
     setLoadedSlugs((prev) => {
-      if (prev.has(slug)) return prev;
-      const next = new Set(prev);
-      next.add(slug);
-      return next;
-    });
-  }, []);
-
-  const markSvgFailed = useCallback((slug: string) => {
-    setSvgFailed((prev) => {
       if (prev.has(slug)) return prev;
       const next = new Set(prev);
       next.add(slug);
@@ -89,8 +93,8 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
         <div className="c-logo-marquee-track" ref={trackRef} style={{ transform: "translateX(0)" }}>
           {looped.map((logo, i) => {
             const loaded = loadedSlugs.has(logo.slug);
-            const usePng = svgFailed.has(logo.slug);
-            const src = `/images/clients/${logo.slug}.${usePng ? "png" : "svg"}`;
+            const ext = SVG_SLUGS.has(logo.slug) ? "svg" : "png";
+            const src = `/images/clients/${logo.slug}.${ext}`;
             return (
               <button
                 key={`${logo.slug}-${i}`}
@@ -99,22 +103,16 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
                 aria-label={`View ${logo.name} logo`}
                 type="button"
               >
-                {/* Company name — visible while image loads */}
                 <span className={`c-logo-ph${loaded ? " is-gone" : ""}`} aria-hidden>
                   {logo.name}
                 </span>
-                {/* Logo image — fades in on load */}
                 <span className={`c-logo-img-wrap${loaded ? " is-loaded" : ""}`}>
                   <Image
-                    key={src}
                     src={src}
                     alt={logo.name}
                     fill
                     sizes="128px"
                     onLoad={() => markLoaded(logo.slug)}
-                    onError={() => {
-                      if (!usePng) markSvgFailed(logo.slug);
-                    }}
                     style={{ objectFit: "contain" }}
                   />
                 </span>
@@ -143,7 +141,7 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
             </button>
             <div className="c-logo-modal-img-wrap">
               <Image
-                src={`/images/clients/${activeLogo.slug}.svg`}
+                src={`/images/clients/${activeLogo.slug}.${SVG_SLUGS.has(activeLogo.slug) ? "svg" : "png"}`}
                 alt={activeLogo.name}
                 width={400}
                 height={200}
