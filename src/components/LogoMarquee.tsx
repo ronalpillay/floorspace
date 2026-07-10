@@ -15,7 +15,7 @@ const SVG_SLUGS = new Set([
   "onward-technologies-limited", "osg", "plethico", "ross", "rossini", "sca",
   "schmersal", "serum-institute-of-india-ltd", "shimz", "smbc-bank",
   "smcc-construction-india-limited", "tristone", "tti-india", "unicharm",
-  "vanderlande", "vector", "voxeljet-technology", "wika", "zf", "zycus",
+  "vector", "voxeljet-technology", "wika", "zf", "zycus",
 ]);
 
 interface Logo {
@@ -82,6 +82,19 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
     return () => cancelAnimationFrame(rafRef.current);
   }, [reverse]);
 
+  // Catch images that already loaded before onLoad was attached (SSR hydration race)
+  useEffect(() => {
+    if (!trackRef.current) return;
+    const imgs = trackRef.current.querySelectorAll<HTMLImageElement>("img.c-logo-img");
+    imgs.forEach((img) => {
+      if (img.complete && img.naturalWidth > 0) {
+        const filename = img.src.split("/").pop() || "";
+        const slug = filename.replace(/\.(svg|png)$/, "");
+        if (slug) markLoaded(slug);
+      }
+    });
+  }, [markLoaded]);
+
   const pause = useCallback(() => { pausedRef.current = true; }, []);
   const resume = useCallback(() => { pausedRef.current = false; }, []);
 
@@ -107,13 +120,13 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
                   {logo.name}
                 </span>
                 <span className={`c-logo-img-wrap${loaded ? " is-loaded" : ""}`}>
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={src}
                     alt={logo.name}
-                    fill
-                    sizes="128px"
+                    loading="eager"
                     onLoad={() => markLoaded(logo.slug)}
-                    style={{ objectFit: "contain" }}
+                    className="c-logo-img"
                   />
                 </span>
               </button>
