@@ -23,9 +23,19 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
 
   const [activeLogo, setActiveLogo] = useState<Logo | null>(null);
   const [loadedSlugs, setLoadedSlugs] = useState<Set<string>>(new Set());
+  const [svgFailed, setSvgFailed] = useState<Set<string>>(new Set());
 
   const markLoaded = useCallback((slug: string) => {
     setLoadedSlugs((prev) => {
+      if (prev.has(slug)) return prev;
+      const next = new Set(prev);
+      next.add(slug);
+      return next;
+    });
+  }, []);
+
+  const markSvgFailed = useCallback((slug: string) => {
+    setSvgFailed((prev) => {
       if (prev.has(slug)) return prev;
       const next = new Set(prev);
       next.add(slug);
@@ -79,6 +89,8 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
         <div className="c-logo-marquee-track" ref={trackRef} style={{ transform: "translateX(0)" }}>
           {looped.map((logo, i) => {
             const loaded = loadedSlugs.has(logo.slug);
+            const usePng = svgFailed.has(logo.slug);
+            const src = `/images/clients/${logo.slug}.${usePng ? "png" : "svg"}`;
             return (
               <button
                 key={`${logo.slug}-${i}`}
@@ -87,18 +99,22 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
                 aria-label={`View ${logo.name} logo`}
                 type="button"
               >
-                {/* Text placeholder — visible while image loads */}
+                {/* Company name — visible while image loads */}
                 <span className={`c-logo-ph${loaded ? " is-gone" : ""}`} aria-hidden>
                   {logo.name}
                 </span>
                 {/* Logo image — fades in on load */}
                 <span className={`c-logo-img-wrap${loaded ? " is-loaded" : ""}`}>
                   <Image
-                    src={`/images/clients/${logo.slug}.png`}
+                    key={src}
+                    src={src}
                     alt={logo.name}
                     fill
                     sizes="128px"
                     onLoad={() => markLoaded(logo.slug)}
+                    onError={() => {
+                      if (!usePng) markSvgFailed(logo.slug);
+                    }}
                     style={{ objectFit: "contain" }}
                   />
                 </span>
@@ -127,7 +143,7 @@ export default function LogoMarquee({ logos, reverse = false }: Props) {
             </button>
             <div className="c-logo-modal-img-wrap">
               <Image
-                src={`/images/clients/${activeLogo.slug}.png`}
+                src={`/images/clients/${activeLogo.slug}.svg`}
                 alt={activeLogo.name}
                 width={400}
                 height={200}
