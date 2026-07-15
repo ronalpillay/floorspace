@@ -118,6 +118,7 @@ export default function RootLayout({
               sameAs: [
                 "https://www.instagram.com/floor_space_india",
                 "https://www.linkedin.com/company/floor-space-india-private-limited/",
+                "https://youtube.com/@floor-spaceindiapvtltd",
               ],
             }),
           }}
@@ -131,7 +132,7 @@ export default function RootLayout({
         {/* CustomCursor disabled */}
         {children}
         <BackToTop />
-        {/* Social FABs — Instagram + LinkedIn above WhatsApp */}
+        {/* Social FABs — Instagram + LinkedIn + YouTube above WhatsApp */}
         <div className="c-social-fabs">
           <a
             href="https://www.instagram.com/floor_space_india?igsh=cHU2OXV2bDN5NG5n"
@@ -157,6 +158,18 @@ export default function RootLayout({
               <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
               <rect x="2" y="9" width="4" height="12"/>
               <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a
+            href="https://youtube.com/@floor-spaceindiapvtltd?si=HxoFSfrXwDKgLILG"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="c-social-fab c-social-fab--youtube"
+            aria-label="Watch us on YouTube"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" stroke="none"/>
+              <path d="M9.75 15.568V8.432L15.818 12l-6.068 3.568z" fill="#fff" stroke="none"/>
             </svg>
           </a>
         </div>

@@ -3624,6 +3624,15 @@ button[type="submit"]:disabled {
   box-shadow: 0 6px 20px rgba(0, 119, 181, 0.55);
 }
 
+.c-social-fab--youtube {
+  background: #ff0000;
+  box-shadow: 0 4px 14px rgba(255, 0, 0, 0.4);
+}
+
+.c-social-fab--youtube:hover {
+  box-shadow: 0 6px 20px rgba(255, 0, 0, 0.55);
+}
+
 /* stale sectors-dark block removed */
 
 /* ── Image hover animations (all service/project images) ── */
