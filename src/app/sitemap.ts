@@ -37,6 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     {
+      url: "https://floor-space.co.in/catalogue",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
       url: "https://floor-space.co.in/contact",
       lastModified: new Date(),
       changeFrequency: "yearly",
