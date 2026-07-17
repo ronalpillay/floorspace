@@ -122,6 +122,10 @@
   box-shadow: 0 1px 0 var(--c-border);
 }
 
+.c-nav:not(.is-scrolled) {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.28) 65%, rgba(0, 0, 0, 0) 100%);
+}
+
 .c-nav-logo {
   display: flex;
   flex-direction: column;
@@ -155,7 +159,8 @@
 
 /* Over the dark hero, keep tagline readable */
 .c-nav:not(.is-scrolled) .c-nav-tagline {
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
 }
 
 .c-nav-links {
@@ -168,11 +173,12 @@
 }
 
 .c-nav-link {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.82rem;
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 0.86rem;
+  font-weight: 650;
   padding: 8px 14px;
   text-decoration: none;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
   border-radius: var(--c-radius-btn);
   transition: background 180ms ease, color 180ms ease;
 }
@@ -184,6 +190,8 @@
 
 .c-nav.is-scrolled .c-nav-link {
   color: var(--c-ink-2);
+  font-weight: 600;
+  text-shadow: none;
 }
 
 .c-nav.is-scrolled .c-nav-link:hover {
