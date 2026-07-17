@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, Download, Menu, X } from "lucide-react";
 
 interface Props {
   /** Force solid (non-transparent) state — use on pages without a video hero */
@@ -19,6 +19,8 @@ const navItems = [
   { label: "Blogs",        href: "/blogs" },
   { label: "Contact",      href: "/contact" },
 ];
+
+const CATALOGUE_PDF = "/catalogue/floor-space-india-turnkey-profile.pdf";
 
 export default function ContemporaryNav({ solid = false }: Props) {
   const [scrolled, setScrolled] = useState(solid);
@@ -54,6 +56,15 @@ export default function ContemporaryNav({ solid = false }: Props) {
           ))}
         </ul>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <a
+            href={CATALOGUE_PDF}
+            download
+            className="c-nav-download"
+            aria-label="Download our catalogue (PDF)"
+            title="Download Catalogue (PDF)"
+          >
+            <Download size={16} strokeWidth={1.8} aria-hidden />
+          </a>
           <Link href="/contact" className="c-nav-cta">Start a Project</Link>
           {!menuOpen && (
             <button
@@ -103,6 +114,14 @@ export default function ContemporaryNav({ solid = false }: Props) {
                 {item.label}
               </Link>
             ))}
+            <a
+              href={CATALOGUE_PDF}
+              download
+              className="c-mobile-link c-mobile-link-download"
+              onClick={() => setMenuOpen(false)}
+            >
+              Download Catalogue <Download size={20} strokeWidth={1.8} aria-hidden />
+            </a>
           </nav>
 
           {/* Bottom info */}

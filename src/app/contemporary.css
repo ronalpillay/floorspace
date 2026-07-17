@@ -212,6 +212,34 @@
   color: #fff !important;
 }
 
+.c-nav-download {
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.92);
+  display: inline-flex;
+  height: 38px;
+  justify-content: center;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+  width: 38px;
+}
+
+.c-nav-download:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.c-nav.is-scrolled .c-nav-download {
+  border-color: var(--c-border-strong);
+  color: var(--c-ink-2);
+}
+
+.c-nav.is-scrolled .c-nav-download:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: var(--c-ink);
+  color: var(--c-ink);
+}
+
 /* ── Hero ── */
 .c-hero-wrap {
   padding: 0;
@@ -2371,6 +2399,23 @@ button[type="submit"]:disabled {
 .c-mobile-menu .c-mobile-link:focus-visible {
   color: #ffffff !important;
   letter-spacing: -0.01em;
+}
+
+.c-mobile-menu .c-mobile-link-download {
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.68) !important;
+  display: flex;
+  font-size: 1.05rem;
+  font-weight: 600;
+  gap: 10px;
+  letter-spacing: 0;
+  margin-top: 6px;
+  padding-top: 18px;
+}
+
+.c-mobile-menu .c-mobile-link-download:hover {
+  color: #ffffff !important;
 }
 
 /* Footer info block */
